@@ -1,0 +1,8 @@
+{
+  "name": "Remix v12 : Footer",
+  "description": "v8 : \nFixing Scrolls inside Case Study\nFailed :: Adding About Page\n\nv7 : Adding Case Study pages\nJust making sure this is a simple scannable page.\nv6 : \nSomehow the panel for grid interaction for a Bento is feeling weird so I\u0027mma try to make something that pans out on the R/L and see what can be done about that.\nAlso my name is taking up TOOOOO much space - need to see how to fix that as well. The Star should be my case studies.\n-\u003e Yet to complete, moving to next step in the interest of time\n\nv5 : \nAdding a cool background and loading animation\n\nv4 :\nGet the Project Cards right\n\nv3 : \nAdding a Hero / Intro to me\nAnd hopefully leading this into the scroll animation for the Project View\n\nv2 : \nConverting to a Portfolio Project\nAdded a Nav bar\nA scrollable 3D spiral carousel built with CSS 3D and Framer Motion.\n",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
