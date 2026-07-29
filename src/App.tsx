@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useSpring, useMotionValueEvent, useMotionValue, useTransform, animate, AnimatePresence } from 'motion/react';
+import { motion, useSpring, useMotionValue, useTransform, animate, AnimatePresence } from 'motion/react';
 import { Figma, PenTool, Users, Sparkles, Bot, Code, ArrowRight, ArrowUpRight, Building2 } from 'lucide-react';
-import { NavBlob } from './components/NavBlob';
-import { NavCompass } from './components/NavCompass';
-import { NavMonolith } from './components/NavMonolith';
-import { NavScattered } from './components/NavScattered';
-import { NavMarquee } from './components/NavMarquee';
 import { NavLiquidGlass } from './components/NavLiquidGlass';
 import SplashCursor from './components/SplashCursor';
 import { CaseStudyModal } from './components/CaseStudyModal';
 import { useActiveTab } from './components/NavLinks';
 import { About } from './components/About';
 import { Footer } from './components/Footer';
+import { useTheme } from './components/ThemeContext';
 
 const IMAGES = [
   "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
@@ -74,7 +70,7 @@ const PROJECTS = [
     image: IMAGES[1],
     title: "AI Workflows for Internal Tools",
     impact: "Agentic AI workflow streamlining internal tool development",
-    type: "Sponsored",
+    type: "Master's Project",
     company: "Verizon Connect",
     category: "AI Agent",
     tools: ["Claude", "Bot", "Figma"],
@@ -145,6 +141,9 @@ const PROJECTS = [
 
 const CARDS = PROJECTS;
 
+const slugify = (title: string) =>
+  title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
 const TOOL_ICONS: Record<string, React.ReactNode> = {
   "Figma": <img src="https://cdn.simpleicons.org/figma" alt="Figma" className="w-3.5 h-3.5" />,
   "Miro": <img src="https://cdn.simpleicons.org/miro" alt="Miro" className="w-3.5 h-3.5" />,
@@ -156,9 +155,12 @@ const TOOL_ICONS: Record<string, React.ReactNode> = {
 };
 
 export default function App() {
+  const { theme } = useTheme();
+  const workSectionRef = React.useRef<HTMLDivElement>(null);
+  const introScrollControlsRef = React.useRef<{ stop: () => void } | null>(null);
+  const cardPanelRefs = React.useRef<(HTMLDivElement | null)[]>([]);
   const [mode, setMode] = useState<'spiral' | 'grid'>('spiral');
   const [detailViewStyle, setDetailViewStyle] = useState<'inline' | 'modal' | 'drawer'>('inline');
-  const [navStyle, setNavStyle] = useState<'blob' | 'compass' | 'monolith' | 'scattered' | 'marquee' | 'liquid-glass'>('liquid-glass');
   const [bgStyle, setBgStyle] = useState<'grid' | 'splash-rainbow' | 'splash-red' | 'splash-blue'>('splash-rainbow');
   
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth < 768);
@@ -166,12 +168,13 @@ export default function App() {
   const [radius, setRadius] = useState(isMobile ? 350 : 760);
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
   const [activeCaseStudy, setActiveCaseStudy] = useState<number | null>(null);
+  const [workProgress, setWorkProgress] = useState(0);
 
   useEffect(() => {
     const path = window.location.pathname;
-    if (path.startsWith('/Work/')) {
-      const slug = path.replace('/Work/', '').replace(/\/$/, '');
-      const index = PROJECTS.findIndex(p => p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') === slug);
+    if (path.startsWith('/work/')) {
+      const slug = path.replace('/work/', '').replace(/\/$/, '');
+      const index = PROJECTS.findIndex(p => slugify(p.title) === slug);
       if (index !== -1) {
         setActiveCaseStudy(index);
       }
@@ -179,9 +182,9 @@ export default function App() {
 
     const handlePopState = () => {
       const currentPath = window.location.pathname;
-      if (currentPath.startsWith('/Work/')) {
-        const currentSlug = currentPath.replace('/Work/', '').replace(/\/$/, '');
-        const currentIndex = PROJECTS.findIndex(p => p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') === currentSlug);
+      if (currentPath.startsWith('/work/')) {
+        const currentSlug = currentPath.replace('/work/', '').replace(/\/$/, '');
+        const currentIndex = PROJECTS.findIndex(p => slugify(p.title) === currentSlug);
         setActiveCaseStudy(currentIndex !== -1 ? currentIndex : null);
       } else {
         setActiveCaseStudy(null);
@@ -194,25 +197,38 @@ export default function App() {
   useEffect(() => {
     if (activeCaseStudy !== null) {
       const project = PROJECTS[activeCaseStudy];
-      const slug = project.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-      window.history.pushState(null, '', `/Work/${slug}`);
+      window.history.pushState(null, '', `/work/${slugify(project.title)}`);
     } else {
-      if (window.location.pathname.startsWith('/Work/')) {
+      if (window.location.pathname.startsWith('/work/')) {
         window.history.pushState(null, '', '/');
       }
     }
   }, [activeCaseStudy]);
 
+  useEffect(() => {
+    if (activeCaseStudy !== null) {
+      document.title = `Neha Kohad | ${PROJECTS[activeCaseStudy].title}`;
+      return;
+    }
+    const titles: Record<string, string> = {
+      '#work': 'Neha Kohad | Work',
+      '#about': 'Neha Kohad | About',
+      '#blog': 'Neha Kohad | Blog',
+    };
+    document.title = titles[activeTab] || 'Neha Kohad | AI Product Designer';
+  }, [activeTab, activeCaseStudy]);
+
   const [spiralYStep, setSpiralYStep] = useState(isMobile ? 60 : 90);
   const [spiralAngleStep, setSpiralAngleStep] = useState(isMobile ? 45 : 30);
   const [cardWidth, setCardWidth] = useState(isMobile ? 240 : 340);
-  const [isPanelOpen, setIsPanelOpen] = useState(!isMobile);
 
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  const [windowHeight, setWindowHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 800);
 
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
+      setWindowHeight(window.innerHeight);
       const mobile = window.innerWidth < 768;
       if (mobile !== isMobile) {
         setIsMobile(mobile);
@@ -220,18 +236,17 @@ export default function App() {
         setSpiralYStep(mobile ? 60 : 90);
         setSpiralAngleStep(mobile ? 45 : 30);
         setCardWidth(mobile ? 240 : 340);
-        if (!mobile) setIsPanelOpen(true);
       }
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [isMobile]);
 
-  const { scrollYProgress } = useScroll();
+  const workScrollProgress = useMotionValue(0);
 
-  const heroY = useTransform(scrollYProgress, [0, 0.1], [0, -150]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.1], [1, 0.95]);
+  const heroY = useTransform(workScrollProgress, [0, 0.1], [0, -150]);
+  const heroOpacity = useTransform(workScrollProgress, [0, 0.05], [1, 0]);
+  const heroScale = useTransform(workScrollProgress, [0, 0.1], [1, 0.95]);
 
   const cardHeight = Math.round(cardWidth * (220 / 340));
   
@@ -313,7 +328,13 @@ export default function App() {
   }, [gridColumns, unitSizeX, unitSizeY, gridGap, containerWidth, isMobile, selectedCardIndex, mode, detailViewStyle]);
 
   const gridTotalHeight = Math.max(...bentoLayout.map(l => l.gridY + l.gridH));
-  const maxGridScroll = Math.max(0, gridTotalHeight - (typeof window !== 'undefined' ? window.innerHeight : 800) / 2 + 100);
+  const maxGridScroll = Math.max(0, gridTotalHeight - windowHeight / 2 + 100);
+  const spiralTravelDistance = (CARDS.length - 1) * spiralYStep;
+  const gridTravelDistance = maxGridScroll;
+  const wheelScrollDistance = Math.max(
+    mode === 'spiral' ? spiralTravelDistance : gridTravelDistance,
+    windowHeight * 0.85
+  );
 
   const targetY = useMotionValue(0);
   const targetRotateY = useMotionValue(0);
@@ -324,40 +345,208 @@ export default function App() {
   const springRotateY = useSpring(targetRotateY, springConfig);
   const springZ = useSpring(targetZ, springConfig);
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (selectedCardIndex !== null) setSelectedCardIndex(null);
-    if (mode === 'spiral') {
-      targetY.set(latest * -(CARDS.length - 1) * spiralYStep);
-      targetRotateY.set(latest * -(CARDS.length - 1) * spiralAngleStep);
-    } else {
-      targetY.set(latest * -maxGridScroll);
-      targetRotateY.set(0);
-    }
-  });
+  // "NEHa" wordmark: in Spiral mode it grows and drifts to center as the
+  // user scrolls, ending up as a huge, faint backdrop behind the cards.
+  const targetWordmarkScale = useMotionValue(1);
+  const targetWordmarkY = useMotionValue(0);
+  const targetWordmarkOpacity = useMotionValue(1);
+  const springWordmarkScale = useSpring(targetWordmarkScale, springConfig);
+  const springWordmarkY = useSpring(targetWordmarkY, springConfig);
+  const springWordmarkOpacity = useSpring(targetWordmarkOpacity, springConfig);
+
+  const workProgressRef = React.useRef(0);
+  useEffect(() => {
+    workProgressRef.current = workProgress;
+  }, [workProgress]);
 
   useEffect(() => {
-    const latest = scrollYProgress.get();
-    
+    if (activeTab === '#about' || activeCaseStudy !== null) return;
+
+    const applyProgress = (next: number) => {
+      workProgressRef.current = next;
+      workScrollProgress.set(next);
+      setWorkProgress(next);
+    };
+
+    const stepProgress = (deltaY: number) => {
+      const current = workProgressRef.current;
+      const next = Math.min(1, Math.max(0, current + deltaY / Math.max(wheelScrollDistance, 1)));
+      if (next === current) return current;
+      applyProgress(next);
+      if (selectedCardIndex !== null && next > 0 && next < 1) {
+        setSelectedCardIndex(null);
+      }
+      return next;
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      const section = workSectionRef.current;
+      if (!section) return;
+      const sectionTop = section.offsetTop;
+      const current = workProgressRef.current;
+
+      if (e.deltaY > 0) {
+        // Scrolling forward through the spiral/grid.
+        if (current < 1) {
+          e.preventDefault();
+          stepProgress(e.deltaY);
+          if (window.scrollY !== sectionTop) window.scrollTo(0, sectionTop);
+        }
+        // else: progress is complete, let the page scroll into the footer normally.
+      } else if (e.deltaY < 0) {
+        if (window.scrollY <= sectionTop + 2) {
+          // Already pinned at the work section: rewind the spiral/grid.
+          if (current > 0) {
+            e.preventDefault();
+            stepProgress(e.deltaY);
+            window.scrollTo(0, sectionTop);
+          }
+        } else if (current >= 1) {
+          // Scrolling up from the footer: snap back and start rewinding.
+          e.preventDefault();
+          window.scrollTo(0, sectionTop);
+          stepProgress(e.deltaY);
+        }
+      }
+    };
+
+    let touchStartY: number | null = null;
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0]?.clientY ?? null;
+    };
+    const handleTouchMove = (e: TouchEvent) => {
+      if (touchStartY === null || !e.touches[0]) return;
+      const currentY = e.touches[0].clientY;
+      const deltaY = touchStartY - currentY;
+      const section = workSectionRef.current;
+      if (!section) return;
+      const sectionTop = section.offsetTop;
+      const current = workProgressRef.current;
+
+      if (deltaY > 0) {
+        if (current < 1) {
+          e.preventDefault();
+          stepProgress(deltaY);
+          touchStartY = currentY;
+          if (window.scrollY !== sectionTop) window.scrollTo(0, sectionTop);
+        }
+      } else if (deltaY < 0) {
+        if (window.scrollY <= sectionTop + 2 && current > 0) {
+          e.preventDefault();
+          stepProgress(deltaY);
+          touchStartY = currentY;
+          window.scrollTo(0, sectionTop);
+        } else if (current >= 1 && window.scrollY > sectionTop + 2) {
+          e.preventDefault();
+          window.scrollTo(0, sectionTop);
+          stepProgress(deltaY);
+          touchStartY = currentY;
+        }
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [activeTab, activeCaseStudy, wheelScrollDistance, workScrollProgress, selectedCardIndex]);
+
+  useEffect(() => {
+    const latest = workProgress;
+
     if (mode === 'spiral') {
-      targetY.set(latest * -(CARDS.length - 1) * spiralYStep);
+      targetY.set(latest * -spiralTravelDistance);
       targetRotateY.set(latest * -(CARDS.length - 1) * spiralAngleStep);
       targetZ.set(-radius);
+
+      // Grow the wordmark in place and push it down toward center by the
+      // halfway point of the scroll; it stays legible but recedes into the backdrop.
+      const growProgress = Math.min(latest / 0.5, 1);
+      targetWordmarkScale.set(1 + growProgress * 4.5);
+      targetWordmarkY.set(windowHeight * 0.22 * growProgress);
+      targetWordmarkOpacity.set(Math.max(0.16, 1 - growProgress * 0.85));
     } else {
       targetY.set(latest * -maxGridScroll);
       targetRotateY.set(0);
       targetZ.set(0);
+
+      targetWordmarkScale.set(1);
+      targetWordmarkY.set(0);
+      targetWordmarkOpacity.set(1);
     }
-  }, [mode, scrollYProgress, targetY, targetRotateY, targetZ, radius, spiralYStep, spiralAngleStep, maxGridScroll]);
+  }, [
+    mode,
+    workProgress,
+    targetY,
+    targetRotateY,
+    targetZ,
+    radius,
+    spiralTravelDistance,
+    spiralAngleStep,
+    maxGridScroll,
+    windowHeight,
+    targetWordmarkScale,
+    targetWordmarkY,
+    targetWordmarkOpacity,
+  ]);
+
+  // Whichever card the user clicks, make sure its full expanded state
+  // (image + text + tools + CTA) actually fits in the viewport.
+  useEffect(() => {
+    if (selectedCardIndex === null) return;
+
+    const timeout = setTimeout(() => {
+      const el = cardPanelRefs.current[selectedCardIndex];
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const topPadding = 110; // clears the floating nav pill
+      const bottomPadding = 32;
+      const viewportHeight = window.innerHeight;
+      const availableHeight = viewportHeight - topPadding - bottomPadding;
+
+      let overflowPx = 0;
+      if (rect.height >= availableHeight) {
+        // Taller than the viewport allows either way - prioritize the top
+        // (title/image) over the bottom, rather than picking whichever edge
+        // happened to trip the check first.
+        overflowPx = rect.top - topPadding;
+      } else if (rect.top < topPadding) {
+        overflowPx = rect.top - topPadding; // negative: content needs to move down
+      } else if (rect.bottom > viewportHeight - bottomPadding) {
+        overflowPx = rect.bottom - (viewportHeight - bottomPadding); // positive: content needs to move up
+      }
+
+      if (Math.abs(overflowPx) < 1) return;
+
+      const travelDistance = mode === 'spiral' ? spiralTravelDistance : maxGridScroll;
+      if (travelDistance <= 0) return;
+
+      const progressDelta = overflowPx / travelDistance;
+      const nextProgress = Math.min(1, Math.max(0, workProgressRef.current + progressDelta));
+
+      workProgressRef.current = nextProgress;
+      workScrollProgress.set(nextProgress);
+      setWorkProgress(nextProgress);
+    }, 950); // let the expand spring (with bounce) fully settle first
+
+    return () => clearTimeout(timeout);
+  }, [selectedCardIndex, mode, spiralTravelDistance, maxGridScroll, workScrollProgress]);
 
   useEffect(() => {
     let controls: any;
     let handleUserScroll: () => void;
-    
+
     const timeout = setTimeout(() => {
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const maxScroll = Math.max(0, (workSectionRef.current?.offsetHeight || 0) - window.innerHeight);
       if (maxScroll > 0) {
         window.scrollTo(0, maxScroll);
-        
+
         controls = animate(maxScroll, 0, {
           duration: 4,
           ease: [0.16, 1, 0.3, 1],
@@ -365,68 +554,93 @@ export default function App() {
             window.scrollTo(0, v);
           }
         });
+        introScrollControlsRef.current = controls;
 
-        // Cancel animation if user tries to scroll
+        // Cancel animation if the user tries to scroll or interact with the page
         handleUserScroll = () => {
           if (controls) controls.stop();
         };
         window.addEventListener('wheel', handleUserScroll, { once: true });
         window.addEventListener('touchstart', handleUserScroll, { once: true });
+        window.addEventListener('pointerdown', handleUserScroll, { once: true });
       }
     }, 100);
-    
+
     return () => {
       clearTimeout(timeout);
       if (controls) controls.stop();
       if (handleUserScroll) {
         window.removeEventListener('wheel', handleUserScroll);
         window.removeEventListener('touchstart', handleUserScroll);
+        window.removeEventListener('pointerdown', handleUserScroll);
       }
     };
   }, []);
 
-  if (activeCaseStudy !== null) {
-    return (
-      <CaseStudyModal
-        project={CARDS[activeCaseStudy]}
-        onClose={() => setActiveCaseStudy(null)}
-      />
-    );
-  }
+  // Belt-and-suspenders: always kill the intro auto-scroll the moment a case
+  // study or another tab is opened, so it can never fight a manual scroll.
+  useEffect(() => {
+    if (activeCaseStudy !== null) {
+      introScrollControlsRef.current?.stop();
+    }
+  }, [activeCaseStudy]);
+
+  useEffect(() => {
+    if (activeTab !== '#work') {
+      introScrollControlsRef.current?.stop();
+    }
+  }, [activeTab]);
+
+  // Clicking any in-page nav link (Work/About/Blog) while a case study is
+  // open should always take you to that page, not leave the case study up.
+  useEffect(() => {
+    const handleDocumentClick = (e: MouseEvent) => {
+      const link = (e.target as HTMLElement)?.closest?.('a[href^="#"]');
+      if (link && activeCaseStudy !== null) {
+        setActiveCaseStudy(null);
+      }
+    };
+    document.addEventListener('click', handleDocumentClick);
+    return () => document.removeEventListener('click', handleDocumentClick);
+  }, [activeCaseStudy]);
 
   return (
-    <div className="w-full bg-[#050505] text-white overflow-x-hidden">
-      {bgStyle === 'splash-rainbow' && <SplashCursor RAINBOW_MODE={true} />}
-      {bgStyle === 'splash-red' && <SplashCursor RAINBOW_MODE={false} COLOR="#ff0000" />}
-      {bgStyle === 'splash-blue' && <SplashCursor RAINBOW_MODE={false} COLOR="#0077ff" />}
+    <div className="w-full bg-[#050505] light:bg-[#fafafa] text-white light:text-zinc-900">
+      {theme === 'dark' && bgStyle === 'splash-rainbow' && <SplashCursor RAINBOW_MODE={true} />}
+      {theme === 'dark' && bgStyle === 'splash-red' && <SplashCursor RAINBOW_MODE={false} COLOR="#ff0000" />}
+      {theme === 'dark' && bgStyle === 'splash-blue' && <SplashCursor RAINBOW_MODE={false} COLOR="#0077ff" />}
 
-      {navStyle === 'blob' && <NavBlob />}
-      {navStyle === 'compass' && <NavCompass />}
-      {navStyle === 'monolith' && <NavMonolith />}
-      {navStyle === 'scattered' && <NavScattered />}
-      {navStyle === 'marquee' && <NavMarquee />}
-      {navStyle === 'liquid-glass' && <NavLiquidGlass />}
+      <NavLiquidGlass />
 
-      {activeTab === '#about' ? (
+      {activeCaseStudy !== null ? (
+        <CaseStudyModal
+          key={activeCaseStudy}
+          project={CARDS[activeCaseStudy]}
+          allProjects={CARDS}
+          currentIndex={activeCaseStudy}
+          onClose={() => setActiveCaseStudy(null)}
+          onSelectProject={(index: number) => setActiveCaseStudy(index)}
+        />
+      ) : activeTab === '#about' ? (
         <About />
       ) : (
         <>
-        <div style={{ height: '400vh' }} className="relative z-0 w-full">
-          <div className="sticky top-0 w-full h-screen overflow-hidden">
+        <div id="work" ref={workSectionRef} className="relative z-0 w-full h-screen overflow-hidden">
+          <div className="w-full h-full">
             {/* View Controls */}
             <div className="absolute bottom-8 left-0 right-0 z-50 flex justify-center pointer-events-auto px-4">
-        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 bg-white/10 backdrop-blur-xl px-6 py-3 rounded-full border border-white/20 shadow-2xl">
+        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 bg-white/10 light:bg-black/5 backdrop-blur-xl px-6 py-3 rounded-full border border-white/20 light:border-black/10 shadow-2xl">
           <div className="flex items-center gap-4 text-sm font-medium tracking-wide">
             <button
               onClick={() => setMode('spiral')}
-              className={`transition-colors cursor-pointer ${mode === 'spiral' ? 'text-white drop-shadow-md' : 'text-zinc-400 hover:text-white'}`}
+              className={`transition-colors cursor-pointer ${mode === 'spiral' ? 'text-white light:text-zinc-900 drop-shadow-md' : 'text-zinc-400 light:text-zinc-500 hover:text-white light:hover:text-zinc-900'}`}
             >
               Spiral
             </button>
-            <span className="text-white/20">•</span>
+            <span className="text-white/20 light:text-black/15">•</span>
             <button
               onClick={() => setMode('grid')}
-              className={`transition-colors cursor-pointer ${mode === 'grid' ? 'text-white drop-shadow-md' : 'text-zinc-400 hover:text-white'}`}
+              className={`transition-colors cursor-pointer ${mode === 'grid' ? 'text-white light:text-zinc-900 drop-shadow-md' : 'text-zinc-400 light:text-zinc-500 hover:text-white light:hover:text-zinc-900'}`}
             >
               Grid
             </button>
@@ -434,26 +648,41 @@ export default function App() {
         </div>
       </div>
 
-      {/* Hero Section */}
-      <motion.div 
-        className="absolute top-0 left-0 w-full h-[30vh] flex flex-col items-center justify-center pt-24 pointer-events-none z-20"
-        style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}
-      >
+      {/* Hero Section. In Spiral mode this drops below the 3D scene's z-index
+          so the wordmark can grow into a backdrop behind the cards. */}
+      <div className={`absolute top-0 left-0 w-full h-[30vh] flex flex-col items-center justify-center pt-24 pointer-events-none ${mode === 'spiral' ? 'z-[5]' : 'z-20'}`}>
         <div className="w-full px-4 flex flex-col items-center">
-          <h1 className="font-display font-black text-6xl sm:text-7xl tracking-tighter text-white mb-4 drop-shadow-lg">
+          <motion.h1
+            className="font-display font-black text-6xl sm:text-7xl tracking-tighter text-white light:text-zinc-900 mb-4 drop-shadow-lg"
+            style={
+              mode === 'spiral'
+                ? { scale: springWordmarkScale, y: springWordmarkY, opacity: springWordmarkOpacity }
+                : { scale: heroScale, y: heroY, opacity: heroOpacity }
+            }
+          >
             NEHa
-          </h1>
-          <div className="flex flex-col items-center space-y-1 text-center">
-            <p className="font-sans text-lg sm:text-xl font-medium text-zinc-300 tracking-tight">AI Product Designer</p>
-            <p className="font-sans text-sm text-zinc-500">Crafting tasteful AI experiences for humans</p>
-          </div>
+          </motion.h1>
+          <motion.div
+            className="flex flex-col items-center space-y-1 text-center"
+            style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}
+          >
+            <p className="font-sans text-lg sm:text-xl font-medium text-zinc-300 light:text-zinc-600 tracking-tight">AI Product Designer</p>
+            <p className="font-sans text-sm text-zinc-500 light:text-zinc-500">Crafting tasteful AI experiences for humans</p>
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
 
       {/* 3D Scene Wrapper */}
       <motion.div
         className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center"
-        animate={{ perspective: mode === 'spiral' ? 1200 : 25000 }}
+        animate={{
+          perspective: mode === 'spiral' ? 1200 : 25000,
+          // Grid's first row otherwise starts at vertical center (viewport
+          // center cancels out card height via the top-1/2 + -h/2 margin
+          // trick), leaving a gap that grows with viewport height. Cancel
+          // that centering out and land the row just under the hero instead.
+          y: mode === 'grid' ? -(windowHeight * 0.2 - 24) : 0,
+        }}
         transition={{ duration: 1.2, type: 'spring', bounce: 0.15 }}
       >
         {/* Background Grid */}
@@ -544,10 +773,12 @@ export default function App() {
                   whileHover={{ scale: isSelected ? 1.25 : (mode === 'spiral' ? 1.05 : 1.02) }}
                   onClick={() => setSelectedCardIndex(isSelected ? null : i)}
                 >
-                  <div 
+                  <div
                     className="w-full h-full rounded-[12px] overflow-hidden absolute inset-0 z-10"
                     style={{
-                      boxShadow: '0 0 40px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.1)',
+                      boxShadow: theme === 'dark'
+                        ? '0 0 40px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.1)'
+                        : '0 4px 24px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.1)',
                       backgroundColor: '#050505',
                       transform: 'translateZ(1px)'
                     }}
@@ -573,15 +804,16 @@ export default function App() {
                   {/* Base Canvas Background & Content - Inline Mode (Spiral & Grid) */}
                   {detailViewStyle === 'inline' && (
                   <motion.div
+                    ref={(el) => { cardPanelRefs.current[i] = el; }}
                     initial={false}
-                    animate={{ 
+                    animate={{
                       top: isSelected ? -12 : 0,
                       left: isSelected ? -12 : 0,
                       right: isSelected ? -12 : 0,
                       opacity: isSelected ? 1 : 0,
                     }}
                     transition={{ duration: 0.6, type: 'spring', bounce: 0.2 }}
-                    className="absolute bg-white/10 backdrop-blur-2xl border border-white/20 rounded-[20px] shadow-2xl z-[-1] overflow-hidden"
+                    className="absolute bg-[#0a0a0a]/95 backdrop-blur-2xl border border-white/20 rounded-[20px] shadow-2xl z-[-1] overflow-hidden"
                   >
                     <motion.div
                       initial={false}
@@ -624,7 +856,7 @@ export default function App() {
                               onClick={(e) => { e.stopPropagation(); setActiveCaseStudy(i); }}
                               className="bg-white text-black px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-zinc-200 transition-colors"
                             >
-                              View Project
+                              {project.cta}
                             </button>
                           </div>
                         </motion.div>
@@ -638,129 +870,6 @@ export default function App() {
           })}
         </motion.div>
       </motion.div>
-
-      {/* Control Panel */}
-      <div className="absolute bottom-4 right-4 sm:bottom-8 sm:right-8 z-50 flex flex-col items-end pointer-events-auto">
-        {isPanelOpen && (
-          <div className="bg-zinc-900/80 backdrop-blur-md p-6 rounded-2xl border border-white/10 w-72 sm:w-80 shadow-2xl mb-4 max-h-[60vh] overflow-y-auto scrollbar-hide">
-            <h3 className="text-white text-sm font-semibold mb-4">Settings</h3>
-            
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between text-xs text-zinc-400 mb-2">
-                  <label>Background Style</label>
-                </div>
-                <select 
-                  value={bgStyle}
-                  onChange={(e) => setBgStyle(e.target.value as any)}
-                  className="w-full bg-black/50 border border-white/20 text-white text-xs p-2 rounded-md outline-none focus:border-white/50"
-                >
-                  <option value="grid">Grid (Default)</option>
-                  <option value="splash-rainbow">Splash Cursor (Rainbow)</option>
-                  <option value="splash-red">Splash Cursor (Red)</option>
-                  <option value="splash-blue">Splash Cursor (Blue)</option>
-                </select>
-              </div>
-
-              <div>
-                <div className="flex justify-between text-xs text-zinc-400 mb-2">
-                  <label>Navigation Style</label>
-                </div>
-                <select 
-                  value={navStyle}
-                  onChange={(e) => setNavStyle(e.target.value as any)}
-                  className="w-full bg-black/50 border border-white/20 text-white text-xs p-2 rounded-md outline-none focus:border-white/50"
-                >
-                  <option value="blob">Magnetic Floating Blob</option>
-                  <option value="compass">Radial Compass</option>
-                  <option value="monolith">Vertical Monolith</option>
-                  <option value="scattered">Scattered Floating Text</option>
-                  <option value="marquee">Interactive Marquee</option>
-                  <option value="liquid-glass">Liquid Glass Pill</option>
-                </select>
-              </div>
-
-              <div>
-                <div className="flex justify-between text-xs text-zinc-400 mb-2">
-                  <label>Details View Style</label>
-                </div>
-                <select 
-                  value={detailViewStyle}
-                  onChange={(e) => setDetailViewStyle(e.target.value as any)}
-                  className="w-full bg-black/50 border border-white/20 text-white text-xs p-2 rounded-md outline-none focus:border-white/50"
-                >
-                  <option value="inline">Inline Expansion (Native)</option>
-                  <option value="modal">Centered Modal Overlay</option>
-                  <option value="drawer">Side Drawer Overlay</option>
-                </select>
-              </div>
-
-              <div className="pt-2 border-t border-white/10">
-                <h4 className="text-white text-xs font-semibold mb-4">Spiral Settings</h4>
-                <div className="flex justify-between text-xs text-zinc-400 mb-2">
-                  <label>Radius</label>
-                  <span>{radius}px</span>
-                </div>
-                <input 
-                  type="range" 
-                  min="200" max="1500" step="10" 
-                  value={radius} 
-                  onChange={e => setRadius(Number(e.target.value))}
-                  className="w-full accent-white"
-                />
-              </div>
-
-              <div>
-                <div className="flex justify-between text-xs text-zinc-400 mb-2">
-                  <label>Y Step</label>
-                  <span>{spiralYStep}px</span>
-                </div>
-                <input 
-                  type="range" 
-                  min="0" max="300" step="5" 
-                  value={spiralYStep} 
-                  onChange={e => setSpiralYStep(Number(e.target.value))}
-                  className="w-full accent-white"
-                />
-              </div>
-
-              <div>
-                <div className="flex justify-between text-xs text-zinc-400 mb-2">
-                  <label>Angle Step</label>
-                  <span>{spiralAngleStep}°</span>
-                </div>
-                <input 
-                  type="range" 
-                  min="10" max="90" step="1" 
-                  value={spiralAngleStep} 
-                  onChange={e => setSpiralAngleStep(Number(e.target.value))}
-                  className="w-full accent-white"
-                />
-              </div>
-
-              <div>
-                <div className="flex justify-between text-xs text-zinc-400 mb-2">
-                  <label>Card Width</label>
-                  <span>{cardWidth}px</span>
-                </div>
-                <input 
-                  type="range" 
-                  min="100" max="800" step="10" 
-                  value={cardWidth} 
-                  onChange={e => setCardWidth(Number(e.target.value))}
-                  className="w-full accent-white"
-                />
-              </div>
-            </div>
-          </div>
-        )}
-        <button 
-          onClick={() => setIsPanelOpen(!isPanelOpen)}
-          className="bg-white/10 hover:bg-white/20 text-white backdrop-blur-md px-4 py-2 rounded-full text-xs font-medium transition-colors border border-white/10"
-        >
-          {isPanelOpen ? 'Hide Controls' : 'Show Controls'}
-        </button>
-      </div>
 
           </div>
         </div>
