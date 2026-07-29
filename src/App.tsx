@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useSpring, useMotionValue, useTransform, animate, AnimatePresence } from 'motion/react';
-import { Figma, PenTool, Users, Sparkles, Bot, Code, ArrowRight, ArrowUpRight, Building2 } from 'lucide-react';
+import { Figma, PenTool, Users, Sparkles, Bot, Code, ArrowRight, ArrowUpRight, Building2, MessageSquare, Table2 } from 'lucide-react';
 import { NavLiquidGlass } from './components/NavLiquidGlass';
 import SplashCursor from './components/SplashCursor';
 import { CaseStudyModal } from './components/CaseStudyModal';
@@ -33,7 +33,7 @@ const PROJECTS = [
     type: "Sponsored",
     company: "Cox Enterprises",
     category: "Web Platform",
-    tools: ["Figma", "Miro"],
+    tools: ["Figma", "Miro", "Teams", "Excel", "Claude"],
     cta: "View Case Study"
   },
   {
@@ -44,7 +44,8 @@ const PROJECTS = [
     company: "Yodlee",
     category: "AI Workflow",
     tools: ["Gemini", "Code", "Bot"],
-    cta: "View Case Study"
+    cta: "View Case Study",
+    status: "nda"
   },
   {
     image: IMAGES[4],
@@ -54,7 +55,8 @@ const PROJECTS = [
     company: "Yodlee",
     category: "Website",
     tools: ["Figma", "Code"],
-    cta: "Explore Site"
+    cta: "Explore Site",
+    status: "nda"
   },
   {
     image: IMAGES[3],
@@ -64,7 +66,8 @@ const PROJECTS = [
     company: "Yodlee",
     category: "Web App",
     tools: ["Figma", "UserTesting"],
-    cta: "View Details"
+    cta: "View Details",
+    status: "nda"
   },
   {
     image: IMAGES[1],
@@ -74,7 +77,8 @@ const PROJECTS = [
     company: "Verizon Connect",
     category: "AI Agent",
     tools: ["Claude", "Bot", "Figma"],
-    cta: "Explore Workflow"
+    cta: "Explore Workflow",
+    status: "fall-start"
   },
   // AI Experiments
   {
@@ -85,7 +89,8 @@ const PROJECTS = [
     company: "Personal",
     category: "AI App",
     tools: ["Gemini", "Claude", "Figma"],
-    cta: "Mix Spices"
+    cta: "Mix Spices",
+    status: "coming-soon"
   },
   {
     image: IMAGES[6],
@@ -95,7 +100,8 @@ const PROJECTS = [
     company: "Personal",
     category: "Mobile Concept",
     tools: ["Gemini", "Figma"],
-    cta: "View Concept"
+    cta: "View Concept",
+    status: "coming-soon"
   },
   {
     image: IMAGES[7],
@@ -105,7 +111,8 @@ const PROJECTS = [
     company: "Personal",
     category: "Web Tracker",
     tools: ["Figma", "Code"],
-    cta: "Open Vault"
+    cta: "Open Vault",
+    status: "coming-soon"
   },
   {
     image: IMAGES[8],
@@ -115,7 +122,8 @@ const PROJECTS = [
     company: "Personal",
     category: "AI Utility",
     tools: ["Claude", "Figma", "UserTesting"],
-    cta: "View Details"
+    cta: "View Details",
+    status: "coming-soon"
   },
   {
     image: IMAGES[9],
@@ -125,7 +133,8 @@ const PROJECTS = [
     company: "Personal",
     category: "Concept",
     tools: ["Miro", "Figma"],
-    cta: "Untangle"
+    cta: "Untangle",
+    status: "coming-soon"
   },
   {
     image: IMAGES[10],
@@ -135,7 +144,8 @@ const PROJECTS = [
     company: "Personal",
     category: "Motion Design",
     tools: ["Code", "Bot"],
-    cta: "Play Video"
+    cta: "Play Video",
+    status: "coming-soon"
   }
 ];
 
@@ -147,6 +157,8 @@ const slugify = (title: string) =>
 const TOOL_ICONS: Record<string, React.ReactNode> = {
   "Figma": <img src="https://cdn.simpleicons.org/figma" alt="Figma" className="w-3.5 h-3.5" />,
   "Miro": <img src="https://cdn.simpleicons.org/miro" alt="Miro" className="w-3.5 h-3.5" />,
+  "Teams": <MessageSquare size={14} />,
+  "Excel": <Table2 size={14} />,
   "UserTesting": <Users size={14} />,
   "Gemini": <img src="https://cdn.simpleicons.org/googlegemini" alt="Gemini" className="w-3.5 h-3.5" />,
   "Claude": <img src="https://cdn.simpleicons.org/anthropic" alt="Claude" className="w-3.5 h-3.5" />,
@@ -723,6 +735,11 @@ export default function App() {
           {CARDS.map((project, i) => {
             const isSelected = selectedCardIndex === i;
             const bento = bentoLayout[i] || { x: 0, y: 0, w: cardWidth, h: cardHeight };
+
+            // In spiral mode, only the 2 nearest cards on each side of center are interactive.
+            const currentCenterIdx = Math.round(workProgress * (CARDS.length - 1));
+            const distFromCenter = Math.abs(i - currentCenterIdx);
+            const isClickable = mode !== 'spiral' || distFromCenter <= 2;
             
             let selectionXOffset = 0;
             if (isSelected && mode === 'grid') {
@@ -759,7 +776,7 @@ export default function App() {
                 transition={{ duration: 1.2, type: 'spring', bounce: 0.15 }}
               >
                 <motion.div
-                  className="w-full h-full pointer-events-auto cursor-pointer relative"
+                  className={`w-full h-full relative ${isClickable ? 'pointer-events-auto cursor-pointer' : 'pointer-events-none cursor-default'}`}
                   style={{
                     transformStyle: 'preserve-3d'
                   }}
@@ -770,8 +787,18 @@ export default function App() {
                     x: selectionXOffset,
                   }}
                   transition={{ duration: 1.2, type: 'spring', bounce: 0.15 }}
-                  whileHover={{ scale: isSelected ? 1.25 : (mode === 'spiral' ? 1.05 : 1.02) }}
-                  onClick={() => setSelectedCardIndex(isSelected ? null : i)}
+                  whileHover={isClickable ? { scale: isSelected ? 1.25 : (mode === 'spiral' ? 1.05 : 1.02) } : {}}
+                  onClick={() => {
+                    if (!isClickable) return;
+                    if (mode === 'spiral' && !isSelected) {
+                      // Bring the clicked card to the center of the spiral
+                      const newProgress = CARDS.length > 1 ? i / (CARDS.length - 1) : 0;
+                      workProgressRef.current = newProgress;
+                      workScrollProgress.set(newProgress);
+                      setWorkProgress(newProgress);
+                    }
+                    setSelectedCardIndex(isSelected ? null : i);
+                  }}
                 >
                   <div
                     className="w-full h-full rounded-[12px] overflow-hidden absolute inset-0 z-10"
@@ -797,8 +824,9 @@ export default function App() {
                         <span>•</span>
                         <span>{project.category}</span>
                       </div>
-                      
+
                     </div>
+
                   </div>
 
                   {/* Base Canvas Background & Content - Inline Mode (Spiral & Grid) */}
@@ -852,12 +880,21 @@ export default function App() {
                                  </div>
                               ))}
                             </div>
-                            <button
-                              onClick={(e) => { e.stopPropagation(); setActiveCaseStudy(i); }}
-                              className="bg-white text-black px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-zinc-200 transition-colors"
-                            >
-                              {project.cta}
-                            </button>
+                            {(project as any).status ? (
+                              <button
+                                disabled
+                                className="bg-zinc-800 text-zinc-500 px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider cursor-not-allowed select-none"
+                              >
+                                {(project as any).status === 'fall-start' ? 'Fall Start' : (project as any).status === 'nda' ? 'NDA' : 'Coming Soon'}
+                              </button>
+                            ) : (
+                              <button
+                                onClick={(e) => { e.stopPropagation(); setActiveCaseStudy(i); }}
+                                className="bg-white text-black px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-zinc-200 transition-colors"
+                              >
+                                {project.cta}
+                              </button>
+                            )}
                           </div>
                         </motion.div>
                       </motion.div>
@@ -924,9 +961,15 @@ export default function App() {
                       ))}
                     </div>
                   </div>
-                  <button className="bg-white text-black px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-zinc-200 transition-colors">
-                    {CARDS[selectedCardIndex].cta}
-                  </button>
+                  {(CARDS[selectedCardIndex] as any).status ? (
+                    <button disabled className="bg-zinc-800 text-zinc-500 px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider cursor-not-allowed select-none">
+                      {(CARDS[selectedCardIndex] as any).status === 'fall-start' ? 'Fall Start' : (CARDS[selectedCardIndex] as any).status === 'nda' ? 'NDA' : 'Coming Soon'}
+                    </button>
+                  ) : (
+                    <button className="bg-white text-black px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-zinc-200 transition-colors">
+                      {CARDS[selectedCardIndex].cta}
+                    </button>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -987,12 +1030,18 @@ export default function App() {
                   </div>
                 </div>
                 
-                <button 
-                  onClick={() => setActiveCaseStudy(selectedCardIndex)}
-                  className="w-full bg-white text-black py-4 rounded-full text-xs font-bold uppercase tracking-wider hover:bg-zinc-200 transition-colors mt-auto"
-                >
-                  {CARDS[selectedCardIndex].cta}
-                </button>
+                {(CARDS[selectedCardIndex] as any).status ? (
+                  <button disabled className="w-full bg-zinc-800 text-zinc-500 py-4 rounded-full text-xs font-bold uppercase tracking-wider cursor-not-allowed select-none mt-auto">
+                    {(CARDS[selectedCardIndex] as any).status === 'fall-start' ? 'Fall Start' : (CARDS[selectedCardIndex] as any).status === 'nda' ? 'NDA' : 'Coming Soon'}
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => setActiveCaseStudy(selectedCardIndex)}
+                    className="w-full bg-white text-black py-4 rounded-full text-xs font-bold uppercase tracking-wider hover:bg-zinc-200 transition-colors mt-auto"
+                  >
+                    {CARDS[selectedCardIndex].cta}
+                  </button>
+                )}
               </div>
             </motion.div>
           </motion.div>
