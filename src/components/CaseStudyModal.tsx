@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowLeft, ChevronLeft, ChevronRight, Sparkles, AlertTriangle, ArrowUpRight, Building2, Check, Quote } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, Sparkles, AlertTriangle, ArrowUpRight, Building2, Check, Quote, Search, Route, Library, Users, PanelsTopLeft, MessageSquare, Table2, Compass, EyeOff, Layers, Headphones, GitBranch, BarChart2, Zap, Award } from 'lucide-react';
 import { CASE_STUDY_CONTENT } from '../data/caseStudies';
 
 interface CaseStudyModalProps {
@@ -12,17 +12,46 @@ interface CaseStudyModalProps {
 }
 
 const SECTIONS = [
-  { id: 'first-glance', title: 'The 10,000 ft View', navTitle: 'Overview' },
-  { id: 'problem', title: 'Untangling the Mess', navTitle: 'Challenge' },
-  { id: 'ai-workflow', title: 'Supercharging with AI', navTitle: 'Decisions' },
-  { id: 'solution', title: 'The Final Deliverable', navTitle: 'Solutions' },
-  { id: 'impact', title: 'Outcomes', navTitle: 'Outcomes' },
+  { id: 'first-glance', title: 'Start With Intent', navTitle: 'Overview' },
+  { id: 'problem', title: 'Where Do I Start?', navTitle: 'Challenge' },
+  { id: 'solution', title: 'Features That Guide', navTitle: 'Features That Guide' },
+  { id: 'stage-1', title: 'Understanding the Problem', navTitle: 'Understanding the Problem' },
+  { id: 'stage-2', title: 'Validating the Strategy', navTitle: 'Validating the Strategy' },
+  { id: 'stage-3', title: 'Refining the Experience', navTitle: 'Refining the Experience' },
+  { id: 'impact', title: 'Enterprise Signal', navTitle: 'Enterprise Signal' },
+];
+
+const CASE_TOOL_ICONS: Record<string, React.ReactNode> = {
+  Figma: <img src="https://cdn.simpleicons.org/figma" alt="" className="h-4 w-4" />,
+  Miro: <img src="https://cdn.simpleicons.org/miro" alt="" className="h-4 w-4" />,
+  Teams: <MessageSquare size={16} />,
+  Excel: <Table2 size={16} />,
+  Claude: <Sparkles size={16} />,
+};
+
+const featureIcons = [PanelsTopLeft, Route, Search, Users, Library];
+const stage1Icons = [Compass, EyeOff, Layers, Headphones];
+const stage2Icons = [Route, Compass, GitBranch, BarChart2];
+const stage3Icons = [Layers, Search, Zap, Award];
+const featureToneClasses = [
+  'from-sky-500/30 via-cyan-400/15 to-emerald-400/20',
+  'from-fuchsia-500/25 via-rose-400/15 to-amber-300/20',
+  'from-violet-500/25 via-blue-400/15 to-slate-100/20',
+  'from-lime-400/25 via-emerald-500/15 to-teal-300/20',
+  'from-orange-400/25 via-red-400/15 to-pink-300/20',
 ];
 
 export function CaseStudyModal({ project, allProjects, currentIndex, onClose, onSelectProject }: CaseStudyModalProps) {
   const [activeSection, setActiveSection] = useState('first-glance');
+  const [activeFeature, setActiveFeature] = useState(0);
+  const [hoveredInsight, setHoveredInsight] = useState<number | null>(null);
+  const [stage2Active, setStage2Active] = useState(0);
+  const [stage3Active, setStage3Active] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const content = CASE_STUDY_CONTENT[project.title];
+  const selectedFeature = content?.solutions?.features[activeFeature] || content?.solutions?.features[0];
+  const stage2 = content?.stages?.[1];
+  const stage3 = content?.stages?.[2];
 
   // Order starting right after the current project (next -> ... -> previous), wrapping around.
   const carouselProjects = Array.from({ length: allProjects.length - 1 }, (_, k) => {
@@ -66,6 +95,36 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Snap stage-2 and stage-3 into full view when the user scrolls a little into them
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let isSnapping = false;
+
+    const handleSnap = () => {
+      if (isSnapping) return;
+      const currentScrollY = window.scrollY;
+      const goingDown = currentScrollY > lastScrollY;
+      lastScrollY = currentScrollY;
+      if (!goingDown) return;
+
+      for (const id of ['stage-2', 'stage-3']) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const { top } = el.getBoundingClientRect();
+        // Section top has entered the viewport but is still in the upper 65% — snap it flush
+        if (top > 0 && top < window.innerHeight * 0.65) {
+          isSnapping = true;
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setTimeout(() => { isSnapping = false; }, 1200);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleSnap, { passive: true });
+    return () => window.removeEventListener('scroll', handleSnap);
   }, []);
 
   if (!project) return null;
@@ -137,7 +196,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent light:from-white light:via-white/80" />
               </div>
 
-              <div className="relative z-10 max-w-5xl">
+              <div className="relative z-10 w-full">
                 {/* Mobile back button - flows with the content so it scrolls
                     away naturally instead of floating over the whole page/footer. */}
                 <button
@@ -161,12 +220,32 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     {content.subtitle}
                   </p>
                 )}
-                <p className="font-sans text-xl sm:text-2xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-2xl">
-                  {content?.summary || project.impact}
-                </p>
+                <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,680px)_minmax(280px,1fr)] gap-8 lg:gap-16 items-end">
+                  <p className="font-sans text-xl sm:text-2xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed">
+                    {content?.summary || project.impact}
+                  </p>
+
+                  {content?.tools && content.tools.length > 0 && (
+                    <div className="lg:justify-self-end">
+                      <div className="text-[10px] font-bold uppercase tracking-widest text-white/40 light:text-zinc-400 mb-3">Tools Used</div>
+                      <div className="flex flex-wrap gap-3 lg:justify-end">
+                        {content.tools.map((tool) => (
+                          <div
+                            key={tool}
+                            className="flex items-center gap-2 rounded-full bg-white/10 light:bg-black/5 border border-white/15 light:border-black/10 px-3 py-2 text-xs font-semibold text-white/80 light:text-zinc-700"
+                            title={tool}
+                          >
+                            {CASE_TOOL_ICONS[tool] || <Sparkles size={14} />}
+                            <span>{tool}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
 
                 {content?.meta && content.meta.length > 0 && (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 mt-10 pt-8 border-t border-white/10 light:border-black/10 max-w-4xl">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-[1.15fr_0.8fr_0.8fr_1fr_1.45fr] gap-x-8 gap-y-8 lg:gap-x-14 xl:gap-x-20 mt-10 pt-8 border-t border-white/10 light:border-black/10 w-full">
                     {content.meta.map((m) => (
                       <div key={m.label}>
                         <div className="text-[10px] font-bold uppercase tracking-widest text-white/40 light:text-zinc-400 mb-1.5">{m.label}</div>
@@ -178,64 +257,80 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
               </div>
             </section>
 
-            <div className="p-8 md:p-16 space-y-32 pb-32">
+            <div className="p-8 md:p-16 space-y-20 pb-32">
 
-              {content?.overview && (
-                <div className="space-y-6">
-                  <p className="font-display font-medium text-2xl sm:text-3xl text-white light:text-zinc-900 tracking-tight leading-snug drop-shadow-md">
-                    {content.overview.hook}
-                  </p>
-                  <div className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl space-y-6">
-                    {content.overview.paragraphs.map((p, i) => (
-                      <p key={i}>{p}</p>
-                    ))}
-                  </div>
-                  <div className="flex items-start gap-4 py-6 pl-6 border-l-2 border-white/20 light:border-black/15">
-                    <Quote size={20} className="text-white/30 light:text-black/25 shrink-0 mt-1" />
-                    <p className="font-display font-bold text-2xl sm:text-3xl text-white light:text-zinc-900 tracking-tight">
-                      {content.overview.quote}
-                    </p>
-                  </div>
-                  <p className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl">
-                    {content.overview.reframe}
-                  </p>
-                </div>
-              )}
 
               {/* 2. Problem Statement */}
               <section id="problem" className="scroll-mt-16">
                 {content?.challenge ? (
-                  <>
-                    <span className="inline-block mb-4 px-2.5 py-1 rounded-full border border-white/10 light:border-black/10 text-[10px] font-bold uppercase tracking-widest text-white/35 light:text-zinc-400">Challenge</span>
-                    <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">
-                      {content.challenge.heading}
-                    </h2>
-                    <div className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl space-y-6">
-                      {content.challenge.paragraphs.map((p, i) => (
-                        <p key={i}>{p}</p>
-                      ))}
-                    </div>
-                    {content.challenge.emphasis.length > 0 && (
-                      <div className="mt-10 space-y-1">
-                        {content.challenge.emphasis.map((line, i) => (
-                          <p key={i} className="font-display font-bold text-2xl sm:text-3xl text-white light:text-zinc-900 tracking-tight">
-                            {line}
-                          </p>
-                        ))}
+                  <div className="grid grid-cols-[1fr_2fr] gap-8 items-stretch">
+
+                    {/* Left col: stacked metric cards */}
+                    {content.overview?.metrics && (
+                      <div className="flex flex-col gap-3 h-full">
+                        {content.overview.metrics.map((metric, i) => {
+                          const gradients = [
+                            'from-violet-500/45 via-blue-500/20 to-transparent',
+                            'from-orange-400/45 via-red-500/25 to-transparent',
+                            'from-cyan-300/35 via-slate-400/20 to-transparent',
+                          ];
+                          const isLight = i === 1;
+                          return (
+                            <motion.div
+                              key={metric.value}
+                              whileHover={{ y: -4 }}
+                              transition={{ type: 'spring', bounce: 0.18, duration: 0.45 }}
+                              className={`group relative flex-1 overflow-hidden rounded-[24px] border flex ${
+                                isLight
+                                  ? 'bg-white text-black light:bg-zinc-900 light:text-white border-white/70 light:border-zinc-900'
+                                  : 'bg-white/[0.04] light:bg-black/[0.03] text-white light:text-zinc-900 border-white/10 light:border-black/10'
+                              }`}
+                            >
+                              {/* Left: gradient + big number */}
+                              <div className={`w-[48%] shrink-0 bg-gradient-to-br ${gradients[i]} flex items-end p-4`}>
+                                <span className={`font-display font-black text-6xl tracking-tighter leading-none ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>{metric.value}</span>
+                              </div>
+                              {/* Right: label + description */}
+                              <div className={`flex-1 flex flex-col justify-end p-4 ${isLight ? 'bg-white light:bg-zinc-900' : 'bg-[#0d0d0d] light:bg-white'}`}>
+                                <ArrowUpRight size={13} className="absolute top-3 right-3 opacity-40 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                                <h3 className={`font-display font-bold text-sm tracking-tight mb-1 ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>{metric.label}</h3>
+                                <p className={`font-sans text-xs leading-snug ${isLight ? 'text-black/55 light:text-white/55' : 'text-white/50 light:text-zinc-500'}`}>{metric.description}</p>
+                              </div>
+                            </motion.div>
+                          );
+                        })}
                       </div>
                     )}
-                    {content.challenge.designChallenge && (
-                      <div className="mt-12 p-8 rounded-3xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
-                        <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40 light:text-zinc-400 mb-4">Design Challenge</h3>
-                        <p className="font-display font-medium text-xl sm:text-2xl text-white light:text-zinc-900 tracking-tight leading-snug">
-                          {content.challenge.designChallenge}
+
+                    {/* Right col: all text + design challenge */}
+                    <div className="flex flex-col gap-5">
+                      <div>
+                        <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md mb-2">
+                          Where Do I Start?
+                        </h2>
+                        <p className="font-sans text-sm text-white/55 light:text-zinc-500 leading-relaxed">
+                          Most organizations don't have a knowledge problem—they have a discovery problem.
                         </p>
                       </div>
-                    )}
-                  </>
+                      {content.challenge.paragraphs.map((p, i) => (
+                        <p key={i} className="font-sans text-sm text-white/65 light:text-zinc-600 leading-relaxed">{p}</p>
+                      ))}
+                      <p className="font-sans text-sm text-white/65 light:text-zinc-600 leading-relaxed">
+                        Resources were scattered across multiple internal systems with inconsistent navigation and terminology. Employees often depended on the HCD team to manually point them toward the right templates, workshops, or experts.
+                      </p>
+                      {content.challenge.designChallenge && (
+                        <div className="rounded-3xl bg-white light:bg-zinc-900 p-7 mt-2">
+                          <h3 className="text-[10px] font-bold uppercase tracking-widest text-black/35 light:text-white/40 mb-4">Design Challenge</h3>
+                          <p className="font-display font-medium text-xl sm:text-2xl text-black light:text-white tracking-tight leading-snug">
+                            {content.challenge.designChallenge}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                  </div>
                 ) : (
                   <>
-                    <span className="inline-block mb-4 px-2.5 py-1 rounded-full border border-white/10 light:border-black/10 text-[10px] font-bold uppercase tracking-widest text-white/35 light:text-zinc-400">Challenge</span>
                     <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">Untangling the Mess</h2>
                     <div className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl space-y-6">
                       <p>
@@ -246,43 +341,151 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                 )}
               </section>
 
-              {/* 3. Decisions */}
-              <section id="ai-workflow" className="scroll-mt-16">
-                {content?.decisions ? (
-                  <>
-                    <span className="inline-block mb-4 px-2.5 py-1 rounded-full border border-white/10 light:border-black/10 text-[10px] font-bold uppercase tracking-widest text-white/35 light:text-zinc-400">Decisions</span>
-                    <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">
-                      {content.decisions.heading}
-                    </h2>
-                    <p className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl mb-12">
-                      {content.decisions.intro}
-                    </p>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {content.decisions.items.map((item, i) => (
-                        <div key={i} className="bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-3xl p-8 relative overflow-hidden">
-                          <div className="text-[10px] font-bold uppercase tracking-widest text-white/30 light:text-zinc-400 mb-4">Insight {String(i + 1).padStart(2, '0')}</div>
-                          <p className="font-display font-medium text-lg sm:text-xl text-white light:text-zinc-900 tracking-tight leading-snug mb-6">
-                            {item.insight}
-                          </p>
-                          <div className="flex items-start gap-3 pt-6 border-t border-white/10 light:border-black/10">
-                            <Check size={18} className="text-emerald-400 light:text-emerald-600 shrink-0 mt-0.5" />
-                            <p className="font-sans text-base text-white/70 light:text-zinc-600 leading-relaxed">
-                              <span className="text-white/90 light:text-zinc-900 font-semibold">Decision: </span>
-                              {item.decision}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
+              {/* 3. Key Features */}
+              <section id="solution" className="scroll-mt-16">
+                {content?.solutions ? (
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 xl:gap-16 items-center">
+                    {/* Left: heading + subtext + feature list */}
+                    <div className="flex flex-col gap-6">
+                      <div className="flex flex-col gap-3">
+                        <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md">
+                          {content.solutions.heading}
+                        </h2>
+                        <p className="font-sans text-sm text-white/55 light:text-zinc-500 leading-relaxed">
+                          We reframed the challenge from building a resource website to designing a product that could scale organizational knowledge.
+                        </p>
+                      </div>
+                      <div>
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-white/45 light:text-zinc-400 mb-3">Features</div>
+                        {content.solutions.features.map((feature, i) => {
+                          const Icon = featureIcons[i] || PanelsTopLeft;
+                          const isActive = i === activeFeature;
+                          return (
+                            <motion.div
+                              key={feature.title}
+                              onMouseEnter={() => setActiveFeature(i)}
+                              onClick={() => setActiveFeature(i)}
+                              className={`py-4 border-t cursor-default transition-colors duration-300 ${isActive ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
+                            >
+                              <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${isActive ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
+                                <Icon size={13} className="shrink-0 opacity-70" />
+                                {feature.title}
+                              </div>
+                              <div className={`overflow-hidden transition-all duration-500 ${isActive ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-relaxed pt-1">{feature.description}</p>
+                              </div>
+                            </motion.div>
+                          );
+                        })}
+                      </div>
                     </div>
 
-                    <p className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl mt-12">
-                      {content.decisions.closing}
+                    {/* Right: MacBook */}
+                    <div className="flex flex-col items-center">
+                      <div className="w-full rounded-[18px] bg-[#1d1d1f] p-[9px] shadow-[0_30px_60px_rgba(0,0,0,0.6)] ring-1 ring-white/[0.10]">
+                        <div className="flex justify-center pb-[6px]"><div className="w-[7px] h-[7px] rounded-full bg-[#3a3a3c]" /></div>
+                        <div className="aspect-[16/10] rounded-[11px] bg-black overflow-hidden relative">
+                          <motion.div
+                            key={activeFeature}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.45 }}
+                            className={`absolute inset-0 bg-gradient-to-br ${featureToneClasses[activeFeature % featureToneClasses.length]}`}
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-[10px] font-mono uppercase tracking-widest text-white/20">
+                              {`Feature ${activeFeature + 1} · Placeholder`}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="w-[90%]">
+                        <div className="h-[5px] bg-[#1d1d1f] rounded-b" />
+                        <div className="h-[10px] bg-[#141414] mx-1 rounded-b-xl shadow-xl" />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">The Final Deliverable</h2>
+                    <div className="aspect-video w-full rounded-3xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10 overflow-hidden mb-12">
+                      <img src={project.image} alt="Solution" className="w-full h-full object-cover" />
+                    </div>
+                  </>
+                )}
+              </section>
+
+              {/* Stage 1: Understanding the Problem */}
+              <section id="stage-1" className="scroll-mt-16">
+                {content?.stages?.[0] ? (
+                  <>
+                    <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">
+                      {content.challenge.emphasis.join(' ')}
+                    </h2>
+
+                    {/* Intro context */}
+                    <p className="font-sans text-sm text-white/55 light:text-zinc-600 leading-relaxed mb-10">
+                      We conducted 8 in-depth interviews with a stratified convenience sample of employees across Cox Enterprises and Cox Automotive. Our research surfaced four recurring insights.
                     </p>
+
+                    <div className="grid grid-cols-4 gap-3">
+                      {content.stages[0].insights.map((item, i) => {
+                        const S1Icon = stage1Icons[i];
+                        const isLight = i === 1;
+                        const gradients = [
+                          'from-violet-500/50 via-blue-500/25 to-transparent',
+                          'from-orange-400/50 via-rose-400/30 to-transparent',
+                          'from-cyan-400/40 via-teal-500/20 to-transparent',
+                          'from-emerald-400/40 via-green-500/20 to-transparent',
+                        ];
+                        const shortInsight = [
+                          'Employees think in goals, not resources.',
+                          'Valuable HCD resources were fragmented across multiple platforms.',
+                          'Employees entered with different levels of HCD experience.',
+                          'Experts spent significant time answering navigation questions.',
+                        ][i];
+                        const shortGoal = [
+                          'Design navigation around intent, not org structure.',
+                          'Centralize discovery into a single layer.',
+                          'Create distinct pathways per maturity level.',
+                          'Free experts from routing; enable self-service.',
+                        ][i];
+                        return (
+                          <motion.div
+                            key={i}
+                            whileHover={{ y: -6 }}
+                            transition={{ type: 'spring', bounce: 0.18, duration: 0.45 }}
+                            className={`group rounded-[24px] border overflow-hidden flex flex-col ${
+                              isLight
+                                ? 'bg-white light:bg-zinc-900 border-white/70 light:border-zinc-900'
+                                : 'bg-white/[0.04] light:bg-black/[0.03] border-white/10 light:border-black/10'
+                            }`}
+                          >
+                            {/* Gradient header strip with icon */}
+                            <div className={`h-20 bg-gradient-to-br ${gradients[i]} flex items-end px-5 pb-3`}>
+                              {S1Icon && <S1Icon size={22} className={isLight ? 'text-black/50 light:text-white/50' : 'text-white/55'} />}
+                            </div>
+                            {/* Content */}
+                            <div className="p-5 flex flex-col gap-3 flex-1">
+                              <h3 className={`font-display font-bold text-base tracking-tight ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>
+                                {item.phrase}
+                              </h3>
+                              <p className={`font-sans text-sm leading-relaxed flex-1 ${isLight ? 'text-black/60 light:text-white/60' : 'text-white/60 light:text-zinc-500'}`}>
+                                {shortInsight}
+                              </p>
+                              <div className={`border-t pt-3 ${isLight ? 'border-black/10 light:border-white/10' : 'border-white/10 light:border-black/10'}`}>
+                                <div className={`text-[10px] font-bold uppercase tracking-widest mb-1.5 ${isLight ? 'text-black/30' : 'text-white/30'}`}>Design Goal</div>
+                                <p className={`font-sans text-sm leading-snug ${isLight ? 'text-black/50' : 'text-white/50'}`}>{shortGoal}</p>
+                              </div>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+
                   </>
                 ) : (
                   <>
-                    <span className="inline-block mb-4 px-2.5 py-1 rounded-full border border-white/10 light:border-black/10 text-[10px] font-bold uppercase tracking-widest text-white/35 light:text-zinc-400">Decisions</span>
                     <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">Supercharging with AI</h2>
                     <p className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl mb-12">
                       I integrated generative models to accelerate our ideation and documentation phases. However, maintaining quality control meant navigating around AI hallucinations and generic outputs.
@@ -321,135 +524,256 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                 )}
               </section>
 
-              {/* 4. The Solution */}
-              <section id="solution" className="scroll-mt-16">
-                {content?.solutions ? (
-                  <>
-                    <span className="inline-block mb-4 px-2.5 py-1 rounded-full border border-white/10 light:border-black/10 text-[10px] font-bold uppercase tracking-widest text-white/35 light:text-zinc-400">Solutions</span>
-                    <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">
-                      {content.solutions.heading}
-                    </h2>
-                    <div className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl space-y-6">
-                      {content.solutions.visionParagraphs.map((p, i) => (
-                        <p key={i}>{p}</p>
-                      ))}
+              {/* Stage 2: Testing the Product Strategy */}
+              {stage2 && (
+                <div id="stage-2" className="-mx-8 md:-mx-16">
+                  <div className="min-h-screen bg-[#0a0a0a] light:bg-white px-8 md:px-16 flex flex-col justify-center gap-10 py-14">
+                    {/* Header */}
+                    <div>
+                      <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-5 drop-shadow-md">{stage2.title}</h2>
+                      <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-snug max-w-2xl">
+                        We conducted 4 task-based think-aloud sessions to validate whether organizing resources around employee intent would improve discovery and reduce dependency on HCD experts.
+                      </p>
                     </div>
 
-                    {content.solutions.intents.length > 0 && (
-                      <div className="flex flex-wrap gap-3 mt-8 mb-8">
-                        {content.solutions.intents.map((intent) => (
-                          <span
-                            key={intent}
-                            className="px-4 py-2 rounded-full bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10 text-sm text-white/80 light:text-zinc-700 font-medium"
-                          >
-                            {intent}
-                          </span>
-                        ))}
+                    {/* 3-col: insight list | MacBook | design change list */}
+                    <div className="grid grid-cols-[1fr_2fr_1fr] gap-8 items-center">
+                      {/* Insights — hover to activate */}
+                      <div>
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-white/45 light:text-zinc-400 mb-3">Insight</div>
+                        {stage2.insights.map((item, i) => {
+                          const active = i === stage2Active;
+                          const S2Icon = stage2Icons[i];
+                          return (
+                            <motion.div key={i}
+                              initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                              transition={{ duration: 0.45, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                              onMouseEnter={() => setStage2Active(i)}
+                              className={`py-4 border-t cursor-default transition-colors duration-300 ${active ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
+                            >
+                              <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
+                                {S2Icon && <S2Icon size={13} className="shrink-0 opacity-70" />}
+                                {item.phrase ?? `Insight ${i + 1}`}
+                              </div>
+                              <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.insight}</p>
+                              </div>
+                            </motion.div>
+                          );
+                        })}
                       </div>
-                    )}
 
-                    {content.solutions.visionClosing && (
-                      <p className="font-display font-medium text-xl sm:text-2xl text-white/90 light:text-zinc-800 tracking-tight leading-snug mb-12">
-                        {content.solutions.visionClosing}
-                      </p>
-                    )}
-
-                    <div className="aspect-video w-full rounded-3xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10 overflow-hidden mb-12">
-                      <img src={project.image} alt="Solution" className="w-full h-full object-cover" />
-                    </div>
-
-                    <div className="space-y-6">
-                      {content.solutions.features.map((feature, i) => (
-                        <div key={feature.title} className="flex gap-6 p-8 rounded-3xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
-                          <div className="shrink-0 w-9 h-9 rounded-full bg-white/10 light:bg-black/5 border border-white/10 light:border-black/10 flex items-center justify-center font-display font-bold text-sm text-white/70 light:text-zinc-600">
-                            {i + 1}
+                      {/* MacBook + Key Question below */}
+                      <div className="flex flex-col gap-4">
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                          className="flex flex-col items-center"
+                        >
+                          <div className="w-full rounded-[18px] bg-[#1d1d1f] p-[9px] shadow-[0_30px_60px_rgba(0,0,0,0.6)] ring-1 ring-white/[0.10]">
+                            <div className="flex justify-center pb-[6px]"><div className="w-[7px] h-[7px] rounded-full bg-[#3a3a3c]" /></div>
+                            <div className="aspect-[16/10] rounded-[11px] bg-black overflow-hidden relative">
+                              <motion.div key={stage2Active} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.45 }}
+                                className={`absolute inset-0 bg-gradient-to-br ${
+                                  stage2Active === 1 ? 'from-violet-500/50 via-purple-600/30 to-transparent' :
+                                  stage2Active === 2 ? 'from-rose-500/50 via-pink-600/30 to-transparent' :
+                                  'from-sky-500/50 via-blue-600/30 to-transparent'
+                                }`}
+                              />
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <span className="text-[10px] font-mono uppercase tracking-widest text-white/20">
+                                  {`Insight ${stage2Active + 1} · Placeholder`}
+                                </span>
+                              </div>
+                            </div>
                           </div>
-                          <div>
-                            <h3 className="font-display font-bold text-xl tracking-tight text-white light:text-zinc-900 mb-2">{feature.title}</h3>
-                            <p className="font-sans text-base sm:text-lg text-white/70 light:text-zinc-600 leading-relaxed">{feature.description}</p>
+                          <div className="w-[90%]">
+                            <div className="h-[5px] bg-[#1d1d1f] rounded-b" />
+                            <div className="h-[10px] bg-[#141414] mx-1 rounded-b-xl shadow-xl" />
                           </div>
+                        </motion.div>
+                        <div className="rounded-xl bg-white light:bg-zinc-900 text-black light:text-white px-5 py-4">
+                          <div className="text-[10px] font-bold uppercase tracking-widest text-black/35 light:text-white/35 mb-1.5">Key Question</div>
+                          <p className="font-display font-bold text-lg tracking-tight leading-snug">{stage2.question}</p>
                         </div>
-                      ))}
+                      </div>
+
+                      {/* Design Changes — mirrors the insight list */}
+                      <div>
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-white/45 light:text-zinc-400 mb-3">Design Change</div>
+                        {stage2.insights.map((item, i) => {
+                          const active = i === stage2Active;
+                          const S2Icon = stage2Icons[i];
+                          return (
+                            <motion.div key={i}
+                              initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                              transition={{ duration: 0.45, delay: i * 0.1 + 0.06, ease: [0.16, 1, 0.3, 1] }}
+                              onMouseEnter={() => setStage2Active(i)}
+                              className={`py-4 border-t cursor-default transition-colors duration-300 ${active ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
+                            >
+                              <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
+                                {S2Icon && <S2Icon size={13} className="shrink-0 opacity-70" />}
+                                {item.changePhrase ?? `Design Response ${i + 1}`}
+                              </div>
+                              <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.change}</p>
+                              </div>
+                            </motion.div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </>
-                ) : (
-                  <>
-                    <span className="inline-block mb-4 px-2.5 py-1 rounded-full border border-white/10 light:border-black/10 text-[10px] font-bold uppercase tracking-widest text-white/35 light:text-zinc-400">Solutions</span>
-                    <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">The Final Deliverable</h2>
-                    <div className="aspect-video w-full rounded-3xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10 overflow-hidden mb-12">
-                      <img src={project.image} alt="Solution" className="w-full h-full object-cover" />
-                    </div>
-                    <div className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl space-y-6">
-                      <p>
-                        The resulting system was a fully componentized Figma library, synced directly to our frontend repository via Design Tokens. This allowed developers to consume design updates instantly.
+                  </div>
+                </div>
+              )}
+
+              {/* Stage 3: Testing the Workflow */}
+              {stage3 && (
+                <div id="stage-3" className="-mx-8 md:-mx-16">
+                  <div className="min-h-screen bg-[#0d0d0d] light:bg-zinc-50 px-8 md:px-16 flex flex-col justify-center gap-10 py-14">
+                    {/* Header */}
+                    <div>
+                      <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-5 drop-shadow-md">{stage3.title}</h2>
+                      <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-snug max-w-2xl">
+                        We built a high-fidelity prototype and evaluated it through expert heuristic review and task-based usability testing — examining whether clear hierarchy, consistent interactions, and strong information scent would enable employees to navigate independently.
                       </p>
                     </div>
-                  </>
-                )}
-              </section>
 
-              {/* 5. Outcomes */}
+                    {/* 3-col: insight list | MacBook | design change list */}
+                    <div className="grid grid-cols-[1fr_2fr_1fr] gap-8 items-center">
+                      {/* Insights */}
+                      <div>
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-white/45 light:text-zinc-400 mb-3">Insight</div>
+                        {stage3.insights.map((item, i) => {
+                          const active = i === stage3Active;
+                          const S3Icon = stage3Icons[i];
+                          return (
+                            <motion.div key={i}
+                              initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                              transition={{ duration: 0.45, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                              onMouseEnter={() => setStage3Active(i)}
+                              className={`py-4 border-t cursor-default transition-colors duration-300 ${active ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
+                            >
+                              <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
+                                {S3Icon && <S3Icon size={13} className="shrink-0 opacity-70" />}
+                                {item.phrase ?? `Insight ${i + 1}`}
+                              </div>
+                              <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.insight}</p>
+                              </div>
+                            </motion.div>
+                          );
+                        })}
+                      </div>
+
+                      {/* MacBook + Key Question below */}
+                      <div className="flex flex-col gap-4">
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                          className="flex flex-col items-center"
+                        >
+                          <div className="w-full rounded-[18px] bg-[#1d1d1f] p-[9px] shadow-[0_30px_60px_rgba(0,0,0,0.6)] ring-1 ring-white/[0.10]">
+                            <div className="flex justify-center pb-[6px]"><div className="w-[7px] h-[7px] rounded-full bg-[#3a3a3c]" /></div>
+                            <div className="aspect-[16/10] rounded-[11px] bg-black overflow-hidden relative">
+                              <motion.div key={stage3Active} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.45 }}
+                                className={`absolute inset-0 bg-gradient-to-br ${
+                                  stage3Active === 1 ? 'from-orange-500/50 via-amber-600/30 to-transparent' :
+                                  stage3Active === 2 ? 'from-cyan-500/50 via-blue-600/30 to-transparent' :
+                                  'from-emerald-500/50 via-teal-600/30 to-transparent'
+                                }`}
+                              />
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <span className="text-[10px] font-mono uppercase tracking-widest text-white/20">
+                                  {`Insight ${stage3Active + 1} · Placeholder`}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="w-[90%]">
+                            <div className="h-[5px] bg-[#1d1d1f] rounded-b" />
+                            <div className="h-[10px] bg-[#141414] mx-1 rounded-b-xl shadow-xl" />
+                          </div>
+                        </motion.div>
+                        <div className="rounded-xl bg-white light:bg-zinc-900 text-black light:text-white px-5 py-4">
+                          <div className="text-[10px] font-bold uppercase tracking-widest text-black/35 light:text-white/35 mb-1.5">Key Question</div>
+                          <p className="font-display font-bold text-lg tracking-tight leading-snug">{stage3.question}</p>
+                        </div>
+                      </div>
+
+                      {/* Design Changes */}
+                      <div>
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-white/45 light:text-zinc-400 mb-3">Design Change</div>
+                        {stage3.insights.map((item, i) => {
+                          const active = i === stage3Active;
+                          const S3Icon = stage3Icons[i];
+                          return (
+                            <motion.div key={i}
+                              initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                              transition={{ duration: 0.45, delay: i * 0.1 + 0.06, ease: [0.16, 1, 0.3, 1] }}
+                              onMouseEnter={() => setStage3Active(i)}
+                              className={`py-4 border-t cursor-default transition-colors duration-300 ${active ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
+                            >
+                              <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
+                                {S3Icon && <S3Icon size={13} className="shrink-0 opacity-70" />}
+                                {item.changePhrase ?? `Design Response ${i + 1}`}
+                              </div>
+                              <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.change}</p>
+                              </div>
+                            </motion.div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 5. Impact */}
               <section id="impact" className="scroll-mt-16">
                 {content?.impact ? (
                   <>
-                    <span className="inline-block mb-4 px-2.5 py-1 rounded-full border border-white/10 light:border-black/10 text-[10px] font-bold uppercase tracking-widest text-white/35 light:text-zinc-400">Outcomes</span>
                     <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">
                       {content.impact.heading}
                     </h2>
-                    {/* Text + 2×2 metric grid side by side */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
-                      <p className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed self-center">
-                        {content.impact.intro}
-                      </p>
-                      <div className="grid grid-cols-2 gap-3">
-                        {content.impact.validationMetrics?.map((m) => (
-                          <div key={m.label} className="p-5 rounded-2xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
-                            <div className="text-[9px] font-bold uppercase tracking-widest text-white/25 light:text-zinc-400 mb-2">Validation</div>
-                            <div className="font-display font-black text-3xl sm:text-4xl tracking-tighter text-white light:text-zinc-900 mb-1 drop-shadow-md">
-                              {m.value}
-                            </div>
-                            <div className="font-sans text-[10px] font-bold uppercase tracking-widest text-white/50 light:text-zinc-500">
-                              {m.label}
-                            </div>
-                          </div>
-                        ))}
-                        {content.impact.businessStats?.map((s) => (
-                          <div key={s.label} className="p-5 rounded-2xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
-                            <div className="text-[9px] font-bold uppercase tracking-widest text-white/25 light:text-zinc-400 mb-2">Business</div>
-                            <div className="font-display font-black text-3xl sm:text-4xl tracking-tighter text-white light:text-zinc-900 mb-1 drop-shadow-md">
-                              {s.value}
-                            </div>
-                            <div className="font-sans text-[10px] font-bold uppercase tracking-widest text-white/50 light:text-zinc-500">
-                              {s.label}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                    <p className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl mb-10">
+                      {content.impact.intro}
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl">
+                      {content.impact.outcomes.map((outcome, i) => (
+                        <div key={i} className="flex items-start gap-3 p-6 rounded-2xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
+                          <Check size={18} className="text-emerald-400 light:text-emerald-600 shrink-0 mt-0.5" />
+                          <p className="font-sans text-base sm:text-lg text-white/80 light:text-zinc-700 leading-snug">{outcome}</p>
+                        </div>
+                      ))}
                     </div>
 
-                    {/* Business outcomes — full-width 3-column */}
-                    {content.impact.businessOutcomes && content.impact.businessOutcomes.length > 0 && (
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        {content.impact.businessOutcomes.map((outcome, i) => (
-                          <div key={i} className="flex items-start gap-3 p-5 rounded-2xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
-                            <Check size={16} className="text-emerald-400 light:text-emerald-600 shrink-0 mt-0.5" />
-                            <p className="font-sans text-sm text-white/80 light:text-zinc-700 leading-snug">{outcome}</p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
                     {content.reflection && (
-                      <div className="mt-24 pt-16 border-t border-white/10 light:border-black/10 max-w-3xl">
-                        <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40 light:text-zinc-400 mb-6">Reflection</h3>
-                        <div className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed space-y-6">
-                          {content.reflection.paragraphs.map((p, i) => (
-                            <p key={i}>{p}</p>
-                          ))}
+                      <div className="mt-24 pt-16 border-t border-white/10 light:border-black/10">
+                        <div className="grid grid-cols-1 xl:grid-cols-[1fr_1fr] gap-12 xl:gap-16 items-start">
+                          <div>
+                            <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40 light:text-zinc-400 mb-6">Reflection</h3>
+                            <div className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed space-y-6">
+                              {content.reflection.paragraphs.map((p, i) => (
+                                <p key={i}>{p}</p>
+                              ))}
+                            </div>
+                            <p className="font-display font-medium text-xl sm:text-2xl text-white light:text-zinc-900 tracking-tight leading-snug mt-8">
+                              {content.reflection.closing}
+                            </p>
+                          </div>
+                          <div className="xl:sticky xl:top-24">
+                            <div className="rounded-3xl overflow-hidden border border-white/10 light:border-black/10">
+                              <img
+                                src="/cox-team.png"
+                                alt="The Cox Design Hub team"
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <p className="font-sans text-xs text-white/35 light:text-zinc-400 mt-3 text-center tracking-wide">The team at Cox Enterprises</p>
+                          </div>
                         </div>
-                        <p className="font-display font-medium text-xl sm:text-2xl text-white light:text-zinc-900 tracking-tight leading-snug mt-8">
-                          {content.reflection.closing}
-                        </p>
                       </div>
                     )}
                   </>
