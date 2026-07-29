@@ -515,12 +515,20 @@ export default function App() {
     if (selectedCardIndex === null) return;
 
     const timeout = setTimeout(() => {
+      // If the footer is in view the page has scrolled past the work section,
+      // which means workProgress is maxed and has no room to push the card up.
+      // Snap the page back first so the full viewport is available.
+      const section = workSectionRef.current;
+      if (section) {
+        window.scrollTo(0, section.offsetTop);
+      }
+
       const el = cardPanelRefs.current[selectedCardIndex];
       if (!el) return;
 
       const rect = el.getBoundingClientRect();
       const topPadding = 110; // clears the floating nav pill
-      const bottomPadding = 32;
+      const bottomPadding = 100; // clears the Spiral/Grid toggle pill at bottom-8
       const viewportHeight = window.innerHeight;
       const availableHeight = viewportHeight - topPadding - bottomPadding;
 
