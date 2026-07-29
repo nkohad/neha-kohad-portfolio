@@ -40,6 +40,7 @@ export interface CaseStudyContent {
     heading: string;
     intro: string;
     outcomes: string[];
+    metrics?: { value: string; unit?: string; label: string; description: string; gradient?: string }[];
   };
   reflection: {
     paragraphs: string[];
@@ -50,7 +51,7 @@ export interface CaseStudyContent {
 // Keyed by project title (src/App.tsx PROJECTS). Projects without an entry
 // here fall back to the generic placeholder content in CaseStudyModal.
 export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
-  'Cox Design Hub': {
+  'Cox HCD Resource Hub': {
     subtitle: 'Designing the Front Door to Human-Centered Design',
     summary:
       'Helping 55,000+ employees discover, learn, and apply Human-Centered Design through a self-service enterprise knowledge platform.',
@@ -287,20 +288,23 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
       },
     ],
     impact: {
-      heading: 'Enterprise signal',
+      heading: 'Outcomes',
       intro:
-        'The project transformed a request for a centralized website into a strategy for scaling Human-Centered Design across the organization. Expected outcomes included:',
+        'The final solution validated our core hypothesis: organizing HCD resources around employee intent rather than organizational structure made the experience easier to navigate, understand, and adopt. The platform transformed fragmented knowledge into a scalable, self-service experience capable of supporting 55,000+ employees while reducing dependency on manual support from the HCD team.',
       outcomes: [
-        'Reduced dependency on manual support',
-        'Faster resource discovery',
-        'Greater visibility of HCD initiatives',
-        'Increased confidence for first-time practitioners',
-        'Better utilization of expert time',
+        'Reduced reliance on the HCD team\'s manual resource curation workflow.',
+        'Unified fragmented HCD resources into a single intent-driven experience.',
+        'Created a scalable foundation for continued HCD adoption across Cox Enterprises.',
+      ],
+      metrics: [
+        { value: '90', label: 'SUS Score', description: 'System Usability Scale', gradient: 'from-emerald-400/45 via-teal-500/20 to-transparent' },
+        { value: '94.4', unit: '%', label: 'Task Success', description: 'Task completion rate', gradient: 'from-sky-500/45 via-blue-500/20 to-transparent' },
+        { value: '<2', label: 'Clicks', description: 'To complete any task', gradient: 'from-fuchsia-500/40 via-rose-400/20 to-transparent' },
       ],
     },
     reflection: {
       paragraphs: [
-        'The Cox Design Hub became less about launching another internal site and more about reducing the operational cost of knowledge transfer.',
+        'The Cox HCD Resource Hub became less about launching another internal site and more about reducing the operational cost of knowledge transfer.',
         'The strongest product decisions came from treating HCD adoption as an enterprise service journey: employees needed clear entry points, visible next steps, and confidence that the path matched their level of maturity.',
         'That framing pushed the work beyond visual polish. It forced us to design for governance, repeatable discovery, expert capacity, and the way a 55,000-person organization actually absorbs new practices.',
         'The next evolution would pair this structure with AI-assisted discovery, contextual recommendations, and personalized learning paths so employees could describe a goal and be routed to the right methods, examples, and experts.',

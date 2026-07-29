@@ -68,9 +68,9 @@ function PlayfulMoon() {
 
 export function Footer() {
   const socialLinks = [
-    { label: 'LinkedIn', icon: <Linkedin size={18} />, href: 'https://linkedin.com/in/nehakohadsanjay' },
-    { label: 'X (Twitter)', icon: <Twitter size={18} />, href: 'https://x.com/nehakohadsanjay' },
-    { label: 'Substack', icon: <Rss size={18} />, href: 'https://substack.com/' },
+    { label: 'LinkedIn', icon: <Linkedin size={18} />, href: 'https://www.linkedin.com/in/neha-kohad/' },
+    { label: 'X (Twitter)', icon: <Twitter size={18} />, href: 'https://x.com/neha_koh' },
+    { label: 'Substack', icon: <Rss size={18} />, href: 'https://substack.com/@nehakohad' },
     { label: 'Email', icon: <Mail size={18} />, href: 'mailto:nehakohadsanjay@gmail.com' },
   ];
 

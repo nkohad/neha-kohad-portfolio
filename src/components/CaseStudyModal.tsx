@@ -18,7 +18,8 @@ const SECTIONS = [
   { id: 'stage-1', title: 'Understanding the Problem', navTitle: 'Understanding the Problem' },
   { id: 'stage-2', title: 'Validating the Strategy', navTitle: 'Validating the Strategy' },
   { id: 'stage-3', title: 'Refining the Experience', navTitle: 'Refining the Experience' },
-  { id: 'impact', title: 'Enterprise Signal', navTitle: 'Enterprise Signal' },
+  { id: 'impact', title: 'Outcomes', navTitle: 'Outcomes' },
+  { id: 'reflection', title: 'Reflection', navTitle: 'Reflection' },
 ];
 
 const CASE_TOOL_ICONS: Record<string, React.ReactNode> = {
@@ -138,19 +139,31 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
       className="flex w-full bg-[#0a0a0a] light:bg-white"
     >
       {/* Sidebar / Table of Contents */}
-      <div className="hidden md:flex flex-col w-72 shrink-0 border-r border-white/10 light:border-black/10 bg-[#050505] light:bg-white p-8 h-screen sticky top-0 self-start">
+      <div className="hidden md:flex flex-col w-72 shrink-0 border-r border-white/10 light:border-zinc-200 bg-[#050505] light:bg-white p-8 h-screen sticky top-0 self-start">
         <button
           onClick={onClose}
-          className="flex items-center gap-2 text-white/50 light:text-zinc-500 hover:text-white light:hover:text-zinc-900 transition-colors mb-12 group w-fit"
+          className="flex items-center gap-2 text-white/50 light:text-zinc-500 hover:text-white light:hover:text-zinc-900 transition-colors mb-12 group w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
         >
           <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-          <span className="font-sans text-[10px] font-bold uppercase tracking-widest">Back</span>
+          <span className="font-sans text-xs font-bold uppercase tracking-widest">Back</span>
         </button>
 
-        <div className="mb-12">
-          <h2 className="text-[10px] font-bold uppercase tracking-widest text-white/40 light:text-zinc-400 mb-3 drop-shadow-md">Case Study</h2>
+        <div className="mb-6">
+          <h2 className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-3 drop-shadow-md">Case Study</h2>
           <p className="font-display text-xl font-bold text-white light:text-zinc-900 tracking-tight leading-tight">{project.title}</p>
         </div>
+
+        <a
+          href="https://www.figma.com/proto/tFXaHycMA6GAbOAo1AZ79J/Neha-s-Copy-%7C-HCD-Centralized-Hub--Copy-?node-id=1007-497&p=f&viewport=198%2C151%2C0.04&t=PGCWAGWm99BfBiYO-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1007%3A497&page-id=297%3A2"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-between w-full rounded-xl border border-white/15 light:border-black/10 px-4 py-3 mb-10 font-sans text-xs font-bold uppercase tracking-wider text-white light:text-zinc-900 bg-white/[0.06] light:bg-black/[0.03] hover:bg-white/10 light:hover:bg-black/[0.06] hover:border-white/30 light:hover:border-black/20 transition-colors group"
+          aria-label="View live case study prototype"
+        >
+          <span>Live Case Study</span>
+          <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+        </a>
+
             <nav className="flex flex-col space-y-5 relative">
               <div className="absolute left-0 top-0 bottom-0 w-px bg-white/10 light:bg-black/10" />
               {SECTIONS.map((section) => (
@@ -160,8 +173,8 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     setActiveSection(section.id);
                     document.getElementById(section.id)?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className={`relative pl-6 text-left font-sans text-sm font-normal tracking-wide transition-colors ${
-                    activeSection === section.id ? 'text-white light:text-zinc-900 drop-shadow-md' : 'text-white/40 light:text-zinc-400 hover:text-white/70 light:hover:text-zinc-600'
+                  className={`relative pl-6 text-left font-sans text-sm font-normal tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded ${
+                    activeSection === section.id ? 'text-white light:text-zinc-900 drop-shadow-md' : 'text-white/55 light:text-zinc-500 hover:text-white/70 light:hover:text-zinc-600'
                   }`}
                 >
                   {activeSection === section.id && (
@@ -174,23 +187,16 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                 </button>
               ))}
             </nav>
-
-            <div className="mt-auto">
-              <button className="flex items-center gap-2 font-sans text-[10px] font-bold uppercase tracking-wider text-white/50 light:text-zinc-500 hover:text-white light:hover:text-zinc-900 transition-colors">
-                <span>View Live Site</span>
-                <ArrowUpRight size={14} />
-              </button>
-            </div>
           </div>
 
           {/* Main Content Area */}
           <div className="flex-1 relative overflow-x-hidden bg-[#0a0a0a] light:bg-white">
             {/* 1. First Glance / Hero */}
-            <section id="first-glance" className="relative min-h-[70vh] flex flex-col justify-end pt-28 px-8 pb-8 md:p-16">
+            <section id="first-glance" className="relative min-h-[70vh] flex flex-col justify-end pt-28 px-8 pb-0 md:px-16 md:pb-0 md:pt-28">
               <div className="absolute inset-0 z-0">
                 <img
                   src={project.image}
-                  alt={project.title}
+                  alt=""
                   className="w-full h-full object-cover opacity-30 light:opacity-20"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent light:from-white light:via-white/80" />
@@ -206,7 +212,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   <ArrowLeft size={20} />
                 </button>
 
-                <div className="flex items-center gap-3 mb-6 font-sans text-[10px] sm:text-xs uppercase tracking-wider font-medium drop-shadow-md">
+                <div className="flex items-center gap-3 mb-6 font-sans text-xs uppercase tracking-wider font-medium drop-shadow-md">
                   <span className="px-3 py-1.5 rounded-full bg-white/10 light:bg-black/5 text-white light:text-zinc-900 border border-white/20 light:border-black/10">
                     {project.type}
                   </span>
@@ -221,13 +227,13 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   </p>
                 )}
                 <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,680px)_minmax(280px,1fr)] gap-8 lg:gap-16 items-end">
-                  <p className="font-sans text-xl sm:text-2xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed">
+                  <p className="font-sans text-xl sm:text-2xl font-normal text-white/70 light:text-zinc-600 leading-relaxed">
                     {content?.summary || project.impact}
                   </p>
 
                   {content?.tools && content.tools.length > 0 && (
                     <div className="lg:justify-self-end">
-                      <div className="text-[10px] font-bold uppercase tracking-widest text-white/40 light:text-zinc-400 mb-3">Tools Used</div>
+                      <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-3">Tools Used</div>
                       <div className="flex flex-wrap gap-3 lg:justify-end">
                         {content.tools.map((tool) => (
                           <div
@@ -248,7 +254,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-[1.15fr_0.8fr_0.8fr_1fr_1.45fr] gap-x-8 gap-y-8 lg:gap-x-14 xl:gap-x-20 mt-10 pt-8 border-t border-white/10 light:border-black/10 w-full">
                     {content.meta.map((m) => (
                       <div key={m.label}>
-                        <div className="text-[10px] font-bold uppercase tracking-widest text-white/40 light:text-zinc-400 mb-1.5">{m.label}</div>
+                        <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-1.5">{m.label}</div>
                         <div className="text-sm text-white/80 light:text-zinc-700 font-medium leading-snug">{m.value}</div>
                       </div>
                     ))}
@@ -257,7 +263,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
               </div>
             </section>
 
-            <div className="p-8 md:p-16 space-y-20 pb-32">
+            <div className="p-8 md:p-16 space-y-[136px] pb-20">
 
 
               {/* 2. Problem Statement */}
@@ -292,7 +298,6 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                               </div>
                               {/* Right: label + description */}
                               <div className={`flex-1 flex flex-col justify-end p-4 ${isLight ? 'bg-white light:bg-zinc-900' : 'bg-[#0d0d0d] light:bg-white'}`}>
-                                <ArrowUpRight size={13} className="absolute top-3 right-3 opacity-40 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                                 <h3 className={`font-display font-bold text-sm tracking-tight mb-1 ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>{metric.label}</h3>
                                 <p className={`font-sans text-xs leading-snug ${isLight ? 'text-black/55 light:text-white/55' : 'text-white/50 light:text-zinc-500'}`}>{metric.description}</p>
                               </div>
@@ -305,22 +310,22 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     {/* Right col: all text + design challenge */}
                     <div className="flex flex-col gap-5">
                       <div>
-                        <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md mb-2">
+                        <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md mb-4">
                           Where Do I Start?
                         </h2>
-                        <p className="font-sans text-sm text-white/55 light:text-zinc-500 leading-relaxed">
+                        <p className="font-sans text-base text-white/55 light:text-zinc-500 leading-relaxed">
                           Most organizations don't have a knowledge problem—they have a discovery problem.
                         </p>
                       </div>
                       {content.challenge.paragraphs.map((p, i) => (
-                        <p key={i} className="font-sans text-sm text-white/65 light:text-zinc-600 leading-relaxed">{p}</p>
+                        <p key={i} className="font-sans text-base text-white/65 light:text-zinc-600 leading-relaxed">{p}</p>
                       ))}
-                      <p className="font-sans text-sm text-white/65 light:text-zinc-600 leading-relaxed">
+                      <p className="font-sans text-base text-white/65 light:text-zinc-600 leading-relaxed">
                         Resources were scattered across multiple internal systems with inconsistent navigation and terminology. Employees often depended on the HCD team to manually point them toward the right templates, workshops, or experts.
                       </p>
                       {content.challenge.designChallenge && (
-                        <div className="rounded-3xl bg-white light:bg-zinc-900 p-7 mt-2">
-                          <h3 className="text-[10px] font-bold uppercase tracking-widest text-black/35 light:text-white/40 mb-4">Design Challenge</h3>
+                        <div className="rounded-3xl bg-white light:bg-zinc-900 p-7 mt-5">
+                          <h3 className="text-xs font-bold uppercase tracking-widest text-black/55 light:text-white/55 mb-4">Design Challenge</h3>
                           <p className="font-display font-medium text-xl sm:text-2xl text-black light:text-white tracking-tight leading-snug">
                             {content.challenge.designChallenge}
                           </p>
@@ -351,12 +356,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md">
                           {content.solutions.heading}
                         </h2>
-                        <p className="font-sans text-sm text-white/55 light:text-zinc-500 leading-relaxed">
+                        <p className="font-sans text-base text-white/55 light:text-zinc-500 leading-relaxed">
                           We reframed the challenge from building a resource website to designing a product that could scale organizational knowledge.
                         </p>
                       </div>
                       <div>
-                        <div className="text-[10px] font-bold uppercase tracking-widest text-white/45 light:text-zinc-400 mb-3">Features</div>
+                        <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-3">Features</div>
                         {content.solutions.features.map((feature, i) => {
                           const Icon = featureIcons[i] || PanelsTopLeft;
                           const isActive = i === activeFeature;
@@ -365,14 +370,17 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                               key={feature.title}
                               onMouseEnter={() => setActiveFeature(i)}
                               onClick={() => setActiveFeature(i)}
-                              className={`py-4 border-t cursor-default transition-colors duration-300 ${isActive ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
+                              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setActiveFeature(i); }}
+                              role="button"
+                              tabIndex={0}
+                              className={`py-4 border-t cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded ${isActive ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
                             >
                               <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${isActive ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
                                 <Icon size={13} className="shrink-0 opacity-70" />
                                 {feature.title}
                               </div>
                               <div className={`overflow-hidden transition-all duration-500 ${isActive ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-relaxed pt-1">{feature.description}</p>
+                                <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed pt-1">{feature.description}</p>
                               </div>
                             </motion.div>
                           );
@@ -424,11 +432,11 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     </h2>
 
                     {/* Intro context */}
-                    <p className="font-sans text-sm text-white/55 light:text-zinc-600 leading-relaxed mb-10">
+                    <p className="font-sans text-base text-white/55 light:text-zinc-600 leading-relaxed mb-10">
                       We conducted 8 in-depth interviews with a stratified convenience sample of employees across Cox Enterprises and Cox Automotive. Our research surfaced four recurring insights.
                     </p>
 
-                    <div className="grid grid-cols-4 gap-3">
+                    <div className="grid grid-cols-4 gap-4">
                       {content.stages[0].insights.map((item, i) => {
                         const S1Icon = stage1Icons[i];
                         const isLight = i === 1;
@@ -474,8 +482,8 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 {shortInsight}
                               </p>
                               <div className={`border-t pt-3 ${isLight ? 'border-black/10 light:border-white/10' : 'border-white/10 light:border-black/10'}`}>
-                                <div className={`text-[10px] font-bold uppercase tracking-widest mb-1.5 ${isLight ? 'text-black/30' : 'text-white/30'}`}>Design Goal</div>
-                                <p className={`font-sans text-sm leading-snug ${isLight ? 'text-black/50' : 'text-white/50'}`}>{shortGoal}</p>
+                                <div className={`text-xs font-bold uppercase tracking-widest mb-1.5 ${isLight ? 'text-black/50 light:text-white/50' : 'text-white/50'}`}>Design Goal</div>
+                                <p className={`font-sans text-sm leading-relaxed ${isLight ? 'text-black/50' : 'text-white/50'}`}>{shortGoal}</p>
                               </div>
                             </div>
                           </motion.div>
@@ -526,45 +534,70 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
 
               {/* Stage 2: Testing the Product Strategy */}
               {stage2 && (
-                <div id="stage-2" className="-mx-8 md:-mx-16">
-                  <div className="min-h-screen bg-[#0a0a0a] light:bg-white px-8 md:px-16 flex flex-col justify-center gap-10 py-14">
+                <div id="stage-2" className="-mx-8 md:-mx-16 scroll-mt-24">
+                  <div className="bg-[#0a0a0a] light:bg-white px-8 md:px-16 flex flex-col gap-10 py-10">
                     {/* Header */}
                     <div>
-                      <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-5 drop-shadow-md">{stage2.title}</h2>
-                      <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-snug max-w-2xl">
+                      <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">{stage2.title}</h2>
+                      <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed max-w-2xl">
                         We conducted 4 task-based think-aloud sessions to validate whether organizing resources around employee intent would improve discovery and reduce dependency on HCD experts.
                       </p>
                     </div>
 
-                    {/* 3-col: insight list | MacBook | design change list */}
-                    <div className="grid grid-cols-[1fr_2fr_1fr] gap-8 items-center">
-                      {/* Insights — hover to activate */}
-                      <div>
-                        <div className="text-[10px] font-bold uppercase tracking-widest text-white/45 light:text-zinc-400 mb-3">Insight</div>
+                    {/* Insight / Design Change table + MacBook side panel */}
+                    <div className="flex gap-10 xl:gap-16 items-start">
+                      {/* Left: 2-col insight / change table — rows size to content only */}
+                      <div className="flex-1 min-w-0">
+                        <div className="grid grid-cols-2 gap-x-8">
+                          <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 pb-3">Insight</div>
+                          <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 pb-3">Design Change</div>
+                        </div>
                         {stage2.insights.map((item, i) => {
                           const active = i === stage2Active;
                           const S2Icon = stage2Icons[i];
                           return (
-                            <motion.div key={i}
-                              initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                              transition={{ duration: 0.45, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                              onMouseEnter={() => setStage2Active(i)}
-                              className={`py-4 border-t cursor-default transition-colors duration-300 ${active ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
-                            >
-                              <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
-                                {S2Icon && <S2Icon size={13} className="shrink-0 opacity-70" />}
-                                {item.phrase ?? `Insight ${i + 1}`}
-                              </div>
-                              <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.insight}</p>
-                              </div>
-                            </motion.div>
+                            <div key={i} className={`grid grid-cols-2 gap-x-8 border-t ${active ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}>
+                              <motion.div
+                                initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                                transition={{ duration: 0.45, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                                onMouseEnter={() => setStage2Active(i)}
+                                onClick={() => setStage2Active(i)}
+                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setStage2Active(i); }}
+                                role="button" tabIndex={0}
+                                className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
+                              >
+                                <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
+                                  {S2Icon && <S2Icon size={13} className="shrink-0 opacity-70" />}
+                                  {item.phrase ?? `Insight ${i + 1}`}
+                                </div>
+                                <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                  <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.insight}</p>
+                                </div>
+                              </motion.div>
+                              <motion.div
+                                initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                                transition={{ duration: 0.45, delay: i * 0.1 + 0.06, ease: [0.16, 1, 0.3, 1] }}
+                                onMouseEnter={() => setStage2Active(i)}
+                                onClick={() => setStage2Active(i)}
+                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setStage2Active(i); }}
+                                role="button" tabIndex={0}
+                                className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
+                              >
+                                <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
+                                  {S2Icon && <S2Icon size={13} className="shrink-0 opacity-70" />}
+                                  {item.changePhrase ?? `Design Response ${i + 1}`}
+                                </div>
+                                <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                  <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.change}</p>
+                                </div>
+                              </motion.div>
+                            </div>
                           );
                         })}
                       </div>
 
-                      {/* MacBook + Key Question below */}
-                      <div className="flex flex-col gap-4">
+                      {/* Right: MacBook + Key Question — independent of table row heights */}
+                      <div className="hidden xl:flex w-[42%] shrink-0 flex-col gap-4 self-start">
                         <motion.div
                           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -593,34 +626,9 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                           </div>
                         </motion.div>
                         <div className="rounded-xl bg-white light:bg-zinc-900 text-black light:text-white px-5 py-4">
-                          <div className="text-[10px] font-bold uppercase tracking-widest text-black/35 light:text-white/35 mb-1.5">Key Question</div>
+                          <div className="text-xs font-bold uppercase tracking-widest text-black/55 light:text-white/55 mb-1.5">Key Question</div>
                           <p className="font-display font-bold text-lg tracking-tight leading-snug">{stage2.question}</p>
                         </div>
-                      </div>
-
-                      {/* Design Changes — mirrors the insight list */}
-                      <div>
-                        <div className="text-[10px] font-bold uppercase tracking-widest text-white/45 light:text-zinc-400 mb-3">Design Change</div>
-                        {stage2.insights.map((item, i) => {
-                          const active = i === stage2Active;
-                          const S2Icon = stage2Icons[i];
-                          return (
-                            <motion.div key={i}
-                              initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                              transition={{ duration: 0.45, delay: i * 0.1 + 0.06, ease: [0.16, 1, 0.3, 1] }}
-                              onMouseEnter={() => setStage2Active(i)}
-                              className={`py-4 border-t cursor-default transition-colors duration-300 ${active ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
-                            >
-                              <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
-                                {S2Icon && <S2Icon size={13} className="shrink-0 opacity-70" />}
-                                {item.changePhrase ?? `Design Response ${i + 1}`}
-                              </div>
-                              <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.change}</p>
-                              </div>
-                            </motion.div>
-                          );
-                        })}
                       </div>
                     </div>
                   </div>
@@ -629,45 +637,70 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
 
               {/* Stage 3: Testing the Workflow */}
               {stage3 && (
-                <div id="stage-3" className="-mx-8 md:-mx-16">
-                  <div className="min-h-screen bg-[#0d0d0d] light:bg-zinc-50 px-8 md:px-16 flex flex-col justify-center gap-10 py-14">
+                <div id="stage-3" className="-mx-8 md:-mx-16 scroll-mt-24">
+                  <div className="bg-[#0d0d0d] light:bg-zinc-50 px-8 md:px-16 flex flex-col gap-10 py-10">
                     {/* Header */}
                     <div>
-                      <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-5 drop-shadow-md">{stage3.title}</h2>
-                      <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-snug max-w-2xl">
+                      <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">{stage3.title}</h2>
+                      <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed max-w-2xl">
                         We built a high-fidelity prototype and evaluated it through expert heuristic review and task-based usability testing — examining whether clear hierarchy, consistent interactions, and strong information scent would enable employees to navigate independently.
                       </p>
                     </div>
 
-                    {/* 3-col: insight list | MacBook | design change list */}
-                    <div className="grid grid-cols-[1fr_2fr_1fr] gap-8 items-center">
-                      {/* Insights */}
-                      <div>
-                        <div className="text-[10px] font-bold uppercase tracking-widest text-white/45 light:text-zinc-400 mb-3">Insight</div>
+                    {/* Insight / Design Change table + MacBook side panel */}
+                    <div className="flex gap-10 xl:gap-16 items-start">
+                      {/* Left: 2-col insight / change table — rows size to content only */}
+                      <div className="flex-1 min-w-0">
+                        <div className="grid grid-cols-2 gap-x-8">
+                          <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 pb-3">Insight</div>
+                          <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 pb-3">Design Change</div>
+                        </div>
                         {stage3.insights.map((item, i) => {
                           const active = i === stage3Active;
                           const S3Icon = stage3Icons[i];
                           return (
-                            <motion.div key={i}
-                              initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                              transition={{ duration: 0.45, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                              onMouseEnter={() => setStage3Active(i)}
-                              className={`py-4 border-t cursor-default transition-colors duration-300 ${active ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
-                            >
-                              <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
-                                {S3Icon && <S3Icon size={13} className="shrink-0 opacity-70" />}
-                                {item.phrase ?? `Insight ${i + 1}`}
-                              </div>
-                              <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.insight}</p>
-                              </div>
-                            </motion.div>
+                            <div key={i} className={`grid grid-cols-2 gap-x-8 border-t ${active ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}>
+                              <motion.div
+                                initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                                transition={{ duration: 0.45, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                                onMouseEnter={() => setStage3Active(i)}
+                                onClick={() => setStage3Active(i)}
+                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setStage3Active(i); }}
+                                role="button" tabIndex={0}
+                                className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
+                              >
+                                <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
+                                  {S3Icon && <S3Icon size={13} className="shrink-0 opacity-70" />}
+                                  {item.phrase ?? `Insight ${i + 1}`}
+                                </div>
+                                <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                  <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.insight}</p>
+                                </div>
+                              </motion.div>
+                              <motion.div
+                                initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                                transition={{ duration: 0.45, delay: i * 0.1 + 0.06, ease: [0.16, 1, 0.3, 1] }}
+                                onMouseEnter={() => setStage3Active(i)}
+                                onClick={() => setStage3Active(i)}
+                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setStage3Active(i); }}
+                                role="button" tabIndex={0}
+                                className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
+                              >
+                                <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
+                                  {S3Icon && <S3Icon size={13} className="shrink-0 opacity-70" />}
+                                  {item.changePhrase ?? `Design Response ${i + 1}`}
+                                </div>
+                                <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                  <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.change}</p>
+                                </div>
+                              </motion.div>
+                            </div>
                           );
                         })}
                       </div>
 
-                      {/* MacBook + Key Question below */}
-                      <div className="flex flex-col gap-4">
+                      {/* Right: MacBook + Key Question — independent of table row heights */}
+                      <div className="hidden xl:flex w-[42%] shrink-0 flex-col gap-4 self-start">
                         <motion.div
                           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -696,65 +729,84 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                           </div>
                         </motion.div>
                         <div className="rounded-xl bg-white light:bg-zinc-900 text-black light:text-white px-5 py-4">
-                          <div className="text-[10px] font-bold uppercase tracking-widest text-black/35 light:text-white/35 mb-1.5">Key Question</div>
+                          <div className="text-xs font-bold uppercase tracking-widest text-black/55 light:text-white/55 mb-1.5">Key Question</div>
                           <p className="font-display font-bold text-lg tracking-tight leading-snug">{stage3.question}</p>
                         </div>
-                      </div>
-
-                      {/* Design Changes */}
-                      <div>
-                        <div className="text-[10px] font-bold uppercase tracking-widest text-white/45 light:text-zinc-400 mb-3">Design Change</div>
-                        {stage3.insights.map((item, i) => {
-                          const active = i === stage3Active;
-                          const S3Icon = stage3Icons[i];
-                          return (
-                            <motion.div key={i}
-                              initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                              transition={{ duration: 0.45, delay: i * 0.1 + 0.06, ease: [0.16, 1, 0.3, 1] }}
-                              onMouseEnter={() => setStage3Active(i)}
-                              className={`py-4 border-t cursor-default transition-colors duration-300 ${active ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
-                            >
-                              <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
-                                {S3Icon && <S3Icon size={13} className="shrink-0 opacity-70" />}
-                                {item.changePhrase ?? `Design Response ${i + 1}`}
-                              </div>
-                              <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.change}</p>
-                              </div>
-                            </motion.div>
-                          );
-                        })}
                       </div>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* 5. Impact */}
+              {/* 5. Outcomes */}
               <section id="impact" className="scroll-mt-16">
                 {content?.impact ? (
                   <>
-                    <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">
+                    <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-5 drop-shadow-md">
                       {content.impact.heading}
                     </h2>
-                    <p className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl mb-10">
+                    <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-relaxed max-w-4xl mb-8">
                       {content.impact.intro}
                     </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl">
-                      {content.impact.outcomes.map((outcome, i) => (
-                        <div key={i} className="flex items-start gap-3 p-6 rounded-2xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
-                          <Check size={18} className="text-emerald-400 light:text-emerald-600 shrink-0 mt-0.5" />
-                          <p className="font-sans text-base sm:text-lg text-white/80 light:text-zinc-700 leading-snug">{outcome}</p>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+
+                      {/* Business column */}
+                      <div className="flex flex-col gap-3 h-full">
+                        <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-1">Business</div>
+
+                        {/* 55K+ split metric card */}
+                        <div className="relative overflow-hidden rounded-[24px] border bg-white/[0.04] light:bg-black/[0.03] border-white/10 light:border-black/10 flex">
+                          <div className="w-[42%] shrink-0 bg-gradient-to-br from-violet-500/45 via-blue-500/20 to-transparent flex items-end p-5">
+                            <span className="font-display font-black text-5xl tracking-tighter leading-none text-white light:text-zinc-900">55K+</span>
+                          </div>
+                          <div className="flex-1 flex flex-col justify-end p-5 bg-[#0d0d0d] light:bg-white">
+                            <h3 className="font-display font-bold text-sm tracking-tight text-white light:text-zinc-900 mb-1">Enterprise Scale</h3>
+                            <p className="font-sans text-xs leading-snug text-white/50 light:text-zinc-500">Employees across Cox Enterprises with access to self-service HCD guidance.</p>
+                          </div>
                         </div>
-                      ))}
+
+                        {/* Qualitative outcome cards — flex-1 so they fill remaining height equally */}
+                        <div className="flex flex-col gap-3 flex-1">
+                          {content.impact.outcomes.map((outcome, i) => (
+                            <div key={i} className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 flex-1">
+                              <Check size={15} className="text-emerald-400 light:text-emerald-600 shrink-0" />
+                              <p className="font-sans text-sm text-white/70 light:text-zinc-600 leading-snug">{outcome}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Validation column */}
+                      {content.impact.metrics && (
+                        <div className="flex flex-col gap-3 h-full">
+                          <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-1">Validation</div>
+                          <div className="flex flex-col gap-3 flex-1">
+                            {content.impact.metrics.map((m, i) => (
+                              <div key={i} className="relative flex-1 overflow-hidden rounded-[24px] border bg-white/[0.04] light:bg-black/[0.03] border-white/10 light:border-black/10 flex">
+                                <div className={`w-[42%] shrink-0 bg-gradient-to-br ${m.gradient ?? 'from-white/10 to-transparent'} flex items-end p-5`}>
+                                  <span className="font-display font-black text-4xl tracking-tighter leading-none text-white light:text-zinc-900">
+                                    {m.value}<span className="text-2xl text-white/50 light:text-zinc-500">{m.unit ?? ''}</span>
+                                  </span>
+                                </div>
+                                <div className="flex-1 flex flex-col justify-end p-5 bg-[#0d0d0d] light:bg-white">
+                                  <h3 className="font-display font-bold text-sm tracking-tight text-white light:text-zinc-900 mb-1">{m.label}</h3>
+                                  <p className="font-sans text-xs leading-snug text-white/50 light:text-zinc-500">{m.description}</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
                     </div>
 
                     {content.reflection && (
-                      <div className="mt-24 pt-16 border-t border-white/10 light:border-black/10">
+                      <div id="reflection" className="mt-[136px] scroll-mt-16">
                         <div className="grid grid-cols-1 xl:grid-cols-[1fr_1fr] gap-12 xl:gap-16 items-start">
                           <div>
-                            <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40 light:text-zinc-400 mb-6">Reflection</h3>
-                            <div className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed space-y-6">
+                            <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">Reflection</h2>
+                            <div className="font-sans text-lg sm:text-xl font-normal text-white/70 light:text-zinc-600 leading-relaxed space-y-6">
                               {content.reflection.paragraphs.map((p, i) => (
                                 <p key={i}>{p}</p>
                               ))}
@@ -767,11 +819,11 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             <div className="rounded-3xl overflow-hidden border border-white/10 light:border-black/10">
                               <img
                                 src="/cox-team.png"
-                                alt="The Cox Design Hub team"
+                                alt="The Cox HCD Resource Hub team"
                                 className="w-full h-full object-cover"
                               />
                             </div>
-                            <p className="font-sans text-xs text-white/35 light:text-zinc-400 mt-3 text-center tracking-wide">The team at Cox Enterprises</p>
+                            <p className="font-sans text-xs text-white/55 light:text-zinc-500 mt-3 text-center tracking-wide">The team at Cox Enterprises</p>
                           </div>
                         </div>
                       </div>
@@ -782,7 +834,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">Measuring the Impact</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
                       <div className="p-8 rounded-3xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
-                        <div className="font-display font-black text-5xl sm:text-6xl tracking-tighter text-white light:text-zinc-900 mb-3 drop-shadow-md">40<span className="text-3xl text-white/50 light:text-zinc-400">%</span></div>
+                        <div className="font-display font-black text-5xl sm:text-6xl tracking-tighter text-white light:text-zinc-900 mb-3 drop-shadow-md">40<span className="text-3xl text-white/50 light:text-zinc-500">%</span></div>
                         <div className="font-sans text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/50 light:text-zinc-500">Increase in Velocity</div>
                       </div>
                       <div className="p-8 rounded-3xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
@@ -790,7 +842,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         <div className="font-sans text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/50 light:text-zinc-500">Design Debt Added</div>
                       </div>
                       <div className="p-8 rounded-3xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
-                        <div className="font-display font-black text-5xl sm:text-6xl tracking-tighter text-white light:text-zinc-900 mb-3 drop-shadow-md">12<span className="text-3xl text-white/50 light:text-zinc-400">+</span></div>
+                        <div className="font-display font-black text-5xl sm:text-6xl tracking-tighter text-white light:text-zinc-900 mb-3 drop-shadow-md">12<span className="text-3xl text-white/50 light:text-zinc-500">+</span></div>
                         <div className="font-sans text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/50 light:text-zinc-500">Teams Adopted</div>
                       </div>
                     </div>
@@ -803,24 +855,24 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
     </motion.div>
 
     {/* More Case Studies Carousel - full width, matches site-wide margins */}
-    <div className="w-full border-t border-white/10 light:border-black/10 bg-[#0a0a0a] light:bg-white py-16 px-6 sm:px-12 md:px-20">
+    <div className="w-full border-t border-white/10 light:border-black/10 bg-[#0a0a0a] light:bg-white py-16 px-6 sm:px-12 md:px-20" role="region" aria-label="More case studies">
       <div className="flex items-center justify-between mb-8">
         <div>
           <h3 className="font-display font-bold text-2xl sm:text-3xl text-white light:text-zinc-900 tracking-tight">Explore More Work</h3>
-          <p className="text-white/40 light:text-zinc-400 text-sm mt-1">Keep browsing the rest of the portfolio</p>
+          <p className="text-white/55 light:text-zinc-500 text-sm mt-1">Keep browsing the rest of the portfolio</p>
         </div>
         <div className="hidden sm:flex items-center gap-2">
           <button
             onClick={() => scrollCarousel(-1)}
             aria-label="Scroll left"
-            className="w-10 h-10 rounded-full border border-white/15 light:border-black/10 flex items-center justify-center text-white/60 light:text-zinc-500 hover:text-white light:hover:text-zinc-900 hover:border-white/40 light:hover:border-black/30 transition-colors"
+            className="w-10 h-10 rounded-full border border-white/15 light:border-black/10 flex items-center justify-center text-white/60 light:text-zinc-500 hover:text-white light:hover:text-zinc-900 hover:border-white/40 light:hover:border-black/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
           >
             <ChevronLeft size={18} />
           </button>
           <button
             onClick={() => scrollCarousel(1)}
             aria-label="Scroll right"
-            className="w-10 h-10 rounded-full border border-white/15 light:border-black/10 flex items-center justify-center text-white/60 light:text-zinc-500 hover:text-white light:hover:text-zinc-900 hover:border-white/40 light:hover:border-black/30 transition-colors"
+            className="w-10 h-10 rounded-full border border-white/15 light:border-black/10 flex items-center justify-center text-white/60 light:text-zinc-500 hover:text-white light:hover:text-zinc-900 hover:border-white/40 light:hover:border-black/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
           >
             <ChevronRight size={18} />
           </button>
@@ -850,13 +902,13 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
             <div className="h-36 sm:h-40 w-full overflow-hidden">
               <img
                 src={p.image}
-                alt={p.title}
+                alt=""
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
             </div>
             <div className="p-4">
-              <div className="flex items-center gap-1.5 mb-1.5 text-[10px] uppercase tracking-widest text-white/40 light:text-zinc-400 font-medium">
+              <div className="flex items-center gap-1.5 mb-1.5 text-xs uppercase tracking-widest text-white/55 light:text-zinc-500 font-medium">
                 {p.company === 'Personal' ? <Sparkles size={11} /> : <Building2 size={11} />}
                 <span>{p.company}</span>
               </div>
