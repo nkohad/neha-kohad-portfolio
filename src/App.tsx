@@ -169,6 +169,8 @@ const TOOL_ICONS: Record<string, React.ReactNode> = {
 export default function App() {
   const { theme } = useTheme();
   const workSectionRef = React.useRef<HTMLDivElement>(null);
+  const wordmarkRef = React.useRef<HTMLHeadingElement>(null);
+  const [wordmarkNaturalWidth, setWordmarkNaturalWidth] = useState(0);
   const introScrollControlsRef = React.useRef<{ stop: () => void } | null>(null);
   const cardPanelRefs = React.useRef<(HTMLDivElement | null)[]>([]);
   const [mode, setMode] = useState<'spiral' | 'grid'>('spiral');
@@ -253,6 +255,12 @@ export default function App() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [isMobile]);
+
+  useEffect(() => {
+    if (wordmarkRef.current) {
+      setWordmarkNaturalWidth(wordmarkRef.current.offsetWidth);
+    }
+  }, [windowWidth]);
 
   const workScrollProgress = useMotionValue(0);
 
@@ -359,7 +367,7 @@ export default function App() {
   const springRotateY = useSpring(targetRotateY, springConfig);
   const springZ = useSpring(targetZ, springConfig);
 
-  // "NEHa" wordmark: in Spiral mode it grows and drifts to center as the
+  // Wordmark: in Spiral mode it grows and drifts to center as the
   // user scrolls, ending up as a huge, faint backdrop behind the cards.
   const targetWordmarkScale = useMotionValue(1);
   const targetWordmarkY = useMotionValue(0);
@@ -474,14 +482,17 @@ export default function App() {
     const latest = workProgress;
 
     if (mode === 'spiral') {
-      targetY.set(latest * -spiralTravelDistance);
+      // Undershoot by 25vh so the last card settles lower in the viewport,
+      // tightening the gap between it and the toggle at the bottom.
+      targetY.set(latest * -(spiralTravelDistance - windowHeight * 0.13));
       targetRotateY.set(latest * -(CARDS.length - 1) * spiralAngleStep);
       targetZ.set(-radius);
 
       // Grow the wordmark in place and push it down toward center by the
       // halfway point of the scroll; it stays legible but recedes into the backdrop.
       const growProgress = Math.min(latest / 0.5, 1);
-      targetWordmarkScale.set(1 + growProgress * 4.5);
+      const wordmarkMaxScale = wordmarkNaturalWidth > 0 ? windowWidth / wordmarkNaturalWidth : 5.5;
+      targetWordmarkScale.set(1 + growProgress * (wordmarkMaxScale - 1));
       targetWordmarkY.set(windowHeight * 0.22 * growProgress);
       targetWordmarkOpacity.set(Math.max(0.16, 1 - growProgress * 0.85));
     } else {
@@ -507,6 +518,8 @@ export default function App() {
     targetWordmarkScale,
     targetWordmarkY,
     targetWordmarkOpacity,
+    wordmarkNaturalWidth,
+    windowWidth,
   ]);
 
   // Whichever card the user clicks, make sure its full expanded state
@@ -667,14 +680,15 @@ export default function App() {
       <div className={`absolute top-0 left-0 w-full h-[30vh] flex flex-col items-center justify-center pt-24 pointer-events-none ${mode === 'spiral' ? 'z-[5]' : 'z-20'}`}>
         <div className="w-full px-4 flex flex-col items-center">
           <motion.h1
-            className="font-display font-black text-6xl sm:text-7xl tracking-tighter text-white light:text-zinc-900 mb-4 drop-shadow-lg"
+            ref={wordmarkRef}
+            className="font-display font-black text-6xl sm:text-7xl tracking-tighter text-white light:text-zinc-900 mb-4 drop-shadow-lg whitespace-nowrap"
             style={
               mode === 'spiral'
                 ? { scale: springWordmarkScale, y: springWordmarkY, opacity: springWordmarkOpacity }
                 : { scale: heroScale, y: heroY, opacity: heroOpacity }
             }
           >
-            NEHa
+            Neha Kohad
           </motion.h1>
           <motion.div
             className="flex flex-col items-center space-y-1 text-center"
