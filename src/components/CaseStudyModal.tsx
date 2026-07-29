@@ -16,7 +16,7 @@ const SECTIONS = [
   { id: 'problem', title: 'Untangling the Mess', navTitle: 'Challenge' },
   { id: 'ai-workflow', title: 'Supercharging with AI', navTitle: 'Decisions' },
   { id: 'solution', title: 'The Final Deliverable', navTitle: 'Solutions' },
-  { id: 'impact', title: 'Measuring the Impact', navTitle: 'Impact' },
+  { id: 'impact', title: 'Outcomes', navTitle: 'Outcomes' },
 ];
 
 export function CaseStudyModal({ project, allProjects, currentIndex, onClose, onSelectProject }: CaseStudyModalProps) {
@@ -206,6 +206,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
               <section id="problem" className="scroll-mt-16">
                 {content?.challenge ? (
                   <>
+                    <span className="inline-block mb-4 px-2.5 py-1 rounded-full border border-white/10 light:border-black/10 text-[10px] font-bold uppercase tracking-widest text-white/35 light:text-zinc-400">Challenge</span>
                     <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">
                       {content.challenge.heading}
                     </h2>
@@ -234,6 +235,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   </>
                 ) : (
                   <>
+                    <span className="inline-block mb-4 px-2.5 py-1 rounded-full border border-white/10 light:border-black/10 text-[10px] font-bold uppercase tracking-widest text-white/35 light:text-zinc-400">Challenge</span>
                     <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">Untangling the Mess</h2>
                     <div className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl space-y-6">
                       <p>
@@ -248,6 +250,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
               <section id="ai-workflow" className="scroll-mt-16">
                 {content?.decisions ? (
                   <>
+                    <span className="inline-block mb-4 px-2.5 py-1 rounded-full border border-white/10 light:border-black/10 text-[10px] font-bold uppercase tracking-widest text-white/35 light:text-zinc-400">Decisions</span>
                     <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">
                       {content.decisions.heading}
                     </h2>
@@ -279,6 +282,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   </>
                 ) : (
                   <>
+                    <span className="inline-block mb-4 px-2.5 py-1 rounded-full border border-white/10 light:border-black/10 text-[10px] font-bold uppercase tracking-widest text-white/35 light:text-zinc-400">Decisions</span>
                     <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">Supercharging with AI</h2>
                     <p className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl mb-12">
                       I integrated generative models to accelerate our ideation and documentation phases. However, maintaining quality control meant navigating around AI hallucinations and generic outputs.
@@ -321,6 +325,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
               <section id="solution" className="scroll-mt-16">
                 {content?.solutions ? (
                   <>
+                    <span className="inline-block mb-4 px-2.5 py-1 rounded-full border border-white/10 light:border-black/10 text-[10px] font-bold uppercase tracking-widest text-white/35 light:text-zinc-400">Solutions</span>
                     <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">
                       {content.solutions.heading}
                     </h2>
@@ -369,6 +374,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   </>
                 ) : (
                   <>
+                    <span className="inline-block mb-4 px-2.5 py-1 rounded-full border border-white/10 light:border-black/10 text-[10px] font-bold uppercase tracking-widest text-white/35 light:text-zinc-400">Solutions</span>
                     <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">The Final Deliverable</h2>
                     <div className="aspect-video w-full rounded-3xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10 overflow-hidden mb-12">
                       <img src={project.image} alt="Solution" className="w-full h-full object-cover" />
@@ -382,24 +388,56 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                 )}
               </section>
 
-              {/* 5. Impact */}
+              {/* 5. Outcomes */}
               <section id="impact" className="scroll-mt-16">
                 {content?.impact ? (
                   <>
+                    <span className="inline-block mb-4 px-2.5 py-1 rounded-full border border-white/10 light:border-black/10 text-[10px] font-bold uppercase tracking-widest text-white/35 light:text-zinc-400">Outcomes</span>
                     <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">
                       {content.impact.heading}
                     </h2>
-                    <p className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl mb-10">
-                      {content.impact.intro}
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl">
-                      {content.impact.outcomes.map((outcome, i) => (
-                        <div key={i} className="flex items-start gap-3 p-6 rounded-2xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
-                          <Check size={18} className="text-emerald-400 light:text-emerald-600 shrink-0 mt-0.5" />
-                          <p className="font-sans text-base sm:text-lg text-white/80 light:text-zinc-700 leading-snug">{outcome}</p>
-                        </div>
-                      ))}
+                    {/* Text + 2×2 metric grid side by side */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
+                      <p className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed self-center">
+                        {content.impact.intro}
+                      </p>
+                      <div className="grid grid-cols-2 gap-3">
+                        {content.impact.validationMetrics?.map((m) => (
+                          <div key={m.label} className="p-5 rounded-2xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
+                            <div className="text-[9px] font-bold uppercase tracking-widest text-white/25 light:text-zinc-400 mb-2">Validation</div>
+                            <div className="font-display font-black text-3xl sm:text-4xl tracking-tighter text-white light:text-zinc-900 mb-1 drop-shadow-md">
+                              {m.value}
+                            </div>
+                            <div className="font-sans text-[10px] font-bold uppercase tracking-widest text-white/50 light:text-zinc-500">
+                              {m.label}
+                            </div>
+                          </div>
+                        ))}
+                        {content.impact.businessStats?.map((s) => (
+                          <div key={s.label} className="p-5 rounded-2xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
+                            <div className="text-[9px] font-bold uppercase tracking-widest text-white/25 light:text-zinc-400 mb-2">Business</div>
+                            <div className="font-display font-black text-3xl sm:text-4xl tracking-tighter text-white light:text-zinc-900 mb-1 drop-shadow-md">
+                              {s.value}
+                            </div>
+                            <div className="font-sans text-[10px] font-bold uppercase tracking-widest text-white/50 light:text-zinc-500">
+                              {s.label}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
+
+                    {/* Business outcomes — full-width 3-column */}
+                    {content.impact.businessOutcomes && content.impact.businessOutcomes.length > 0 && (
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        {content.impact.businessOutcomes.map((outcome, i) => (
+                          <div key={i} className="flex items-start gap-3 p-5 rounded-2xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
+                            <Check size={16} className="text-emerald-400 light:text-emerald-600 shrink-0 mt-0.5" />
+                            <p className="font-sans text-sm text-white/80 light:text-zinc-700 leading-snug">{outcome}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
                     {content.reflection && (
                       <div className="mt-24 pt-16 border-t border-white/10 light:border-black/10 max-w-3xl">
