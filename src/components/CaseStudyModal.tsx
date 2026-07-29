@@ -17,6 +17,7 @@ const SECTIONS = [
   { id: 'ai-workflow', title: 'Supercharging with AI', navTitle: 'Decisions' },
   { id: 'solution', title: 'The Final Deliverable', navTitle: 'Solutions' },
   { id: 'impact', title: 'Outcomes', navTitle: 'Outcomes' },
+  { id: 'reflection', title: 'Reflection', navTitle: 'Reflection' },
 ];
 
 export function CaseStudyModal({ project, allProjects, currentIndex, onClose, onSelectProject }: CaseStudyModalProps) {
@@ -440,14 +441,15 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     )}
 
                     {content.reflection && (
-                      <div className="mt-24 pt-16 border-t border-white/10 light:border-black/10 max-w-3xl">
-                        <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/40 light:text-zinc-400 mb-6">Reflection</h3>
-                        <div className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed space-y-6">
+                      <div id="reflection" className="mt-24 pt-16 border-t border-white/10 light:border-black/10 scroll-mt-16">
+                        <span className="inline-block mb-4 px-2.5 py-1 rounded-full border border-white/10 light:border-black/10 text-[10px] font-bold uppercase tracking-widest text-white/35 light:text-zinc-400">Reflection</span>
+                        <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">Reflection</h2>
+                        <div className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl space-y-6">
                           {content.reflection.paragraphs.map((p, i) => (
                             <p key={i}>{p}</p>
                           ))}
                         </div>
-                        <p className="font-display font-medium text-xl sm:text-2xl text-white light:text-zinc-900 tracking-tight leading-snug mt-8">
+                        <p className="font-display font-medium text-xl sm:text-2xl text-white light:text-zinc-900 tracking-tight leading-snug mt-8 max-w-3xl">
                           {content.reflection.closing}
                         </p>
                       </div>
