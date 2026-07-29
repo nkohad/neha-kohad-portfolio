@@ -28,7 +28,7 @@ const PROJECTS = [
   // Sponsored (Large Projects)
   {
     image: IMAGES[0],
-    title: "Cox Design Hub",
+    title: "Cox HCD Resource Hub",
     impact: "Centralized design resources and standards for enterprise teams",
     type: "Sponsored",
     company: "Cox Enterprises",
