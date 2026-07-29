@@ -344,88 +344,65 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
               {/* 3. Key Features */}
               <section id="solution" className="scroll-mt-16">
                 {content?.solutions ? (
-                  <div className="grid grid-cols-1 xl:grid-cols-[0.55fr_1fr_1.15fr] gap-6 xl:gap-8 items-center">
-                    <div className="flex flex-col gap-4">
-                      <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md">
-                        {content.solutions.heading}
-                      </h2>
-                      <p className="font-sans text-sm text-white/55 light:text-zinc-500 leading-relaxed">
-                        We reframed the challenge from building a resource website to designing a product that could scale organizational knowledge.
-                      </p>
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 xl:gap-16 items-center">
+                    {/* Left: heading + subtext + feature list */}
+                    <div className="flex flex-col gap-6">
+                      <div className="flex flex-col gap-3">
+                        <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md">
+                          {content.solutions.heading}
+                        </h2>
+                        <p className="font-sans text-sm text-white/55 light:text-zinc-500 leading-relaxed">
+                          We reframed the challenge from building a resource website to designing a product that could scale organizational knowledge.
+                        </p>
+                      </div>
+                      <div>
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-white/45 light:text-zinc-400 mb-3">Features</div>
+                        {content.solutions.features.map((feature, i) => {
+                          const Icon = featureIcons[i] || PanelsTopLeft;
+                          const isActive = i === activeFeature;
+                          return (
+                            <motion.div
+                              key={feature.title}
+                              onMouseEnter={() => setActiveFeature(i)}
+                              onClick={() => setActiveFeature(i)}
+                              className={`py-4 border-t cursor-default transition-colors duration-300 ${isActive ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
+                            >
+                              <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${isActive ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
+                                <Icon size={13} className="shrink-0 opacity-70" />
+                                {feature.title}
+                              </div>
+                              <div className={`overflow-hidden transition-all duration-500 ${isActive ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-relaxed pt-1">{feature.description}</p>
+                              </div>
+                            </motion.div>
+                          );
+                        })}
+                      </div>
                     </div>
 
-                    <div>
-                      <div className="text-[10px] font-bold uppercase tracking-widest text-white/45 light:text-zinc-400 mb-3">Features</div>
-                      {content.solutions.features.map((feature, i) => {
-                        const Icon = featureIcons[i] || PanelsTopLeft;
-                        const isActive = i === activeFeature;
-                        return (
+                    {/* Right: MacBook */}
+                    <div className="flex flex-col items-center">
+                      <div className="w-full rounded-[18px] bg-[#1d1d1f] p-[9px] shadow-[0_30px_60px_rgba(0,0,0,0.6)] ring-1 ring-white/[0.10]">
+                        <div className="flex justify-center pb-[6px]"><div className="w-[7px] h-[7px] rounded-full bg-[#3a3a3c]" /></div>
+                        <div className="aspect-[16/10] rounded-[11px] bg-black overflow-hidden relative">
                           <motion.div
-                            key={feature.title}
-                            onMouseEnter={() => setActiveFeature(i)}
-                            onClick={() => setActiveFeature(i)}
-                            className={`py-4 border-t cursor-default transition-colors duration-300 ${isActive ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
-                          >
-                            <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${isActive ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
-                              <Icon size={13} className="shrink-0 opacity-70" />
-                              {feature.title}
-                            </div>
-                            <div className={`overflow-hidden transition-all duration-500 ${isActive ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                              <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-relaxed pt-1">{feature.description}</p>
-                            </div>
-                          </motion.div>
-                        );
-                      })}
-                    </div>
-
-                    <div className="relative">
-                      <div className="rounded-[28px] bg-zinc-800 light:bg-zinc-200 p-3 shadow-2xl border border-white/10 light:border-black/10">
-                        <div className="rounded-[20px] bg-[#050505] light:bg-white p-2">
-                          <motion.div
-                            key={selectedFeature?.title}
-                            initial={{ opacity: 0.4, scale: 0.985 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.25 }}
-                            className={`aspect-video rounded-2xl overflow-hidden bg-gradient-to-br ${featureToneClasses[activeFeature % featureToneClasses.length]} relative border border-white/10 light:border-black/10`}
-                          >
-                            <img src={project.image} alt="" className="absolute inset-0 h-full w-full object-cover opacity-15 mix-blend-screen light:mix-blend-multiply" />
-                            <div className="absolute inset-0 p-5 sm:p-7 flex flex-col">
-                              <div className="flex items-center justify-between mb-5">
-                                <div className="flex gap-1.5">
-                                  <span className="h-2.5 w-2.5 rounded-full bg-white/45 light:bg-black/25" />
-                                  <span className="h-2.5 w-2.5 rounded-full bg-white/30 light:bg-black/15" />
-                                  <span className="h-2.5 w-2.5 rounded-full bg-white/20 light:bg-black/10" />
-                                </div>
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-white/55 light:text-black/45">Placeholder Media</span>
-                              </div>
-                              <div className="grid grid-cols-[0.7fr_1fr] gap-4 flex-1">
-                                <div className="rounded-2xl bg-white/[0.12] light:bg-white/70 border border-white/15 light:border-black/10 p-4">
-                                  <div className="h-3 w-16 rounded-full bg-white/55 light:bg-black/20 mb-4" />
-                                  <div className="space-y-2">
-                                    <div className="h-2 rounded-full bg-white/35 light:bg-black/15" />
-                                    <div className="h-2 w-3/4 rounded-full bg-white/25 light:bg-black/10" />
-                                    <div className="h-2 w-5/6 rounded-full bg-white/25 light:bg-black/10" />
-                                  </div>
-                                </div>
-                                <div className="rounded-2xl bg-black/20 light:bg-white/70 border border-white/15 light:border-black/10 p-5 flex flex-col justify-between">
-                                  <div>
-                                    <div className="text-[10px] font-bold uppercase tracking-widest text-white/55 light:text-black/40 mb-2">Feature {String(activeFeature + 1).padStart(2, '0')}</div>
-                                    <h3 className="font-display font-bold text-2xl text-white light:text-zinc-950 tracking-tight leading-tight">
-                                      {selectedFeature?.imageLabel || selectedFeature?.title}
-                                    </h3>
-                                  </div>
-                                  <div className="grid grid-cols-3 gap-2">
-                                    <div className="h-14 rounded-xl bg-white/[0.18] light:bg-black/10" />
-                                    <div className="h-14 rounded-xl bg-white/10 light:bg-black/5" />
-                                    <div className="h-14 rounded-xl bg-white/10 light:bg-black/5" />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </motion.div>
+                            key={activeFeature}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.45 }}
+                            className={`absolute inset-0 bg-gradient-to-br ${featureToneClasses[activeFeature % featureToneClasses.length]}`}
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-[10px] font-mono uppercase tracking-widest text-white/20">
+                              {`Feature ${activeFeature + 1} · Placeholder`}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                      <div className="mx-auto h-3 w-1/2 rounded-b-2xl bg-zinc-800 light:bg-zinc-200 border-x border-b border-white/10 light:border-black/10" />
+                      <div className="w-[90%]">
+                        <div className="h-[5px] bg-[#1d1d1f] rounded-b" />
+                        <div className="h-[10px] bg-[#141414] mx-1 rounded-b-xl shadow-xl" />
+                      </div>
                     </div>
                   </div>
                 ) : (
