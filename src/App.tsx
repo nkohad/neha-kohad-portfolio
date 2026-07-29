@@ -264,12 +264,14 @@ export default function App() {
   
   // Bento Layout Math
   const gridColumns = isMobile ? 4 : 8;
-  const gridPadding = isMobile ? 32 : 80;
+  const gridPadding = isMobile ? 48 : 160; // matches About page: px-6 mobile, px-20 desktop (each side × 2)
+  const gridMaxWidth = 1200; // matches About page max-w-[1200px]
   const gridGap = isMobile ? 12 : 24;
-  
+
   const drawerWidth = 450;
   const isPushActive = mode === 'grid' && detailViewStyle === ('drawer-push' as any) && selectedCardIndex !== null && !isMobile;
-  const activeContainerWidth = isPushActive ? windowWidth - gridPadding - drawerWidth : windowWidth - gridPadding;
+  const rawContainerWidth = Math.min(windowWidth - gridPadding, gridMaxWidth);
+  const activeContainerWidth = isPushActive ? rawContainerWidth - drawerWidth : rawContainerWidth;
   const containerWidth = Math.max(activeContainerWidth, 300);
   const gridXOffset = isPushActive ? -drawerWidth / 2 : 0;
   
@@ -305,7 +307,7 @@ export default function App() {
       const isSelected = idx === selectedCardIndex && mode === 'grid';
       const isLarge = ["Yodlee", "Cox Enterprises", "Verizon Connect"].includes(card.company);
       
-      let w = isLarge ? (isMobile ? 4 : 4) : (isMobile ? 2 : 2);
+      let w = isLarge ? (isMobile ? 4 : 3) : (isMobile ? 2 : 2);
       let h = isLarge ? (isMobile ? 2 : 2) : (isMobile ? 1 : 1);
       
       let placed = false;
@@ -761,8 +763,9 @@ export default function App() {
               <motion.div
                 key={i}
                 className="absolute top-1/2 left-1/2"
-                style={{ 
-                  transformStyle: 'preserve-3d' 
+                style={{
+                  transformStyle: 'preserve-3d',
+                  zIndex: isSelected ? 30 : 'auto',
                 }}
                 animate={{
                   width: mode === 'spiral' ? cardWidth : bento.w,
