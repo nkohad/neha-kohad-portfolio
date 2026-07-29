@@ -1,10 +1,11 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import gtLogo from '../assets/logos/gt.jpeg';
-import coxLogo from '../assets/logos/cox.jpeg';
-import ciscoLogo from '../assets/logos/cisco.jpeg';
-import autodeskLogo from '../assets/logos/autodesk.png';
-import pesLogo from '../assets/logos/pes.png';
+import yodleeLogo from '../assets/logos/yodlee.jpeg';
+import gtLogo from '../assets/logos/georgia-tech.jpeg';
+import coxLogo from '../assets/logos/cox-enterprises.jpeg';
+import ciscoLogo from '../assets/logos/cisco-logo.jpeg';
+import autodeskLogo from '../assets/logos/autodesk-logo.png';
+import pesLogo from '../assets/logos/pes-university.png';
 
 const WORK_EXPERIENCE = [
   {
@@ -12,7 +13,7 @@ const WORK_EXPERIENCE = [
     role: "Graduate Intern · AI Product Design",
     date: "Summer 2026 — Present",
     domain: "yodlee.com",
-    logoUrl: "https://upload.wikimedia.org/wikipedia/commons/0/0a/Yodlee_wordmark_2025.svg",
+    logoUrl: yodleeLogo,
     color: "#4A154B" // Deep purple
   },
   {
@@ -85,12 +86,12 @@ const COLLAGE_IMAGES = [
 
 export function About() {
   return (
-    <div className="min-h-screen bg-black text-[#F8F8F8] font-sans pb-32 overflow-hidden">
+    <div className="min-h-screen bg-black light:bg-[#fafafa] text-[#F8F8F8] light:text-zinc-900 font-sans pb-32 overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-6 sm:px-12 md:px-20 pt-48">
-        
+
         {/* Hero Section */}
         <div className="mb-48 lg:mb-64">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -99,13 +100,13 @@ export function About() {
               I often think of products as conversations waiting to happen.
             </h1>
           </motion.div>
-          
+
           <div className="flex flex-col lg:flex-row justify-between gap-24 lg:gap-32 items-start">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[18px] sm:text-[20px] lg:text-[22px] leading-[1.8] text-white/70 max-w-[600px] flex flex-col gap-8 font-light"
+              className="text-[18px] sm:text-[20px] lg:text-[22px] leading-[1.8] text-white/70 light:text-zinc-600 max-w-[600px] flex flex-col gap-8 font-light"
             >
               <p>
                 I'm an AI Product Designer who enjoys making emerging technologies feel intuitive, trustworthy, and deeply human.
@@ -126,7 +127,7 @@ export function About() {
                   initial={{ opacity: 0, scale: 0.9, rotate: 0 }}
                   animate={{ opacity: 1, scale: 1, rotate: img.rotate }}
                   transition={{ duration: 1, delay: 0.4 + (i * 0.1), ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute shadow-2xl p-6 rounded-2xl flex items-center justify-center border border-white/5"
+                  className="absolute shadow-2xl p-6 rounded-2xl flex items-center justify-center border border-white/5 light:border-black/5"
                   style={{
                     top: img.top,
                     left: img.left,
@@ -145,7 +146,7 @@ export function About() {
 
         {/* Experience */}
         <section className="mb-32">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -153,7 +154,7 @@ export function About() {
           >
             Experience
           </motion.h2>
-          
+
           <div className="flex flex-col">
             {WORK_EXPERIENCE.map((exp, i) => (
               <ExperienceItem key={i} index={i} item={exp} />
@@ -163,7 +164,7 @@ export function About() {
 
         {/* Education */}
         <section className="mb-24">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -171,21 +172,21 @@ export function About() {
           >
             Education
           </motion.h2>
-          
+
           <div className="flex flex-col">
             {EDUCATION.map((edu, i) => (
               <EducationItem key={i} index={i} item={edu} />
             ))}
           </div>
         </section>
-        
+
         {/* Currently Exploring */}
-        <section className="border-t border-white/10 pt-16">
-          <motion.h2 
+        <section className="border-t border-white/10 light:border-black/10 pt-16">
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[20px] font-display mb-6 text-white/50 uppercase tracking-widest text-sm"
+            className="text-[20px] font-display mb-6 text-white/50 light:text-zinc-500 uppercase tracking-widest text-sm"
           >
             Currently Exploring
           </motion.h2>
@@ -193,10 +194,10 @@ export function About() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex flex-wrap gap-3 text-[16px] text-white/70 font-light"
+            className="flex flex-wrap gap-3 text-[16px] text-white/70 light:text-zinc-600 font-light"
           >
             {['AI interfaces', 'Multimodal systems', 'Human-AI collaboration', 'Typography', 'Accessibility'].map((topic, i) => (
-              <span key={topic} className="px-4 py-2 rounded-full bg-white/5 border border-white/10">{topic}</span>
+              <span key={topic} className="px-4 py-2 rounded-full bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">{topic}</span>
             ))}
           </motion.div>
         </section>
@@ -208,21 +209,21 @@ export function About() {
 
 function ExperienceItem({ item, index }: { item: any, index: number }) {
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className="group flex flex-col md:flex-row md:items-center gap-4 md:gap-6 py-6 border-b border-white/10 hover:bg-white/[0.02] transition-colors duration-300 px-4 -mx-4 rounded-xl cursor-pointer"
+      className="group flex flex-col md:flex-row md:items-center gap-4 md:gap-6 py-6 border-b border-white/10 light:border-black/10 hover:bg-white/[0.02] light:hover:bg-black/[0.02] transition-colors duration-300 px-4 -mx-4 rounded-xl cursor-pointer"
       whileHover={{ y: -2 }}
     >
-      <div 
+      <div
         className="w-[64px] h-[64px] rounded-xl flex items-center justify-center overflow-hidden flex-shrink-0"
         style={{ backgroundColor: `${item.color}20` }} // 20 hex is 12% opacity
       >
         {/* Fallback to simple icon if clearbit fails, using an img tag for clearbit */}
-        <img 
-          src={item.logoUrl || `https://logo.clearbit.com/${item.domain}`} 
+        <img
+          src={item.logoUrl || `https://logo.clearbit.com/${item.domain}`}
           alt={`${item.company} logo`}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
           onError={(e) => {
@@ -230,14 +231,14 @@ function ExperienceItem({ item, index }: { item: any, index: number }) {
           }}
         />
       </div>
-      
+
       <div className="flex-1 flex flex-col md:flex-row md:items-baseline md:justify-between gap-2">
         <div className="flex flex-col gap-1">
-          <h3 className="text-[20px] sm:text-[22px] font-display font-medium text-[#F8F8F8]">{item.company}</h3>
-          <p className="text-[16px] sm:text-[18px] text-white/65 font-light">{item.role}</p>
+          <h3 className="text-[20px] sm:text-[22px] font-display font-medium text-[#F8F8F8] light:text-zinc-900">{item.company}</h3>
+          <p className="text-[16px] sm:text-[18px] text-white/65 light:text-zinc-600 font-light">{item.role}</p>
         </div>
-        
-        <div className="text-[15px] sm:text-[16px] text-white/50 font-light md:text-right mt-2 md:mt-0 tracking-wide">
+
+        <div className="text-[15px] sm:text-[16px] text-white/50 light:text-zinc-500 font-light md:text-right mt-2 md:mt-0 tracking-wide">
           {item.date}
         </div>
       </div>
@@ -247,20 +248,20 @@ function ExperienceItem({ item, index }: { item: any, index: number }) {
 
 function EducationItem({ item, index }: { item: any, index: number }) {
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className="group flex flex-col md:flex-row md:items-center gap-4 md:gap-6 py-6 border-b border-white/10 hover:bg-white/[0.02] transition-colors duration-300 px-4 -mx-4 rounded-xl cursor-pointer"
+      className="group flex flex-col md:flex-row md:items-center gap-4 md:gap-6 py-6 border-b border-white/10 light:border-black/10 hover:bg-white/[0.02] light:hover:bg-black/[0.02] transition-colors duration-300 px-4 -mx-4 rounded-xl cursor-pointer"
       whileHover={{ y: -2 }}
     >
-      <div 
+      <div
         className="w-[64px] h-[64px] rounded-xl flex items-center justify-center overflow-hidden flex-shrink-0"
         style={{ backgroundColor: `${item.color}20` }}
       >
-        <img 
-          src={item.logoUrl || `https://logo.clearbit.com/${item.domain}`} 
+        <img
+          src={item.logoUrl || `https://logo.clearbit.com/${item.domain}`}
           alt={`${item.school} logo`}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
           onError={(e) => {
@@ -268,14 +269,14 @@ function EducationItem({ item, index }: { item: any, index: number }) {
           }}
         />
       </div>
-      
+
       <div className="flex-1 flex flex-col md:flex-row md:items-baseline md:justify-between gap-2">
         <div className="flex flex-col gap-1">
-          <h3 className="text-[20px] sm:text-[22px] font-display font-medium text-[#F8F8F8]">{item.school}</h3>
-          <p className="text-[16px] sm:text-[18px] text-white/65 font-light">{item.degree}</p>
+          <h3 className="text-[20px] sm:text-[22px] font-display font-medium text-[#F8F8F8] light:text-zinc-900">{item.school}</h3>
+          <p className="text-[16px] sm:text-[18px] text-white/65 light:text-zinc-600 font-light">{item.degree}</p>
         </div>
-        
-        <div className="text-[15px] sm:text-[16px] text-white/50 font-light md:text-right mt-2 md:mt-0 tracking-wide">
+
+        <div className="text-[15px] sm:text-[16px] text-white/50 light:text-zinc-500 font-light md:text-right mt-2 md:mt-0 tracking-wide">
           {item.date}
         </div>
       </div>
