@@ -30,7 +30,9 @@ export interface CaseStudyContent {
   impact: {
     heading: string;
     intro: string;
-    outcomes: string[];
+    validationMetrics?: { value: string; label: string }[];
+    businessStats?: { value: string; label: string }[];
+    businessOutcomes?: string[];
   };
   reflection: {
     paragraphs: string[];
@@ -122,15 +124,21 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
       ],
     },
     impact: {
-      heading: 'Impact',
+      heading: 'Outcomes',
       intro:
-        'The project transformed a request for a centralized website into a strategy for scaling Human-Centered Design across the organization. Expected outcomes included:',
-      outcomes: [
-        'Reduced dependency on manual support',
-        'Faster resource discovery',
-        'Greater visibility of HCD initiatives',
-        'Increased confidence for first-time practitioners',
-        'Better utilization of expert time',
+        'The final solution validated our core hypothesis: organizing HCD resources around employee intent rather than organizational structure made the experience easier to navigate, understand, and adopt. The platform transformed fragmented knowledge into a scalable, self-service experience capable of supporting 55,000+ employees while reducing dependency on manual support from the HCD team.',
+      validationMetrics: [
+        { value: '90', label: 'System Usability Scale (SUS)' },
+        { value: '94.4%', label: 'Task Completion Rate' },
+        { value: '1.35', label: 'Avg. Clicks per Task' },
+      ],
+      businessStats: [
+        { value: '55k+', label: 'Employees Supported' },
+      ],
+      businessOutcomes: [
+        'Reduced reliance on manual resource curation by the HCD team',
+        'Unified fragmented HCD resources into a single intent-driven experience',
+        'Created a scalable foundation for continued HCD adoption across Cox Enterprises',
       ],
     },
     reflection: {
