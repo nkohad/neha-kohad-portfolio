@@ -263,7 +263,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
               </div>
             </section>
 
-            <div className="p-8 md:p-16 space-y-[136px] pb-20">
+            <div className="p-8 md:p-16 space-y-36 pb-20">
 
 
               {/* 2. Problem Statement */}
@@ -286,18 +286,18 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                               key={metric.value}
                               whileHover={{ y: -4 }}
                               transition={{ type: 'spring', bounce: 0.18, duration: 0.45 }}
-                              className={`group relative flex-1 overflow-hidden rounded-[24px] border flex ${
+                              className={`group relative flex-1 overflow-hidden rounded-3xl border flex ${
                                 isLight
                                   ? 'bg-white text-black light:bg-zinc-900 light:text-white border-white/70 light:border-zinc-900'
                                   : 'bg-white/[0.04] light:bg-black/[0.03] text-white light:text-zinc-900 border-white/10 light:border-black/10'
                               }`}
                             >
                               {/* Left: gradient + big number */}
-                              <div className={`w-[48%] shrink-0 bg-gradient-to-br ${gradients[i]} flex items-end p-4`}>
+                              <div className={`w-[48%] shrink-0 bg-gradient-to-br ${gradients[i]} flex items-end p-5`}>
                                 <span className={`font-display font-black text-6xl tracking-tighter leading-none ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>{metric.value}</span>
                               </div>
                               {/* Right: label + description */}
-                              <div className={`flex-1 flex flex-col justify-end p-4 ${isLight ? 'bg-white light:bg-zinc-900' : 'bg-[#0d0d0d] light:bg-white'}`}>
+                              <div className={`flex-1 flex flex-col justify-end p-5 ${isLight ? 'bg-white light:bg-zinc-900' : 'bg-[#0d0d0d] light:bg-white'}`}>
                                 <h3 className={`font-display font-bold text-sm tracking-tight mb-1 ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>{metric.label}</h3>
                                 <p className={`font-sans text-xs leading-snug ${isLight ? 'text-black/55 light:text-white/55' : 'text-white/50 light:text-zinc-500'}`}>{metric.description}</p>
                               </div>
@@ -311,18 +311,17 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     <div className="flex flex-col gap-5">
                       <div>
                         <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md mb-4">
-                          Where Do I Start?
+                          {content.challenge.heading}
                         </h2>
-                        <p className="font-sans text-base text-white/55 light:text-zinc-500 leading-relaxed">
-                          Most organizations don't have a knowledge problem—they have a discovery problem.
-                        </p>
+                        {content.overview?.hook && (
+                          <p className="font-sans text-base text-white/55 light:text-zinc-500 leading-relaxed">
+                            {content.overview.hook}
+                          </p>
+                        )}
                       </div>
                       {content.challenge.paragraphs.map((p, i) => (
                         <p key={i} className="font-sans text-base text-white/65 light:text-zinc-600 leading-relaxed">{p}</p>
                       ))}
-                      <p className="font-sans text-base text-white/65 light:text-zinc-600 leading-relaxed">
-                        Resources were scattered across multiple internal systems with inconsistent navigation and terminology. Employees often depended on the HCD team to manually point them toward the right templates, workshops, or experts.
-                      </p>
                       {content.challenge.designChallenge && (
                         <div className="rounded-3xl bg-white light:bg-zinc-900 p-7 mt-5">
                           <h3 className="text-xs font-bold uppercase tracking-widest text-black/55 light:text-white/55 mb-4">Design Challenge</h3>
@@ -356,9 +355,11 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md">
                           {content.solutions.heading}
                         </h2>
-                        <p className="font-sans text-base text-white/55 light:text-zinc-500 leading-relaxed">
-                          We reframed the challenge from building a resource website to designing a product that could scale organizational knowledge.
-                        </p>
+                        {content.overview?.reframe && (
+                          <p className="font-sans text-base text-white/55 light:text-zinc-500 leading-relaxed">
+                            {content.overview.reframe}
+                          </p>
+                        )}
                       </div>
                       <div>
                         <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-3">Features</div>
@@ -375,7 +376,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                               tabIndex={0}
                               className={`py-4 border-t cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded ${isActive ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
                             >
-                              <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${isActive ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
+                              <div className={`flex items-center gap-2 font-display text-sm font-medium mb-1.5 transition-colors duration-300 ${isActive ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
                                 <Icon size={13} className="shrink-0 opacity-70" />
                                 {feature.title}
                               </div>
@@ -433,7 +434,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
 
                     {/* Intro context */}
                     <p className="font-sans text-base text-white/55 light:text-zinc-600 leading-relaxed mb-10">
-                      We conducted 8 in-depth interviews with a stratified convenience sample of employees across Cox Enterprises and Cox Automotive. Our research surfaced four recurring insights.
+                      {content.stages[0].validating}
                     </p>
 
                     <div className="grid grid-cols-4 gap-4">
@@ -446,24 +447,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                           'from-cyan-400/40 via-teal-500/20 to-transparent',
                           'from-emerald-400/40 via-green-500/20 to-transparent',
                         ];
-                        const shortInsight = [
-                          'Employees think in goals, not resources.',
-                          'Valuable HCD resources were fragmented across multiple platforms.',
-                          'Employees entered with different levels of HCD experience.',
-                          'Experts spent significant time answering navigation questions.',
-                        ][i];
-                        const shortGoal = [
-                          'Design navigation around intent, not org structure.',
-                          'Centralize discovery into a single layer.',
-                          'Create distinct pathways per maturity level.',
-                          'Free experts from routing; enable self-service.',
-                        ][i];
                         return (
                           <motion.div
                             key={i}
                             whileHover={{ y: -6 }}
                             transition={{ type: 'spring', bounce: 0.18, duration: 0.45 }}
-                            className={`group rounded-[24px] border overflow-hidden flex flex-col ${
+                            className={`group rounded-3xl border overflow-hidden flex flex-col ${
                               isLight
                                 ? 'bg-white light:bg-zinc-900 border-white/70 light:border-zinc-900'
                                 : 'bg-white/[0.04] light:bg-black/[0.03] border-white/10 light:border-black/10'
@@ -479,11 +468,11 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 {item.phrase}
                               </h3>
                               <p className={`font-sans text-sm leading-relaxed flex-1 ${isLight ? 'text-black/60 light:text-white/60' : 'text-white/60 light:text-zinc-500'}`}>
-                                {shortInsight}
+                                {item.insight}
                               </p>
                               <div className={`border-t pt-3 ${isLight ? 'border-black/10 light:border-white/10' : 'border-white/10 light:border-black/10'}`}>
                                 <div className={`text-xs font-bold uppercase tracking-widest mb-1.5 ${isLight ? 'text-black/50 light:text-white/50' : 'text-white/50'}`}>Design Goal</div>
-                                <p className={`font-sans text-sm leading-relaxed ${isLight ? 'text-black/50' : 'text-white/50'}`}>{shortGoal}</p>
+                                <p className={`font-sans text-sm leading-relaxed ${isLight ? 'text-black/50' : 'text-white/50'}`}>{item.change}</p>
                               </div>
                             </div>
                           </motion.div>
@@ -540,7 +529,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     <div>
                       <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">{stage2.title}</h2>
                       <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed max-w-2xl">
-                        We conducted 4 task-based think-aloud sessions to validate whether organizing resources around employee intent would improve discovery and reduce dependency on HCD experts.
+                        {stage2.validating}
                       </p>
                     </div>
 
@@ -566,7 +555,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 role="button" tabIndex={0}
                                 className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
                               >
-                                <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
+                                <div className={`flex items-center gap-2 font-display text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
                                   {S2Icon && <S2Icon size={13} className="shrink-0 opacity-70" />}
                                   {item.phrase ?? `Insight ${i + 1}`}
                                 </div>
@@ -583,7 +572,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 role="button" tabIndex={0}
                                 className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
                               >
-                                <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
+                                <div className={`flex items-center gap-2 font-display text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
                                   {S2Icon && <S2Icon size={13} className="shrink-0 opacity-70" />}
                                   {item.changePhrase ?? `Design Response ${i + 1}`}
                                 </div>
@@ -625,7 +614,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             <div className="h-[10px] bg-[#141414] mx-1 rounded-b-xl shadow-xl" />
                           </div>
                         </motion.div>
-                        <div className="rounded-xl bg-white light:bg-zinc-900 text-black light:text-white px-5 py-4">
+                        <div className="rounded-xl bg-white light:bg-zinc-900 text-black light:text-white p-5">
                           <div className="text-xs font-bold uppercase tracking-widest text-black/55 light:text-white/55 mb-1.5">Key Question</div>
                           <p className="font-display font-bold text-lg tracking-tight leading-snug">{stage2.question}</p>
                         </div>
@@ -643,7 +632,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     <div>
                       <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">{stage3.title}</h2>
                       <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed max-w-2xl">
-                        We built a high-fidelity prototype and evaluated it through expert heuristic review and task-based usability testing — examining whether clear hierarchy, consistent interactions, and strong information scent would enable employees to navigate independently.
+                        {stage3.validating}
                       </p>
                     </div>
 
@@ -669,7 +658,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 role="button" tabIndex={0}
                                 className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
                               >
-                                <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
+                                <div className={`flex items-center gap-2 font-display text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
                                   {S3Icon && <S3Icon size={13} className="shrink-0 opacity-70" />}
                                   {item.phrase ?? `Insight ${i + 1}`}
                                 </div>
@@ -686,7 +675,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 role="button" tabIndex={0}
                                 className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
                               >
-                                <div className={`flex items-center gap-2 text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
+                                <div className={`flex items-center gap-2 font-display text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
                                   {S3Icon && <S3Icon size={13} className="shrink-0 opacity-70" />}
                                   {item.changePhrase ?? `Design Response ${i + 1}`}
                                 </div>
@@ -728,7 +717,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             <div className="h-[10px] bg-[#141414] mx-1 rounded-b-xl shadow-xl" />
                           </div>
                         </motion.div>
-                        <div className="rounded-xl bg-white light:bg-zinc-900 text-black light:text-white px-5 py-4">
+                        <div className="rounded-xl bg-white light:bg-zinc-900 text-black light:text-white p-5">
                           <div className="text-xs font-bold uppercase tracking-widest text-black/55 light:text-white/55 mb-1.5">Key Question</div>
                           <p className="font-display font-bold text-lg tracking-tight leading-snug">{stage3.question}</p>
                         </div>
@@ -745,7 +734,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-5 drop-shadow-md">
                       {content.impact.heading}
                     </h2>
-                    <p className="font-sans text-sm text-white/60 light:text-zinc-600 leading-relaxed max-w-4xl mb-8">
+                    <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed max-w-4xl mb-8">
                       {content.impact.intro}
                     </p>
 
@@ -756,7 +745,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-1">Business</div>
 
                         {/* 55K+ split metric card */}
-                        <div className="relative overflow-hidden rounded-[24px] border bg-white/[0.04] light:bg-black/[0.03] border-white/10 light:border-black/10 flex">
+                        <div className="relative overflow-hidden rounded-3xl border bg-white/[0.04] light:bg-black/[0.03] border-white/10 light:border-black/10 flex">
                           <div className="w-[42%] shrink-0 bg-gradient-to-br from-violet-500/45 via-blue-500/20 to-transparent flex items-end p-5">
                             <span className="font-display font-black text-5xl tracking-tighter leading-none text-white light:text-zinc-900">55K+</span>
                           </div>
@@ -769,7 +758,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         {/* Qualitative outcome cards — flex-1 so they fill remaining height equally */}
                         <div className="flex flex-col gap-3 flex-1">
                           {content.impact.outcomes.map((outcome, i) => (
-                            <div key={i} className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 flex-1">
+                            <div key={i} className="flex items-center gap-3 p-5 rounded-2xl bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 flex-1">
                               <Check size={15} className="text-emerald-400 light:text-emerald-600 shrink-0" />
                               <p className="font-sans text-sm text-white/70 light:text-zinc-600 leading-snug">{outcome}</p>
                             </div>
@@ -783,9 +772,9 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                           <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-1">Validation</div>
                           <div className="flex flex-col gap-3 flex-1">
                             {content.impact.metrics.map((m, i) => (
-                              <div key={i} className="relative flex-1 overflow-hidden rounded-[24px] border bg-white/[0.04] light:bg-black/[0.03] border-white/10 light:border-black/10 flex">
+                              <div key={i} className="relative flex-1 overflow-hidden rounded-3xl border bg-white/[0.04] light:bg-black/[0.03] border-white/10 light:border-black/10 flex">
                                 <div className={`w-[42%] shrink-0 bg-gradient-to-br ${m.gradient ?? 'from-white/10 to-transparent'} flex items-end p-5`}>
-                                  <span className="font-display font-black text-4xl tracking-tighter leading-none text-white light:text-zinc-900">
+                                  <span className="font-display font-black text-5xl tracking-tighter leading-none text-white light:text-zinc-900">
                                     {m.value}<span className="text-2xl text-white/50 light:text-zinc-500">{m.unit ?? ''}</span>
                                   </span>
                                 </div>
@@ -802,7 +791,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     </div>
 
                     {content.reflection && (
-                      <div id="reflection" className="mt-[136px] scroll-mt-16">
+                      <div id="reflection" className="mt-36 scroll-mt-16">
                         <div className="grid grid-cols-1 xl:grid-cols-[1fr_1fr] gap-12 xl:gap-16 items-start">
                           <div>
                             <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">Reflection</h2>

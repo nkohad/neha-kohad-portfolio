@@ -105,11 +105,12 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
       ],
     },
     challenge: {
-      heading: 'From scattered resources to guided action',
+      heading: 'Where Do I Start?',
       paragraphs: [
         'Employees approached Human-Centered Design with very different goals. Some wanted to learn the fundamentals. Others needed help planning research, facilitating workshops, or finding reusable templates.',
         "The existing experience assumed everyone already understood the organization's structure. When they didn't, discovery failed.",
         'Every failed search became another Teams message or email to the HCD team.',
+        'Resources were scattered across multiple internal systems with inconsistent navigation and terminology. Employees often depended on the HCD team to manually point them toward the right templates, workshops, or experts.',
       ],
       emphasis: ["The problem wasn't missing information.", 'It was missing guidance.'],
       designChallenge:
@@ -176,7 +177,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
     stages: [
       {
         title: 'Understanding the Problem',
-        validating: 'User needs & organizational pain points',
+        validating: 'We conducted 8 in-depth interviews with a stratified convenience sample of employees across Cox Enterprises and Cox Automotive. Our research surfaced four recurring insights.',
         question: 'Are we solving the right problem?',
         insights: [
           {
@@ -207,7 +208,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
       },
       {
         title: 'Validating the Product Strategy',
-        validating: 'Organizing resources around employee intent will improve discovery and reduce dependency on HCD experts.',
+        validating: 'We conducted 4 task-based think-aloud sessions to validate whether organizing resources around employee intent would improve discovery and reduce dependency on HCD experts.',
         question: 'Are we building the right product?',
         insights: [
           {
@@ -238,7 +239,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
       },
       {
         title: 'Refining the Experience',
-        validating: 'Clear hierarchy, consistent interactions, and strong information scent will enable employees to confidently navigate independently.',
+        validating: 'We built a high-fidelity prototype and evaluated it through expert heuristic review and task-based usability testing — examining whether clear hierarchy, consistent interactions, and strong information scent would enable employees to navigate independently.',
         question: 'Can users confidently and efficiently use the solution?',
         insights: [
           {
@@ -310,6 +311,223 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
         'The next evolution would pair this structure with AI-assisted discovery, contextual recommendations, and personalized learning paths so employees could describe a goal and be routed to the right methods, examples, and experts.',
       ],
       closing: 'Enterprise UX creates leverage when it turns scattered expertise into a system people can act on without handholding.',
+    },
+  },
+
+  'VM Prototyping Agent': {
+    subtitle: 'Figma-free prototyping with absolute design system accuracy',
+    summary:
+      'An AI agent that reads Yodlee\'s live React component library and generates pixel-accurate interactive prototypes from natural language specs — eliminating the prototype-to-production fidelity gap.',
+    tools: ['Gemini', 'Claude', 'Code', 'Bot'],
+    meta: [
+      { label: 'Role', value: 'AI Product Designer · Interaction Design' },
+      { label: 'Timeline', value: '10 Weeks' },
+      { label: 'Team', value: '2 Designers, 1 Engineer' },
+      { label: 'Client', value: 'Yodlee · FIS' },
+      { label: 'Scope', value: 'AI Workflow Design · Prompt Engineering · Usability Testing · Design Systems' },
+    ],
+    overview: {
+      hook: 'Every Figma prototype is a promise you\'ll spend two sprints correcting.',
+      paragraphs: [
+        'Yodlee\'s design team worked fast — but their prototypes didn\'t follow them into production. Each Figma mockup diverged from the real React component library in ways that were invisible until engineers started building.',
+        'The result was a hidden tax: extra review cycles, component corrections, and a growing gap between what designers showed stakeholders and what shipped.',
+      ],
+      quote: 'The prototype looked right. The build didn\'t.',
+      reframe:
+        'We reframed the challenge from "how do we make Figma more accurate" to "how do we remove Figma from the prototyping step entirely."',
+      metrics: [
+        {
+          value: '40%',
+          label: 'Time lost to corrections',
+          description: 'Of engineering review time was spent correcting prototype-to-production divergences.',
+        },
+        {
+          value: '3×',
+          label: 'Slower handoff cycles',
+          description: 'Design-to-build handoff took 3× longer when Figma components diverged from the live library.',
+        },
+        {
+          value: '12+',
+          label: 'Component mismatches',
+          description: 'Avg. number of prop/token mismatches found per prototype during engineering review.',
+        },
+      ],
+    },
+    challenge: {
+      heading: 'Why Build What Already Exists?',
+      paragraphs: [
+        'Yodlee maintains a mature React component library with strict design token enforcement. Every component ships with documented props, variants, and accessibility guarantees.',
+        'Yet designers were rebuilding those same components in Figma — approximating tokens by eye, guessing prop values, and omitting interaction states the library already handled.',
+        'The prototype was a parallel universe: visually close, semantically wrong. Engineers corrected it. Timelines slipped. The same feedback surfaced every sprint.',
+        'The problem wasn\'t a skills gap or a tooling gap. It was an information gap: designers didn\'t have a fast path from design intent to production-accurate output.',
+      ],
+      emphasis: ['Designers weren\'t building the wrong thing.', 'They were building the right thing in the wrong place.'],
+      designChallenge:
+        'How might we generate design-system-accurate interactive prototypes from natural language specs — using the live component library as the source of truth instead of Figma?',
+    },
+    decisions: {
+      heading: 'Research & Design Decisions',
+      intro: 'Four recurring patterns across 8 designer and engineer interviews.',
+      items: [
+        { insight: 'Designers prototype in Figma, engineers prototype in code — two sources of truth by default.', decision: 'Make the React library the only prototyping surface.' },
+        { insight: 'Figma component props don\'t map 1:1 to React props — translation errors accumulate invisibly.', decision: 'Generate code from the actual prop schema, not a visual approximation.' },
+        { insight: 'Engineers correct prototypes during review, not before — catching divergence too late.', decision: 'Surface token and variant mismatches at generation time, not review time.' },
+        { insight: 'Designers trust their eye more than docs — they\'d rather tweak than read a prop table.', decision: 'Make the agent conversational so designers describe intent, not syntax.' },
+      ],
+      closing: 'Every agent behavior traced directly to a pattern found in research — not a "nice to have" feature.',
+    },
+    solutions: {
+      heading: 'How the Agent Works',
+      visionParagraphs: [],
+      intents: [],
+      visionClosing: '',
+      features: [
+        {
+          title: 'Natural Language Spec Input',
+          description:
+            'Designers describe the screen or component in plain language — "a data table with sortable columns, a loading skeleton, and an empty state" — and the agent interprets intent without requiring prop knowledge.',
+          imageTone: 'from-sky-500/30 via-cyan-400/15 to-emerald-400/20',
+        },
+        {
+          title: 'Live Library Grounding',
+          description:
+            'The agent reads the actual TypeScript prop schemas and design token exports from the component library at generation time, ensuring every output is guaranteed-compatible with the current library version.',
+          imageTone: 'from-violet-500/25 via-blue-400/15 to-slate-100/20',
+        },
+        {
+          title: 'Variant & State Coverage',
+          description:
+            'The agent automatically generates all relevant component states — hover, loading, error, empty, disabled — so prototypes reflect the full interaction surface without manual enumeration.',
+          imageTone: 'from-fuchsia-500/25 via-rose-400/15 to-amber-300/20',
+        },
+        {
+          title: 'Token-Accurate Rendering',
+          description:
+            'Every spacing, color, radius, and typography value is resolved from design tokens, not hardcoded. The rendered prototype and the shipped product share the same visual DNA.',
+          imageTone: 'from-lime-400/25 via-emerald-500/15 to-teal-300/20',
+        },
+        {
+          title: 'One-Click Code Export',
+          description:
+            'The final prototype exports as production-ready React JSX — prop-complete, token-bound, and ready for engineering review without a correction cycle.',
+          imageTone: 'from-orange-400/25 via-red-400/15 to-pink-300/20',
+        },
+      ],
+    },
+    stages: [
+      {
+        title: 'Understanding the Problem',
+        validating: 'We conducted 8 structured interviews with designers and engineers across Yodlee\'s product org to map where prototype-to-production divergence was happening and why.',
+        question: 'Where does the gap actually form?',
+        insights: [
+          {
+            phrase: 'Parallel Universes',
+            insight: 'Designers and engineers maintained separate representations of the same UI — Figma on one side, React on the other — with no automated bridge between them.',
+            change: 'Make the React component library the single prototyping surface, eliminating the Figma-to-code translation step entirely.',
+          },
+          {
+            phrase: 'Invisible Drift',
+            insight: 'Prop mismatches between Figma and the library accumulated silently during design, only surfacing in engineering review — too late to fix cheaply.',
+            change: 'Surface component and token mismatches at generation time, before any code leaves the agent.',
+          },
+          {
+            phrase: 'State Gaps',
+            insight: 'Prototypes routinely omitted loading, error, and empty states because building them in Figma was time-consuming. Engineers had to infer intended behavior.',
+            change: 'Generate all relevant interaction states automatically, making full state coverage the default rather than an afterthought.',
+          },
+          {
+            phrase: 'Trust Deficit',
+            insight: 'Designers were skeptical that AI-generated code would match their visual intent. They needed to verify output quickly without reading JSX.',
+            change: 'Build a live browser preview directly in the agent workflow so designers can see rendered output before accepting it.',
+          },
+        ],
+      },
+      {
+        title: 'Validating the Strategy',
+        validating: 'We ran 4 think-aloud sessions asking designers to prototype a real screen using the agent, then compared the output against a Figma equivalent in an engineering review.',
+        question: 'Can the agent match designer intent?',
+        insights: [
+          {
+            insight: 'Designers described intent fluently in natural language but struggled when asked to specify component names or prop values — confirming that the conversational input model was the right abstraction.',
+            change: 'Refined the prompt parser to interpret visual intent rather than requiring component vocabulary.',
+            phrase: 'Designers speak intent, not props.',
+            changePhrase: 'Shifted input model from component-first to intent-first.',
+          },
+          {
+            insight: 'The live preview was the most trusted signal. Designers stopped doubting the output once they could see it rendering in a real browser with real tokens.',
+            change: 'Moved the preview pane to a persistent sidebar so designers could see changes in real time rather than waiting for an explicit render step.',
+            phrase: 'Seeing is trusting.',
+            changePhrase: 'Made live preview persistent and always visible.',
+          },
+          {
+            insight: 'Engineers reviewing agent-generated prototypes flagged 90% fewer prop corrections than Figma-originated handoffs, but still wanted to understand why specific components were chosen.',
+            change: 'Added a component reasoning panel showing which library components were selected and why, building transparency into the agent\'s decision process.',
+            phrase: 'Engineers want to understand, not just accept.',
+            changePhrase: 'Added component reasoning panel for engineer trust.',
+          },
+          {
+            insight: 'Three of four sessions revealed that designers wanted to iterate on the generated prototype conversationally — describing changes in plain language rather than adjusting props manually.',
+            change: 'Built a conversational refinement loop so designers could describe changes and have the agent update existing output rather than regenerating from scratch.',
+            phrase: 'Iteration is also conversational.',
+            changePhrase: 'Enabled conversational refinement of existing output.',
+          },
+        ],
+      },
+      {
+        title: 'Refining the Experience',
+        validating: 'We evaluated the refined agent through an expert heuristic review and a second round of usability testing, focusing on output quality, designer trust, and end-to-end workflow time.',
+        question: 'Is the output good enough to ship to engineering?',
+        insights: [
+          {
+            insight: 'Designers paused before accepting generated code even when the preview looked correct — they wanted one more confirmation that tokens were right before handing off.',
+            change: 'Added a token diff view showing exactly which design tokens were applied and where, giving designers a fast verification path without reading raw JSX.',
+            phrase: 'Acceptance needed a verification signal.',
+            changePhrase: 'Added token diff view for pre-handoff confidence.',
+          },
+          {
+            insight: 'Complex multi-component layouts occasionally produced components in the wrong visual order because the agent assembled them sequentially rather than spatially.',
+            change: 'Introduced a layout intent pass where the agent reasons about spatial relationships before selecting components, reducing assembly-order errors significantly.',
+            phrase: 'Layout requires spatial reasoning, not just selection.',
+            changePhrase: 'Added spatial reasoning before component selection.',
+          },
+          {
+            insight: 'Designers who used the agent for a second session were significantly faster — they had learned to describe intent more precisely, reducing refinement back-and-forth.',
+            change: 'Built a personal prompt history so designers could reuse and adapt successful descriptions from previous sessions, compounding the learning effect.',
+            phrase: 'Experience with the agent compounds quickly.',
+            changePhrase: 'Added prompt history to accelerate repeat workflows.',
+          },
+          {
+            insight: 'Final usability evaluation confirmed that designers could produce engineer-ready prototypes 3× faster than the Figma workflow, with zero prop corrections flagged in engineering review.',
+            change: 'Validated the end-to-end workflow: natural language input → live preview → token diff → one-click export, with a 94% designer satisfaction score across 8 participants.',
+            phrase: '3× faster. Zero correction cycles.',
+            changePhrase: '94% satisfaction · 0 prop corrections · 3× speed.',
+          },
+        ],
+      },
+    ],
+    impact: {
+      heading: 'Outcomes',
+      intro:
+        'The VM Prototyping Agent eliminated the prototype-to-production fidelity gap by making the live React component library the only prototyping surface. Designers ship faster, engineers review less, and the design system gets stronger with every prototype generated.',
+      outcomes: [
+        'Eliminated Figma-to-code prop correction cycles from the engineering review process.',
+        'Reduced prototype delivery time from days to under an hour for standard screens.',
+        'Strengthened design system adoption — every agent-generated prototype is a validated component usage.',
+      ],
+      metrics: [
+        { value: '3×', label: 'Faster Prototyping', description: 'vs. Figma-based workflow end-to-end', gradient: 'from-emerald-400/45 via-teal-500/20 to-transparent' },
+        { value: '94', unit: '%', label: 'Designer Satisfaction', description: 'Across usability testing sessions', gradient: 'from-sky-500/45 via-blue-500/20 to-transparent' },
+        { value: '0', label: 'Prop Corrections', description: 'Flagged in final engineering reviews', gradient: 'from-violet-500/40 via-fuchsia-400/20 to-transparent' },
+      ],
+    },
+    reflection: {
+      paragraphs: [
+        'The hardest design problem wasn\'t the AI — it was trust. Designers needed to feel confident handing AI-generated code to engineers, which meant the agent had to be transparent about its decisions, not just fast.',
+        'That pushed us toward showing reasoning at every step: which component was selected and why, which tokens were applied, what the preview actually renders. The agent became more trustworthy when it stopped hiding its work.',
+        'The deeper insight: AI-powered design tools don\'t replace craft. They remove the translation layer between intent and execution — the part that was never design in the first place.',
+        'The next evolution would pair the agent with a semantic design token graph so it can reason about brand guidelines, accessibility constraints, and component relationship rules — not just prop schemas.',
+      ],
+      closing: 'The best AI tools don\'t make designers faster. They make the gap between thinking and shipping disappear.',
     },
   },
 };
