@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useSpring, useMotionValue, useTransform, animate, AnimatePresence } from 'motion/react';
 import { Figma, PenTool, Users, Sparkles, Bot, Code, ArrowRight, ArrowUpRight, Building2, MessageSquare, Table2 } from 'lucide-react';
-import { NavLiquidGlass } from './components/NavLiquidGlass';
 import SplashCursor from './components/SplashCursor';
 import { CaseStudyModal } from './components/CaseStudyModal';
 import { useActiveTab } from './components/NavLinks';
 import { About } from './components/About';
-import { Footer } from './components/Footer';
+import { LeftSidebar } from './components/LeftSidebar';
 import { useTheme } from './components/ThemeContext';
 
 const IMAGES = [
@@ -182,6 +181,7 @@ export default function App() {
   const [radius, setRadius] = useState(isMobile ? 350 : 760);
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
   const [activeCaseStudy, setActiveCaseStudy] = useState<number | null>(null);
+  const [activeSection, setActiveSection] = useState('first-glance');
   const [workProgress, setWorkProgress] = useState(0);
 
   useEffect(() => {
@@ -212,6 +212,7 @@ export default function App() {
     if (activeCaseStudy !== null) {
       const project = PROJECTS[activeCaseStudy];
       window.history.pushState(null, '', `/work/${slugify(project.title)}`);
+      setActiveSection('first-glance');
     } else {
       if (window.location.pathname.startsWith('/work/')) {
         window.history.pushState(null, '', '/');
@@ -271,6 +272,8 @@ export default function App() {
   const cardHeight = Math.round(cardWidth * (220 / 340));
   
   // Bento Layout Math
+  const SIDEBAR_W = isMobile ? 0 : 256;
+  const contentWidth = windowWidth - SIDEBAR_W;
   const gridColumns = isMobile ? 4 : 8;
   const gridPadding = isMobile ? 48 : 160; // matches About page: px-6 mobile, px-20 desktop (each side × 2)
   const gridMaxWidth = 1200; // matches About page max-w-[1200px]
@@ -278,7 +281,7 @@ export default function App() {
 
   const drawerWidth = 450;
   const isPushActive = mode === 'grid' && detailViewStyle === ('drawer-push' as any) && selectedCardIndex !== null && !isMobile;
-  const rawContainerWidth = Math.min(windowWidth - gridPadding, gridMaxWidth);
+  const rawContainerWidth = Math.min(contentWidth - gridPadding, gridMaxWidth);
   const activeContainerWidth = isPushActive ? rawContainerWidth - drawerWidth : rawContainerWidth;
   const containerWidth = Math.max(activeContainerWidth, 300);
   const gridXOffset = isPushActive ? -drawerWidth / 2 : 0;
@@ -491,7 +494,7 @@ export default function App() {
       // Grow the wordmark in place and push it down toward center by the
       // halfway point of the scroll; it stays legible but recedes into the backdrop.
       const growProgress = Math.min(latest / 0.5, 1);
-      const wordmarkMaxScale = wordmarkNaturalWidth > 0 ? windowWidth / wordmarkNaturalWidth : 5.5;
+      const wordmarkMaxScale = wordmarkNaturalWidth > 0 ? contentWidth / wordmarkNaturalWidth : 5.5;
       targetWordmarkScale.set(1 + growProgress * (wordmarkMaxScale - 1));
       targetWordmarkY.set(windowHeight * 0.22 * growProgress);
       targetWordmarkOpacity.set(Math.max(0.16, 1 - growProgress * 0.85));
@@ -645,8 +648,19 @@ export default function App() {
       {theme === 'dark' && bgStyle === 'splash-red' && <SplashCursor RAINBOW_MODE={false} COLOR="#ff0000" />}
       {theme === 'dark' && bgStyle === 'splash-blue' && <SplashCursor RAINBOW_MODE={false} COLOR="#0077ff" />}
 
-      <NavLiquidGlass />
+      <LeftSidebar
+        activeCaseStudy={activeCaseStudy}
+        project={activeCaseStudy !== null ? CARDS[activeCaseStudy] : null}
+        activeSection={activeSection}
+        activeTab={activeTab}
+        onSectionClick={(id) => {
+          setActiveSection(id);
+          document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+        }}
+        onCloseCaseStudy={() => setActiveCaseStudy(null)}
+      />
 
+      <div className="md:pl-64">
       {activeCaseStudy !== null ? (
         <CaseStudyModal
           key={activeCaseStudy}
@@ -655,6 +669,8 @@ export default function App() {
           currentIndex={activeCaseStudy}
           onClose={() => setActiveCaseStudy(null)}
           onSelectProject={(index: number) => setActiveCaseStudy(index)}
+          activeSection={activeSection}
+          onSectionChange={setActiveSection}
         />
       ) : activeTab === '#about' ? (
         <About />
@@ -1074,8 +1090,7 @@ export default function App() {
       </AnimatePresence>
       </>
       )}
-      
-      <Footer />
+      </div>
     </div>
   );
 }

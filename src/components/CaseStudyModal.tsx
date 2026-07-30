@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { ArrowLeft, ChevronLeft, ChevronRight, Sparkles, AlertTriangle, ArrowUpRight, Building2, Check, Quote, Search, Route, Library, Users, PanelsTopLeft, MessageSquare, Table2, Compass, EyeOff, Layers, Headphones, GitBranch, BarChart2, Zap, Award } from 'lucide-react';
 import { CASE_STUDY_CONTENT } from '../data/caseStudies';
+import { CASE_STUDY_SECTIONS } from './LeftSidebar';
 
 interface CaseStudyModalProps {
   project: any;
@@ -9,18 +10,9 @@ interface CaseStudyModalProps {
   currentIndex: number;
   onClose: () => void;
   onSelectProject: (index: number) => void;
+  activeSection: string;
+  onSectionChange: (id: string) => void;
 }
-
-const SECTIONS = [
-  { id: 'first-glance', title: 'Start With Intent', navTitle: 'Overview' },
-  { id: 'problem', title: 'Where Do I Start?', navTitle: 'Challenge' },
-  { id: 'solution', title: 'Features That Guide', navTitle: 'Features That Guide' },
-  { id: 'stage-1', title: 'Understanding the Problem', navTitle: 'Understanding the Problem' },
-  { id: 'stage-2', title: 'Validating the Strategy', navTitle: 'Validating the Strategy' },
-  { id: 'stage-3', title: 'Refining the Experience', navTitle: 'Refining the Experience' },
-  { id: 'impact', title: 'Outcomes', navTitle: 'Outcomes' },
-  { id: 'reflection', title: 'Reflection', navTitle: 'Reflection' },
-];
 
 const CASE_TOOL_ICONS: Record<string, React.ReactNode> = {
   Figma: <img src="https://cdn.simpleicons.org/figma" alt="" className="h-4 w-4" />,
@@ -42,8 +34,7 @@ const featureToneClasses = [
   'from-orange-400/25 via-red-400/15 to-pink-300/20',
 ];
 
-export function CaseStudyModal({ project, allProjects, currentIndex, onClose, onSelectProject }: CaseStudyModalProps) {
-  const [activeSection, setActiveSection] = useState('first-glance');
+export function CaseStudyModal({ project, allProjects, currentIndex, onClose, onSelectProject, activeSection, onSectionChange }: CaseStudyModalProps) {
   const [activeFeature, setActiveFeature] = useState(0);
   const [hoveredInsight, setHoveredInsight] = useState<number | null>(null);
   const [stage2Active, setStage2Active] = useState(0);
@@ -74,12 +65,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
       const scrollPosition = window.scrollY;
       const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 20;
 
-      let currentSection = SECTIONS[0].id;
+      let currentSection = CASE_STUDY_SECTIONS[0].id;
 
       if (isAtBottom) {
-        currentSection = SECTIONS[SECTIONS.length - 1].id;
+        currentSection = CASE_STUDY_SECTIONS[CASE_STUDY_SECTIONS.length - 1].id;
       } else {
-        for (const section of SECTIONS) {
+        for (const section of CASE_STUDY_SECTIONS) {
           const el = document.getElementById(section.id);
           if (el) {
             const top = el.getBoundingClientRect().top + window.scrollY;
@@ -90,13 +81,13 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
         }
       }
 
-      setActiveSection(currentSection);
+      onSectionChange(currentSection);
     };
 
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [onSectionChange]);
 
   // Snap stage-2 and stage-3 into full view when the user scrolls a little into them
   useEffect(() => {
@@ -136,61 +127,10 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="flex w-full bg-[#0a0a0a] light:bg-white"
+      className="w-full bg-[#0a0a0a] light:bg-white"
     >
-      {/* Sidebar / Table of Contents */}
-      <div className="hidden md:flex flex-col w-72 shrink-0 border-r border-white/10 light:border-zinc-200 bg-[#050505] light:bg-white p-8 h-screen sticky top-0 self-start">
-        <button
-          onClick={onClose}
-          className="flex items-center gap-2 text-white/50 light:text-zinc-500 hover:text-white light:hover:text-zinc-900 transition-colors mb-12 group w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
-        >
-          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-          <span className="font-sans text-xs font-bold uppercase tracking-widest">Back</span>
-        </button>
-
-        <div className="mb-6">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-3 drop-shadow-md">Case Study</h2>
-          <p className="font-display text-xl font-bold text-white light:text-zinc-900 tracking-tight leading-tight">{project.title}</p>
-        </div>
-
-        <a
-          href="https://www.figma.com/proto/tFXaHycMA6GAbOAo1AZ79J/Neha-s-Copy-%7C-HCD-Centralized-Hub--Copy-?node-id=1007-497&p=f&viewport=198%2C151%2C0.04&t=PGCWAGWm99BfBiYO-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1007%3A497&page-id=297%3A2"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-between w-full rounded-xl border border-white/15 light:border-black/10 px-4 py-3 mb-10 font-sans text-xs font-bold uppercase tracking-wider text-white light:text-zinc-900 bg-white/[0.06] light:bg-black/[0.03] hover:bg-white/10 light:hover:bg-black/[0.06] hover:border-white/30 light:hover:border-black/20 transition-colors group"
-          aria-label="View live case study prototype"
-        >
-          <span>Live Case Study</span>
-          <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-        </a>
-
-            <nav className="flex flex-col space-y-5 relative">
-              <div className="absolute left-0 top-0 bottom-0 w-px bg-white/10 light:bg-black/10" />
-              {SECTIONS.map((section) => (
-                <button
-                  key={section.id}
-                  onClick={() => {
-                    setActiveSection(section.id);
-                    document.getElementById(section.id)?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className={`relative pl-6 text-left font-sans text-sm font-normal tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded ${
-                    activeSection === section.id ? 'text-white light:text-zinc-900 drop-shadow-md' : 'text-white/55 light:text-zinc-500 hover:text-white/70 light:hover:text-zinc-600'
-                  }`}
-                >
-                  {activeSection === section.id && (
-                    <motion.div
-                      layoutId="activeSectionIndicator"
-                      className="absolute left-0 top-0 bottom-0 w-0.5 bg-white light:bg-zinc-900"
-                    />
-                  )}
-                  {section.navTitle}
-                </button>
-              ))}
-            </nav>
-          </div>
-
           {/* Main Content Area */}
-          <div className="flex-1 relative overflow-x-hidden bg-[#0a0a0a] light:bg-white">
+          <div className="relative overflow-x-hidden bg-[#0a0a0a] light:bg-white">
             {/* 1. First Glance / Hero */}
             <section id="first-glance" className="relative min-h-[70vh] flex flex-col justify-end pt-28 px-8 pb-0 md:px-16 md:pb-0 md:pt-28">
               <div className="absolute inset-0 z-0">
