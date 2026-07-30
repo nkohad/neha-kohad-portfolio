@@ -96,7 +96,7 @@ export function About() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h1 className="text-[48px] sm:text-[64px] lg:text-[76px] leading-[1.05] font-display font-medium tracking-tight mb-20 lg:mb-32 max-w-[900px]">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl leading-[1.05] font-display font-medium tracking-tight mb-20 lg:mb-32 max-w-[900px]">
               I often think of products as conversations waiting to happen.
             </h1>
           </motion.div>
@@ -106,7 +106,7 @@ export function About() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[18px] sm:text-[20px] lg:text-[22px] leading-[1.8] text-white/70 light:text-zinc-600 max-w-[600px] flex flex-col gap-8 font-light"
+              className="text-lg sm:text-xl leading-[1.8] text-white/70 light:text-zinc-600 max-w-[600px] flex flex-col gap-8 font-light"
             >
               <p>
                 I'm an AI Product Designer who enjoys making emerging technologies feel intuitive, trustworthy, and deeply human.
@@ -150,7 +150,7 @@ export function About() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[22px] sm:text-[24px] font-display mb-8"
+            className="text-2xl font-display mb-8"
           >
             Experience
           </motion.h2>
@@ -168,7 +168,7 @@ export function About() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[22px] sm:text-[24px] font-display mb-8"
+            className="text-2xl font-display mb-8"
           >
             Education
           </motion.h2>
@@ -186,7 +186,7 @@ export function About() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[20px] font-display mb-6 text-white/50 light:text-zinc-500 uppercase tracking-widest text-sm"
+            className="font-sans text-xs font-bold mb-6 text-white/50 light:text-zinc-500 uppercase tracking-widest"
           >
             Currently Exploring
           </motion.h2>
@@ -194,7 +194,7 @@ export function About() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex flex-wrap gap-3 text-[16px] text-white/70 light:text-zinc-600 font-light"
+            className="flex flex-wrap gap-3 text-base text-white/70 light:text-zinc-600 font-light"
           >
             {['AI interfaces', 'Multimodal systems', 'Human-AI collaboration', 'Typography', 'Accessibility'].map((topic, i) => (
               <span key={topic} className="px-4 py-2 rounded-full bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">{topic}</span>
@@ -234,11 +234,11 @@ function ExperienceItem({ item, index }: { item: any, index: number }) {
 
       <div className="flex-1 flex flex-col md:flex-row md:items-baseline md:justify-between gap-2">
         <div className="flex flex-col gap-1">
-          <h3 className="text-[20px] sm:text-[22px] font-display font-medium text-[#F8F8F8] light:text-zinc-900">{item.company}</h3>
-          <p className="text-[16px] sm:text-[18px] text-white/65 light:text-zinc-600 font-light">{item.role}</p>
+          <h3 className="text-xl sm:text-2xl font-display font-medium text-[#F8F8F8] light:text-zinc-900">{item.company}</h3>
+          <p className="text-base sm:text-lg text-white/65 light:text-zinc-600 font-light">{item.role}</p>
         </div>
 
-        <div className="text-[15px] sm:text-[16px] text-white/50 light:text-zinc-500 font-light md:text-right mt-2 md:mt-0 tracking-wide">
+        <div className="text-sm sm:text-base text-white/50 light:text-zinc-500 font-light md:text-right mt-2 md:mt-0 tracking-wide">
           {item.date}
         </div>
       </div>
@@ -272,11 +272,11 @@ function EducationItem({ item, index }: { item: any, index: number }) {
 
       <div className="flex-1 flex flex-col md:flex-row md:items-baseline md:justify-between gap-2">
         <div className="flex flex-col gap-1">
-          <h3 className="text-[20px] sm:text-[22px] font-display font-medium text-[#F8F8F8] light:text-zinc-900">{item.school}</h3>
-          <p className="text-[16px] sm:text-[18px] text-white/65 light:text-zinc-600 font-light">{item.degree}</p>
+          <h3 className="text-xl sm:text-2xl font-display font-medium text-[#F8F8F8] light:text-zinc-900">{item.school}</h3>
+          <p className="text-base sm:text-lg text-white/65 light:text-zinc-600 font-light">{item.degree}</p>
         </div>
 
-        <div className="text-[15px] sm:text-[16px] text-white/50 light:text-zinc-500 font-light md:text-right mt-2 md:mt-0 tracking-wide">
+        <div className="text-sm sm:text-base text-white/50 light:text-zinc-500 font-light md:text-right mt-2 md:mt-0 tracking-wide">
           {item.date}
         </div>
       </div>
