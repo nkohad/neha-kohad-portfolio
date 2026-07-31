@@ -106,8 +106,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
     challenge: {
       heading: 'Where Do I Start?',
       paragraphs: [
-        "Most teams don't lack knowledge—they lack a clear way in. When we partnered with Cox Enterprises, the Human-Centered Design (HCD) team had already built a rich ecosystem of workshops, templates, certifications, and coaching. Yet employees still struggled to find the right resources because they were scattered across multiple internal systems.'challenge",
-        "Every failed search became another Teams message or email to the HCD team."
+        "The Human-Centered Design (HCD) team had already built a rich ecosystem of workshops, templates, certifications, and coaching. Yet employees still struggled to find the right resources.Every failed search became another Teams message or email to the HCD team.",
         // 'When we partnered with Cox Enterprises, the Human-Centered Design (HCD) team had already built an ecosystem of workshops, certifications, templates, research methods, project examples, and coaching opportunities. More than 1,000 employees had participated in HCD initiatives across an organization of 55,000+ people.',
         // 'Despite that investment, employees continued asking the same question:',
         // 'Employees approached Human-Centered Design with very different goals. Some wanted to learn the fundamentals. Others needed help planning research, facilitating workshops, or finding reusable templates.',
@@ -210,7 +209,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
         ],
       },
       {
-        title: 'Validating the Product Strategy',
+        title: 'Organizing by intent, not resource was key to help self-serve users of varying intent to arrive here with confidence.',
         validating: 'We conducted 4 task-based think-aloud sessions to validate whether organizing resources around employee intent would improve discovery and reduce dependency on HCD experts.',
         question: 'Are we building the right product?',
         insights: [
@@ -241,7 +240,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
         ],
       },
       {
-        title: 'Refining the Experience',
+        title: 'Turning feedback to features',
         validating: 'We built a high-fidelity prototype and evaluated it through expert heuristic review and task-based usability testing — examining whether clear hierarchy, consistent interactions, and strong information scent would enable employees to navigate independently.',
         question: 'Can users confidently and efficiently use the solution?',
         insights: [

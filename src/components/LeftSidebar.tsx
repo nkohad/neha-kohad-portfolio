@@ -7,7 +7,7 @@ import { ThemeToggle } from './ThemeToggle';
 export const CASE_STUDY_SECTIONS = [
   { id: 'first-glance', navTitle: 'Overview' },
   { id: 'problem', navTitle: 'Challenge' },
-  { id: 'solution', navTitle: 'Features That Guide' },
+  { id: 'solution', navTitle: 'Key Features' },
   { id: 'stage-1', navTitle: 'Understanding the Problem' },
   { id: 'stage-2', navTitle: 'Validating the Strategy' },
   { id: 'stage-3', navTitle: 'Refining the Experience' },
