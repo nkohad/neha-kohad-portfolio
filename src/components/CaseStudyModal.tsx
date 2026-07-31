@@ -152,7 +152,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   <ArrowLeft size={20} />
                 </button>
 
-                <div className="flex items-center gap-3 mb-6 font-sans text-xs uppercase tracking-wider font-medium drop-shadow-md">
+                <div className="flex items-center gap-3 mb-6 font-sans text-sm uppercase tracking-wider font-medium drop-shadow-md">
                   <span className="px-3 py-1.5 rounded-full bg-white/10 light:bg-black/5 text-white light:text-zinc-900 border border-white/20 light:border-black/10">
                     {project.type}
                   </span>
@@ -161,11 +161,11 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                 <h1 className="font-display font-black text-5xl sm:text-7xl tracking-tighter text-white light:text-zinc-900 mb-6 leading-[1.1] drop-shadow-lg">
                   {project.title}
                 </h1>
-                {content?.subtitle && (
+                {/* {content?.subtitle && (
                   <p className="font-display text-2xl sm:text-3xl font-medium text-white/90 light:text-zinc-800 tracking-tight mb-4 leading-snug">
                     {content.subtitle}
                   </p>
-                )}
+                )} */}
                 <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,680px)_minmax(280px,1fr)] gap-8 lg:gap-16 items-end">
                   <p className="font-sans text-xl sm:text-2xl font-normal text-white/70 light:text-zinc-600 leading-relaxed">
                     {content?.summary || project.impact}
@@ -173,12 +173,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
 
                   {content?.tools && content.tools.length > 0 && (
                     <div className="lg:justify-self-end">
-                      <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-3">Tools Used</div>
+                      <div className="font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-3">Tools Used</div>
                       <div className="flex flex-wrap gap-3 lg:justify-end">
                         {content.tools.map((tool) => (
                           <div
                             key={tool}
-                            className="flex items-center gap-2 rounded-full bg-white/10 light:bg-black/5 border border-white/15 light:border-black/10 px-3 py-2 text-xs font-semibold text-white/80 light:text-zinc-700"
+                            className="flex items-center gap-2 rounded-full bg-white/10 light:bg-black/5 border border-white/15 light:border-black/10 px-3 py-2 text-sm font-semibold text-white/80 light:text-zinc-700"
                             title={tool}
                           >
                             {CASE_TOOL_ICONS[tool] || <Sparkles size={14} />}
@@ -191,11 +191,11 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                 </div>
 
                 {content?.meta && content.meta.length > 0 && (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-[1.15fr_0.8fr_0.8fr_1fr_1.45fr] gap-x-8 gap-y-8 lg:gap-x-14 xl:gap-x-20 mt-10 pt-8 border-t border-white/10 light:border-black/10 w-full">
+                  <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-x-8 gap-y-8 lg:gap-x-14 xl:gap-x-20 mt-10 pt-8 border-t border-white/10 light:border-black/10 w-full">
                     {content.meta.map((m) => (
                       <div key={m.label}>
-                        <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-1.5">{m.label}</div>
-                        <div className="text-sm text-white/80 light:text-zinc-700 font-medium leading-snug">{m.value}</div>
+                        <div className="font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-1.5">{m.label}</div>
+                        <div className="text-lg sm:text-xl text-white/80 light:text-zinc-700 font-medium leading-snug">{m.value}</div>
                       </div>
                     ))}
                   </div>
@@ -209,7 +209,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
               {/* 2. Problem Statement */}
               <section id="problem" className="scroll-mt-16">
                 {content?.challenge ? (
-                  <div className="grid grid-cols-[1fr_2fr] gap-8 items-stretch">
+                  <div className="grid grid-cols-[1fr_1fr] gap-8 items-stretch">
 
                     {/* Left col: stacked metric cards */}
                     {content.overview?.metrics && (
@@ -233,13 +233,13 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                               }`}
                             >
                               {/* Left: gradient + big number */}
-                              <div className={`w-[48%] shrink-0 bg-gradient-to-br ${gradients[i]} flex items-end p-5`}>
+                              <div className={`w-[40%] shrink-0 bg-gradient-to-br ${gradients[i]} flex items-end p-5`}>
                                 <span className={`font-display font-black text-6xl tracking-tighter leading-none ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>{metric.value}</span>
                               </div>
                               {/* Right: label + description */}
                               <div className={`flex-1 flex flex-col justify-end p-5 ${isLight ? 'bg-white light:bg-zinc-900' : 'bg-[#0d0d0d] light:bg-white'}`}>
-                                <h3 className={`font-display font-bold text-sm tracking-tight mb-1 ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>{metric.label}</h3>
-                                <p className={`font-sans text-xs leading-snug ${isLight ? 'text-black/55 light:text-white/55' : 'text-white/50 light:text-zinc-500'}`}>{metric.description}</p>
+                                <h3 className={`font-display font-bold text-base tracking-tight mb-1 ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>{metric.label}</h3>
+                                <p className={`font-sans text-xl leading-snug ${isLight ? 'text-black/55 light:text-white/55' : 'text-white/50 light:text-zinc-500'}`}>{metric.description}</p>
                               </div>
                             </motion.div>
                           );
@@ -250,22 +250,22 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     {/* Right col: all text + design challenge */}
                     <div className="flex flex-col gap-5">
                       <div>
-                        <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md mb-4">
+                        <h2 className="font-display font-bold text-xl sm:text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md mb-4">
                           {content.challenge.heading}
                         </h2>
                         {content.overview?.hook && (
-                          <p className="font-sans text-base text-white/55 light:text-zinc-500 leading-relaxed">
+                          <p className="font-sans text-xl text-white/55 light:text-zinc-500 leading-relaxed">
                             {content.overview.hook}
                           </p>
                         )}
                       </div>
                       {content.challenge.paragraphs.map((p, i) => (
-                        <p key={i} className="font-sans text-base text-white/65 light:text-zinc-600 leading-relaxed">{p}</p>
+                        <p key={i} className="font-sans text-xl text-white/65 light:text-zinc-600 leading-relaxed">{p}</p>
                       ))}
                       {content.challenge.designChallenge && (
                         <div className="rounded-3xl bg-white light:bg-zinc-900 p-7 mt-5">
-                          <h3 className="text-xs font-bold uppercase tracking-widest text-black/55 light:text-white/55 mb-4">Design Challenge</h3>
-                          <p className="font-display font-medium text-xl sm:text-2xl text-black light:text-white tracking-tight leading-snug">
+                          <h3 className="font-display text-base font-bold uppercase text-black/55 light:text-white/55 mb-4">Design Challenge</h3>
+                          <p className="font-medium text-xl sm:text-xl text-black light:text-white tracking-tight leading-snug">
                             {content.challenge.designChallenge}
                           </p>
                         </div>
@@ -288,21 +288,17 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
               {/* 3. Key Features */}
               <section id="solution" className="scroll-mt-16">
                 {content?.solutions ? (
-                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 xl:gap-16 items-center">
+                  <div className="grid grid-cols-[1fr_2fr] gap-8 xl:gap-8 items-center">
                     {/* Left: heading + subtext + feature list */}
                     <div className="flex flex-col gap-6">
                       <div className="flex flex-col gap-3">
                         <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md">
                           {content.solutions.heading}
                         </h2>
-                        {content.overview?.reframe && (
-                          <p className="font-sans text-base text-white/55 light:text-zinc-500 leading-relaxed">
-                            {content.overview.reframe}
-                          </p>
-                        )}
+                      
                       </div>
                       <div>
-                        <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-3">Features</div>
+                        <div className="font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-3">Features</div>
                         {content.solutions.features.map((feature, i) => {
                           const Icon = featureIcons[i] || PanelsTopLeft;
                           const isActive = i === activeFeature;
@@ -316,12 +312,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                               tabIndex={0}
                               className={`py-4 border-t cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded ${isActive ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
                             >
-                              <div className={`flex items-center gap-2 font-display text-sm font-medium mb-1.5 transition-colors duration-300 ${isActive ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
-                                <Icon size={13} className="shrink-0 opacity-70" />
+                              <div className={`flex items-center gap-2 font-display text-xl font-medium mb-1.5 transition-colors duration-300 ${isActive ?'text-emerald-400' : 'text-white/55 light:text-zinc-500'}`}>
+                                <Icon size={20} className="shrink-0 opacity-70" />
                                 {feature.title}
                               </div>
                               <div className={`overflow-hidden transition-all duration-500 ${isActive ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed pt-1">{feature.description}</p>
+                                <p className="font-sans text-xl text-white/60 light:text-zinc-600 leading-relaxed pt-1">{feature.description}</p>
                               </div>
                             </motion.div>
                           );
@@ -373,11 +369,11 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     </h2>
 
                     {/* Intro context */}
-                    <p className="font-sans text-base text-white/55 light:text-zinc-600 leading-relaxed mb-10">
+                    <p className="font-sans text-xl text-white/55 light:text-zinc-600 leading-relaxed mb-10">
                       {content.stages[0].validating}
                     </p>
 
-                    <div className="grid grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 gap-4">
                       {content.stages[0].insights.map((item, i) => {
                         const S1Icon = stage1Icons[i];
                         const isLight = i === 1;
@@ -399,20 +395,30 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             }`}
                           >
                             {/* Gradient header strip with icon */}
-                            <div className={`h-20 bg-gradient-to-br ${gradients[i]} flex items-end px-5 pb-3`}>
-                              {S1Icon && <S1Icon size={22} className={isLight ? 'text-black/50 light:text-white/50' : 'text-white/55'} />}
+                            <div className={`bg-gradient-to-br ${gradients[i]} px-8 py-8`}>
+                              <div className="flex items-center gap-4">
+                                <S1Icon
+                                  size={24}
+                                  className={`shrink-0 ${isLight ? 'text-black/50' : 'text-white/55'}`}
+                                />
+
+                              </div>
                             </div>
                             {/* Content */}
                             <div className="p-5 flex flex-col gap-3 flex-1">
-                              <h3 className={`font-display font-bold text-base tracking-tight ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>
-                                {item.phrase}
-                              </h3>
-                              <p className={`font-sans text-sm leading-relaxed flex-1 ${isLight ? 'text-black/60 light:text-white/60' : 'text-white/60 light:text-zinc-500'}`}>
+                               <h3
+                                  className={`font-display font-bold text-base uppercase  leading-none ${
+                                    isLight ? 'text-black' : 'text-white'
+                                  }`}
+                                >
+                                  {item.phrase}
+                                </h3>
+                              <p className={`font-sans text-xl leading-relaxed flex-1 ${isLight ? 'text-black/60 light:text-white/60' : 'text-white/60 light:text-zinc-500'}`}>
                                 {item.insight}
                               </p>
                               <div className={`border-t pt-3 ${isLight ? 'border-black/10 light:border-white/10' : 'border-white/10 light:border-black/10'}`}>
-                                <div className={`text-xs font-bold uppercase tracking-widest mb-1.5 ${isLight ? 'text-black/50 light:text-white/50' : 'text-white/50'}`}>Design Goal</div>
-                                <p className={`font-sans text-sm leading-relaxed ${isLight ? 'text-black/50' : 'text-white/50'}`}>{item.change}</p>
+                                <div className={`font-display text-base font-bold uppercase mb-1.5 ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>Design Goal</div>
+                                <p className={`font-sans text-xl leading-relaxed ${isLight ? 'text-black/50' : 'text-white/50'}`}>{item.change}</p>
                               </div>
                             </div>
                           </motion.div>
@@ -461,14 +467,14 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                 )}
               </section>
 
-              {/* Stage 2: Testing the Product Strategy */}
-              {stage2 && (
+              {/* REDO | Stage 2 : Testing Product Strategy */}
+              <section id="stage-2" className="scroll-mt-16"> 
                 <div id="stage-2" className="-mx-8 md:-mx-16 scroll-mt-24">
                   <div className="bg-[#0a0a0a] light:bg-white px-8 md:px-16 flex flex-col gap-10 py-10">
                     {/* Header */}
                     <div>
                       <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">{stage2.title}</h2>
-                      <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed max-w-2xl">
+                      <p className="font-sans text-xl text-white/60 light:text-zinc-600 leading-relaxed">
                         {stage2.validating}
                       </p>
                     </div>
@@ -478,8 +484,8 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                       {/* Left: 2-col insight / change table — rows size to content only */}
                       <div className="flex-1 min-w-0">
                         <div className="grid grid-cols-2 gap-x-8">
-                          <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 pb-3">Insight</div>
-                          <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 pb-3">Design Change</div>
+                          <div className="font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 pb-3">Insight</div>
+                          <div className="font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 pb-3">Design Change</div>
                         </div>
                         {stage2.insights.map((item, i) => {
                           const active = i === stage2Active;
@@ -495,8 +501,8 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 role="button" tabIndex={0}
                                 className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
                               >
-                                <div className={`flex items-center gap-2 font-display text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
-                                  {S2Icon && <S2Icon size={13} className="shrink-0 opacity-70" />}
+                                <div className={`flex items-center gap-4 font-display text-xl font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
+                                  {S2Icon && <S2Icon size={20} className="shrink-0 opacity-70" />}
                                   {item.phrase ?? `Insight ${i + 1}`}
                                 </div>
                                 <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
@@ -512,8 +518,8 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 role="button" tabIndex={0}
                                 className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
                               >
-                                <div className={`flex items-center gap-2 font-display text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
-                                  {S2Icon && <S2Icon size={13} className="shrink-0 opacity-70" />}
+                                <div className={`flex items-center gap-2 font-display text-xl font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
+                                  {/* {S2Icon && <S2Icon size={20} className="shrink-0 opacity-70" />} */}
                                   {item.changePhrase ?? `Design Response ${i + 1}`}
                                 </div>
                                 <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
@@ -527,6 +533,10 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
 
                       {/* Right: MacBook + Key Question — independent of table row heights */}
                       <div className="hidden xl:flex w-[42%] shrink-0 flex-col gap-4 self-start">
+                        <div className="rounded-xl bg-white light:bg-zinc-900 text-black light:text-white p-5">
+                          <div className="font-display text-base font-bold uppercase tracking-widest text-black/55 light:text-white/55 mb-1.5">Key Question</div>
+                          <p className=" font-medium text-xl tracking-tight leading-snug">{stage2.question}</p>
+                        </div>
                         <motion.div
                           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -554,18 +564,16 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             <div className="h-[10px] bg-[#141414] mx-1 rounded-b-xl shadow-xl" />
                           </div>
                         </motion.div>
-                        <div className="rounded-xl bg-white light:bg-zinc-900 text-black light:text-white p-5">
-                          <div className="text-xs font-bold uppercase tracking-widest text-black/55 light:text-white/55 mb-1.5">Key Question</div>
-                          <p className="font-display font-bold text-lg tracking-tight leading-snug">{stage2.question}</p>
-                        </div>
+                        
                       </div>
                     </div>
                   </div>
                 </div>
-              )}
+              
+              </section>
 
               {/* Stage 3: Testing the Workflow */}
-              {stage3 && (
+              <section> 
                 <div id="stage-3" className="-mx-8 md:-mx-16 scroll-mt-24">
                   <div className="bg-[#0d0d0d] light:bg-zinc-50 px-8 md:px-16 flex flex-col gap-10 py-10">
                     {/* Header */}
@@ -581,7 +589,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                       {/* Left: 2-col insight / change table — rows size to content only */}
                       <div className="flex-1 min-w-0">
                         <div className="grid grid-cols-2 gap-x-8">
-                          <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 pb-3">Insight</div>
+                          <div className="text-xs font-bold uppercase text-white/55 light:text-zinc-500 pb-3">Insight</div>
                           <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 pb-3">Design Change</div>
                         </div>
                         {stage3.insights.map((item, i) => {
@@ -598,8 +606,8 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 role="button" tabIndex={0}
                                 className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
                               >
-                                <div className={`flex items-center gap-2 font-display text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
-                                  {S3Icon && <S3Icon size={13} className="shrink-0 opacity-70" />}
+                                <div className={`flex items-center gap-4 font-display text-xl font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
+                                  {S3Icon && <S3Icon size={20} className="shrink-0 opacity-70" />}
                                   {item.phrase ?? `Insight ${i + 1}`}
                                 </div>
                                 <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
@@ -615,8 +623,8 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 role="button" tabIndex={0}
                                 className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
                               >
-                                <div className={`flex items-center gap-2 font-display text-sm font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
-                                  {S3Icon && <S3Icon size={13} className="shrink-0 opacity-70" />}
+                                <div className={`flex items-center gap-2 font-display text-xl font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
+                                  {/* {S3Icon && <S3Icon size={13} className="shrink-0 opacity-70" />} */}
                                   {item.changePhrase ?? `Design Response ${i + 1}`}
                                 </div>
                                 <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
@@ -630,6 +638,10 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
 
                       {/* Right: MacBook + Key Question — independent of table row heights */}
                       <div className="hidden xl:flex w-[42%] shrink-0 flex-col gap-4 self-start">
+                        <div className="rounded-xl bg-white light:bg-zinc-900 text-black light:text-white p-5">
+                          <div className="font-display text-base font-bold uppercase text-black/55 light:text-white/55 mb-1.5">Key Question</div>
+                          <p className=" font-medium text-xl tracking-tight leading-snug">{stage3.question}</p>
+                        </div>
                         <motion.div
                           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -657,24 +669,18 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             <div className="h-[10px] bg-[#141414] mx-1 rounded-b-xl shadow-xl" />
                           </div>
                         </motion.div>
-                        <div className="rounded-xl bg-white light:bg-zinc-900 text-black light:text-white p-5">
-                          <div className="text-xs font-bold uppercase tracking-widest text-black/55 light:text-white/55 mb-1.5">Key Question</div>
-                          <p className="font-display font-bold text-lg tracking-tight leading-snug">{stage3.question}</p>
-                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              )}
+              </section>
 
               {/* 5. Outcomes */}
               <section id="impact" className="scroll-mt-16">
-                {content?.impact ? (
-                  <>
                     <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-5 drop-shadow-md">
                       {content.impact.heading}
                     </h2>
-                    <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed max-w-4xl mb-8">
+                    <p className="font-sans text-xl text-white/60 light:text-zinc-600 leading-relaxed mb-8">
                       {content.impact.intro}
                     </p>
 
@@ -682,16 +688,16 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
 
                       {/* Business column */}
                       <div className="flex flex-col gap-3 h-full">
-                        <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-1">Business</div>
+                        <div className="font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-1">Business</div>
 
                         {/* 55K+ split metric card */}
                         <div className="relative overflow-hidden rounded-3xl border bg-white/[0.04] light:bg-black/[0.03] border-white/10 light:border-black/10 flex">
-                          <div className="w-[42%] shrink-0 bg-gradient-to-br from-violet-500/45 via-blue-500/20 to-transparent flex items-end p-5">
-                            <span className="font-display font-black text-5xl tracking-tighter leading-none text-white light:text-zinc-900">55K+</span>
+                          <div className="w-[40%] shrink-0 bg-gradient-to-br from-violet-500/45 via-blue-500/20 to-transparent flex items-end p-5">
+                            <span className="font-display font-black text-6xl tracking-tighter leading-none text-white light:text-zinc-900">55K+</span>
                           </div>
                           <div className="flex-1 flex flex-col justify-end p-5 bg-[#0d0d0d] light:bg-white">
-                            <h3 className="font-display font-bold text-sm tracking-tight text-white light:text-zinc-900 mb-1">Enterprise Scale</h3>
-                            <p className="font-sans text-xs leading-snug text-white/50 light:text-zinc-500">Employees across Cox Enterprises with access to self-service HCD guidance.</p>
+                            <h3 className="font-display font-bold text-base tracking-tight text-white light:text-zinc-900 mb-1">Enterprise Scale</h3>
+                            <p className="font-sans text-xl leading-snug text-white/50 light:text-zinc-500">Employees across Cox Enterprises with access to self-service HCD guidance.</p>
                           </div>
                         </div>
 
@@ -700,7 +706,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                           {content.impact.outcomes.map((outcome, i) => (
                             <div key={i} className="flex items-center gap-3 p-5 rounded-2xl bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 flex-1">
                               <Check size={15} className="text-emerald-400 light:text-emerald-600 shrink-0" />
-                              <p className="font-sans text-sm text-white/70 light:text-zinc-600 leading-snug">{outcome}</p>
+                              <p className="font-sans text-xl text-white/70 light:text-zinc-600 leading-snug">{outcome}</p>
                             </div>
                           ))}
                         </div>
@@ -709,18 +715,18 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                       {/* Validation column */}
                       {content.impact.metrics && (
                         <div className="flex flex-col gap-3 h-full">
-                          <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-1">Validation</div>
+                          <div className=" font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-1">Validation</div>
                           <div className="flex flex-col gap-3 flex-1">
                             {content.impact.metrics.map((m, i) => (
                               <div key={i} className="relative flex-1 overflow-hidden rounded-3xl border bg-white/[0.04] light:bg-black/[0.03] border-white/10 light:border-black/10 flex">
-                                <div className={`w-[42%] shrink-0 bg-gradient-to-br ${m.gradient ?? 'from-white/10 to-transparent'} flex items-end p-5`}>
-                                  <span className="font-display font-black text-5xl tracking-tighter leading-none text-white light:text-zinc-900">
-                                    {m.value}<span className="text-2xl text-white/50 light:text-zinc-500">{m.unit ?? ''}</span>
+                                <div className={`w-[40%] shrink-0 bg-gradient-to-br ${m.gradient ?? 'from-white/10 to-transparent'} flex items-end p-5`}>
+                                  <span className="font-display font-black text-6xl tracking-tighter leading-none text-white light:text-zinc-900">
+                                    {m.value}<span className="text-2xl text-white/50 light:text-zinc-500">{ m.unit ?? ' '} </span>
                                   </span>
                                 </div>
                                 <div className="flex-1 flex flex-col justify-end p-5 bg-[#0d0d0d] light:bg-white">
-                                  <h3 className="font-display font-bold text-sm tracking-tight text-white light:text-zinc-900 mb-1">{m.label}</h3>
-                                  <p className="font-sans text-xs leading-snug text-white/50 light:text-zinc-500">{m.description}</p>
+                                  <h3 className="font-display font-bold text-base tracking-tight text-white light:text-zinc-900 mb-1">{m.label}</h3>
+                                  <p className="font-sans text-xl leading-snug text-white/50 light:text-zinc-500">{m.description}</p>
                                 </div>
                               </div>
                             ))}
@@ -730,6 +736,10 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
 
                     </div>
 
+              </section>
+
+              {/* 6. Reflections */}
+              <section id="relfections" className="scroll-mt-16">
                     {content.reflection && (
                       <div id="reflection" className="mt-36 scroll-mt-16">
                         <div className="grid grid-cols-1 xl:grid-cols-[1fr_1fr] gap-12 xl:gap-16 items-start">
@@ -757,26 +767,6 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         </div>
                       </div>
                     )}
-                  </>
-                ) : (
-                  <>
-                    <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">Measuring the Impact</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-                      <div className="p-8 rounded-3xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
-                        <div className="font-display font-black text-5xl sm:text-6xl tracking-tighter text-white light:text-zinc-900 mb-3 drop-shadow-md">40<span className="text-3xl text-white/50 light:text-zinc-500">%</span></div>
-                        <div className="font-sans text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/50 light:text-zinc-500">Increase in Velocity</div>
-                      </div>
-                      <div className="p-8 rounded-3xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
-                        <div className="font-display font-black text-5xl sm:text-6xl tracking-tighter text-white light:text-zinc-900 mb-3 drop-shadow-md">0</div>
-                        <div className="font-sans text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/50 light:text-zinc-500">Design Debt Added</div>
-                      </div>
-                      <div className="p-8 rounded-3xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10">
-                        <div className="font-display font-black text-5xl sm:text-6xl tracking-tighter text-white light:text-zinc-900 mb-3 drop-shadow-md">12<span className="text-3xl text-white/50 light:text-zinc-500">+</span></div>
-                        <div className="font-sans text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/50 light:text-zinc-500">Teams Adopted</div>
-                      </div>
-                    </div>
-                  </>
-                )}
               </section>
 
             </div>
@@ -784,11 +774,11 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
     </motion.div>
 
     {/* More Case Studies Carousel - full width, matches site-wide margins */}
-    <div className="w-full border-t border-white/10 light:border-black/10 bg-[#0a0a0a] light:bg-white py-16 px-6 sm:px-12 md:px-20" role="region" aria-label="More case studies">
+    <div className="w-full border-t border-white/10 light:border-black/10 bg-[#0a0a0a] light:bg-white py-16 px-6 sm:px-12 md:px-12" role="region" aria-label="More case studies">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h3 className="font-display font-bold text-2xl sm:text-3xl text-white light:text-zinc-900 tracking-tight">Explore More Work</h3>
-          <p className="text-white/55 light:text-zinc-500 text-sm mt-1">Keep browsing the rest of the portfolio</p>
+          <h3 className="font-display font-bold text-2xl sm:text-4xl text-white light:text-zinc-900 tracking-tight">Explore More Work</h3>
+          <p className="text-white/55 light:text-zinc-500 text-xl mt-1">Keep browsing the rest of the portfolio</p>
         </div>
         <div className="hidden sm:flex items-center gap-2">
           <button

@@ -61,7 +61,6 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
       { label: 'Timeline', value: '15 Weeks' },
       { label: 'Team', value: '4 Designers' },
       { label: 'Client', value: 'Cox Enterprises' },
-      { label: 'Scope', value: 'Product Strategy · UX Research · Information Architecture · Interaction Design' },
     ],
     overview: {
       hook: "Most teams don't lack knowledge. They lack a clear way in.",
@@ -107,12 +106,15 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
     challenge: {
       heading: 'Where Do I Start?',
       paragraphs: [
-        'Employees approached Human-Centered Design with very different goals. Some wanted to learn the fundamentals. Others needed help planning research, facilitating workshops, or finding reusable templates.',
-        "The existing experience assumed everyone already understood the organization's structure. When they didn't, discovery failed.",
-        'Every failed search became another Teams message or email to the HCD team.',
-        'Resources were scattered across multiple internal systems with inconsistent navigation and terminology. Employees often depended on the HCD team to manually point them toward the right templates, workshops, or experts.',
+        "The Human-Centered Design (HCD) team had already built a rich ecosystem of workshops, templates, certifications, and coaching. Yet employees still struggled to find the right resources.Every failed search became another Teams message or email to the HCD team.",
+        // 'When we partnered with Cox Enterprises, the Human-Centered Design (HCD) team had already built an ecosystem of workshops, certifications, templates, research methods, project examples, and coaching opportunities. More than 1,000 employees had participated in HCD initiatives across an organization of 55,000+ people.',
+        // 'Despite that investment, employees continued asking the same question:',
+        // 'Employees approached Human-Centered Design with very different goals. Some wanted to learn the fundamentals. Others needed help planning research, facilitating workshops, or finding reusable templates.',
+        // "The existing experience assumed everyone already understood the organization's structure. When they didn't, discovery failed.",
+        // 'Every failed search became another Teams message or email to the HCD team.',
+        // 'Resources were scattered across multiple internal systems with inconsistent navigation and terminology. Employees often depended on the HCD team to manually point them toward the right templates, workshops, or experts.',
       ],
-      emphasis: ["The problem wasn't missing information.", 'It was missing guidance.'],
+      emphasis: ["The problem wasn't missing information - It was missing guidance."],
       designChallenge:
         'How might we help employees independently discover, learn, and apply Human-Centered Design while reducing dependency on manual support?',
     },
@@ -189,7 +191,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
           {
             phrase: 'Hidden Access',
             insight: "Knowledge existed, but discoverability didn't. Valuable HCD resources were fragmented across multiple internal platforms.",
-            change: 'Consolidate scattered resources into a single discovery layer so employees can find what they need without knowing where to look.',
+            change: 'Consolidate scattered resources into a single discovery layer so employees can find what they need with ease.',
             quote: '"I\'ve checked SharePoint, searched Teams channels, even Googled it internally. I still ended up just pinging someone from the HCD team." — Business Analyst, Cox Automotive',
           },
           {
@@ -207,7 +209,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
         ],
       },
       {
-        title: 'Validating the Product Strategy',
+        title: 'Organizing by intent, not resource was key to help self-serve users of varying intent to arrive here with confidence.',
         validating: 'We conducted 4 task-based think-aloud sessions to validate whether organizing resources around employee intent would improve discovery and reduce dependency on HCD experts.',
         question: 'Are we building the right product?',
         insights: [
@@ -238,7 +240,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
         ],
       },
       {
-        title: 'Refining the Experience',
+        title: 'Turning feedback to features',
         validating: 'We built a high-fidelity prototype and evaluated it through expert heuristic review and task-based usability testing — examining whether clear hierarchy, consistent interactions, and strong information scent would enable employees to navigate independently.',
         question: 'Can users confidently and efficiently use the solution?',
         insights: [
@@ -305,9 +307,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
     },
     reflection: {
       paragraphs: [
-        'The Cox HCD Resource Hub became less about launching another internal site and more about reducing the operational cost of knowledge transfer.',
         'The strongest product decisions came from treating HCD adoption as an enterprise service journey: employees needed clear entry points, visible next steps, and confidence that the path matched their level of maturity.',
-        'That framing pushed the work beyond visual polish. It forced us to design for governance, repeatable discovery, expert capacity, and the way a 55,000-person organization actually absorbs new practices.',
         'The next evolution would pair this structure with AI-assisted discovery, contextual recommendations, and personalized learning paths so employees could describe a goal and be routed to the right methods, examples, and experts.',
       ],
       closing: 'Enterprise UX creates leverage when it turns scattered expertise into a system people can act on without handholding.',
