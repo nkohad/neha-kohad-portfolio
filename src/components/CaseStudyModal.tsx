@@ -774,11 +774,11 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
     </motion.div>
 
     {/* More Case Studies Carousel - full width, matches site-wide margins */}
-    <div className="w-full border-t border-white/10 light:border-black/10 bg-[#0a0a0a] light:bg-white py-16 px-6 sm:px-12 md:px-20" role="region" aria-label="More case studies">
+    <div className="w-full border-t border-white/10 light:border-black/10 bg-[#0a0a0a] light:bg-white py-16 px-6 sm:px-12 md:px-12" role="region" aria-label="More case studies">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h3 className="font-display font-bold text-2xl sm:text-3xl text-white light:text-zinc-900 tracking-tight">Explore More Work</h3>
-          <p className="text-white/55 light:text-zinc-500 text-sm mt-1">Keep browsing the rest of the portfolio</p>
+          <h3 className="font-display font-bold text-2xl sm:text-4xl text-white light:text-zinc-900 tracking-tight">Explore More Work</h3>
+          <p className="text-white/55 light:text-zinc-500 text-xl mt-1">Keep browsing the rest of the portfolio</p>
         </div>
         <div className="hidden sm:flex items-center gap-2">
           <button
