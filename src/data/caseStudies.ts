@@ -36,6 +36,15 @@ export interface CaseStudyContent {
     question: string;
     insights: { insight: string; change: string; quote?: string; phrase?: string; changePhrase?: string }[];
   }[];
+  audienceMapping?: {
+    heading: string;
+    paragraphs: string[];
+    groupsIntro: string;
+    groups: { title: string; description: string }[];
+    closing: string;
+    conceptsHeading: string;
+    concepts: { name: string; description: string; detail: string; verdict: string; outcome: 'won' | 'killed'; sketch?: string }[];
+  };
   impact: {
     heading: string;
     intro: string;
@@ -183,25 +192,25 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
         question: 'Are we solving the right problem?',
         insights: [
           {
-            phrase: 'Goal Logic',
-            insight: 'Employees think in goals, not resources. They start with "I need to conduct research" rather than "I need an interview guide."',
-            change: 'Design navigation around what employees are trying to accomplish, not how the organization categorizes its resources.',
+            phrase: 'Employees think in goals, not resources.',
+            insight: 'They start with "I need to conduct research" rather than "I need an interview guide."',
+            change: 'Navigation had to be organized around what people were trying to accomplish, not how HCD organized its own files.',
             quote: '"I always know what I\'m trying to do — run a usability study, plan a workshop — but figuring out where to even start on the platform takes longer than the actual task." — Product Manager, Cox Enterprises',
           },
           {
-            phrase: 'Hidden Access',
-            insight: "Knowledge existed, but discoverability didn't. Valuable HCD resources were fragmented across multiple internal platforms.",
+            phrase: "The knowledge existed. The access didn't.",
+            insight: "Valuable HCD resources were fragmented across multiple internal platforms.",
             change: 'Consolidate scattered resources into a single discovery layer so employees can find what they need with ease.',
             quote: '"I\'ve checked SharePoint, searched Teams channels, even Googled it internally. I still ended up just pinging someone from the HCD team." — Business Analyst, Cox Automotive',
           },
           {
-            phrase: 'Varied Maturity',
+            phrase: "People weren't starting from the same place.",
             insight: 'Employees entered with different levels of HCD experience.',
             change: 'Create distinct pathways for employees at different stages of HCD maturity, from first-time learners to experienced practitioners.',
             quote: '"I went through the bootcamp two years ago. A colleague just joined with zero HCD background. We need completely different things from the same platform." — Senior Designer, Cox Media Group',
           },
           {
-            phrase: 'Manual Support',
+            phrase: 'Experts were doing triage, not strategy.',
             insight: 'Experts spent significant time answering navigation questions rather than providing strategic guidance.',
             change: 'Enable self-service navigation so employees can find what they need independently, reserving expert access for strategic guidance rather than routing questions.',
             quote: '"Half the questions I get aren\'t strategic at all — people just want to know where things live. I\'d rather spend that time on actual coaching." — HCD Lead, Cox Enterprises',
@@ -290,6 +299,44 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
         ],
       },
     ],
+    audienceMapping: {
+      heading: "Findings told me what people needed. They didn't tell me who was asking.",
+      paragraphs: [
+        "For that, I didn't just rely on what people told me in interviews — I asked the HCD team to pull their last three months of inbox requests, and read the actual pattern of what people were asking for, not just what they said they wanted in a session.",
+      ],
+      groupsIntro: 'Between the two, three distinct groups came into focus:',
+      groups: [
+        { title: 'New to HCD entirely', description: "Didn't know the program existed, let alone what it offered." },
+        { title: 'HCD-aware, self-motivated', description: 'Knew about it, wanted in for their own work or career growth.' },
+        { title: 'Managers and leadership', description: "Knew HCD, wanted to bring it to their team, and often wanted something custom to their group's situation." },
+      ],
+      closing:
+        'Three groups with three different reasons for showing up meant a single, one-size-fits-all navigation structure was never going to work — which is exactly why an intent-based structure, not a resource-based one, became the design principle the rest of the hub was built around. It\'s the same idea as "people think in goals, not resources" above, just made concrete: the IA and the copy both had to start from why someone came, not what category HCD happened to file something under.',
+      conceptsHeading: 'Three ideas, one real constraint',
+      concepts: [
+        {
+          name: 'Mascot AI Agent',
+          description: 'An embedded assistant guiding people through HCD resources.',
+          detail: "The team didn't have the build capacity, and stakeholders didn't trust a bot they had no reason to trust yet. It also needed a hub to live inside — phase 2, not a standalone fix.",
+          verdict: 'Killed — governance overhead',
+          outcome: 'killed',
+        },
+        {
+          name: 'Smart Email Response System',
+          description: 'Automating replies to routine requests.',
+          detail: "It only helped people who already knew to email HCD — not the much bigger group who didn't know the team existed. Stakeholders reframed the real complaint: it wasn't about saving time, it was the monotony of answering the same five questions on repeat. Different problem, different fix.",
+          verdict: 'Killed — wrong audience',
+          outcome: 'killed',
+        },
+        {
+          name: 'Centralized Design Hub',
+          description: 'One low-maintenance source of truth.',
+          detail: "It solved the actual root cause, asked nothing extra of a 4-person team's bandwidth, and let visibility grow without anyone losing control of it.",
+          verdict: 'Won',
+          outcome: 'won',
+        },
+      ],
+    },
     impact: {
       heading: 'Outcomes',
       intro:

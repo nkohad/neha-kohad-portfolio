@@ -1,0 +1,29 @@
+{
+        title: 'Understanding the Problem',
+        validating: 'We conducted 8 in-depth interviews with a stratified convenience sample of employees across Cox Enterprises and Cox Automotive. Our research surfaced four recurring insights.',
+        question: 'Are we solving the right problem?',
+        insights: [
+          {
+            phrase: 'Goal Logic',
+            insight: 'Employees think in goals, not resources. They start with "I need to conduct research" rather than "I need an interview guide."',
+            change: 'Design navigation around what employees are trying to accomplish, not how the organization categorizes its resources.',
+            quote: '"I always know what I\'m trying to do — run a usability study, plan a workshop — but figuring out where to even start on the platform takes longer than the actual task." — Product Manager, Cox Enterprises',
+          },
+          {
+            phrase: 'Hidden Access',
+            insight: "Knowledge existed, but discoverability didn't. Valuable HCD resources were fragmented across multiple internal platforms.",
+            change: 'Consolidate scattered resources into a single discovery layer so employees can find what they need with ease.',
+            quote: '"I\'ve checked SharePoint, searched Teams channels, even Googled it internally. I still ended up just pinging someone from the HCD team." — Business Analyst, Cox Automotive',
+          },
+          {
+            phrase: 'Varied Maturity',
+            insight: 'Employees entered with different levels of HCD experience.',
+            change: 'Create distinct pathways for employees at different stages of HCD maturity, from first-time learners to experienced practitioners.',
+            quote: '"I went through the bootcamp two years ago. A colleague just joined with zero HCD background. We need completely different things from the same platform." — Senior Designer, Cox Media Group',
+          },
+          {
+            phrase: 'Manual Support',
+            insight: 'Experts spent significant time answering navigation questions rather than providing strategic guidance.',
+            change: 'Enable self-service navigation so employees can find what they need independently, reserving expert access for strategic guidance rather than routing questions.',
+            quote: '"Half the questions I get aren\'t strategic at all — people just want to know where things live. I\'d rather spend that time on actual coaching." — HCD Lead, Cox Enterprises',
+          },

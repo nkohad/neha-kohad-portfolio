@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowLeft, ChevronLeft, ChevronRight, Sparkles, AlertTriangle, ArrowUpRight, Building2, Check, Quote, Search, Route, Library, Users, PanelsTopLeft, MessageSquare, Table2, Compass, EyeOff, Layers, Headphones, GitBranch, BarChart2, Zap, Award, UserPlus, Briefcase, Bot, Mail, X } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, Sparkles, AlertTriangle, ArrowUpRight, Building2, Check, Quote, Search, Route, Library, Users, PanelsTopLeft, MessageSquare, Table2, Compass, EyeOff, Layers, Headphones, GitBranch, BarChart2, Zap, Award } from 'lucide-react';
 import { CASE_STUDY_CONTENT } from '../data/caseStudies';
 import { CASE_STUDY_SECTIONS } from './LeftSidebar';
 
@@ -26,8 +26,6 @@ const featureIcons = [PanelsTopLeft, Route, Search, Users, Library];
 const stage1Icons = [Compass, EyeOff, Layers, Headphones];
 const stage2Icons = [Route, Compass, GitBranch, BarChart2];
 const stage3Icons = [Layers, Search, Zap, Award];
-const audienceGroupIcons = [EyeOff, UserPlus, Briefcase];
-const conceptIcons = [Bot, Mail, Building2];
 const featureToneClasses = [
   'from-sky-500/30 via-cyan-400/15 to-emerald-400/20',
   'from-fuchsia-500/25 via-rose-400/15 to-amber-300/20',
@@ -407,17 +405,21 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                               </div>
                             </div>
                             {/* Content */}
-                            <div className="p-6 flex flex-col gap-2.5 flex-1">
+                            <div className="p-5 flex flex-col gap-3 flex-1">
                                <h3
-                                  className={`font-display font-bold text-xl leading-snug tracking-tight ${
+                                  className={`font-display font-bold text-base leading-none ${
                                     isLight ? 'text-black' : 'text-white'
                                   }`}
                                 >
                                   {item.phrase}
                                 </h3>
-                              <p className={`font-sans text-base leading-relaxed flex-1 ${isLight ? 'text-black/60 light:text-white/60' : 'text-white/60 light:text-zinc-500'}`}>
+                              <p className={`font-sans text-xl leading-relaxed flex-1 ${isLight ? 'text-black/60 light:text-white/60' : 'text-white/60 light:text-zinc-500'}`}>
                                 {item.insight}
                               </p>
+                              <div className={`border-t pt-3 ${isLight ? 'border-black/10 light:border-white/10' : 'border-white/10 light:border-black/10'}`}>
+                                <div className={`font-display text-base font-bold uppercase mb-1.5 ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>Design Goal</div>
+                                <p className={`font-sans text-xl leading-relaxed ${isLight ? 'text-black/50' : 'text-white/50'}`}>{item.change}</p>
+                              </div>
                             </div>
                           </motion.div>
                         );
@@ -464,111 +466,6 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   </>
                 )}
               </section>
-
-              {/* Mapping the Audience */}
-              {content?.audienceMapping && (
-                <section id="audience" className="scroll-mt-16">
-                  <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">
-                    {content.audienceMapping.heading}
-                  </h2>
-                  {content.audienceMapping.paragraphs.map((p, i) => (
-                    <p key={i} className="font-sans text-xl text-white/60 light:text-zinc-600 leading-relaxed mb-4 max-w-3xl">
-                      {p}
-                    </p>
-                  ))}
-
-                  <p className="font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mt-6 mb-4">
-                    {content.audienceMapping.groupsIntro}
-                  </p>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                    {content.audienceMapping.groups.map((group, i) => {
-                      const GroupIcon = audienceGroupIcons[i] || Users;
-                      return (
-                        <motion.div
-                          key={group.title}
-                          whileHover={{ y: -4 }}
-                          transition={{ type: 'spring', bounce: 0.18, duration: 0.45 }}
-                          className="rounded-3xl border border-white/10 light:border-black/10 bg-white/[0.04] light:bg-black/[0.03] p-6 flex flex-col gap-3"
-                        >
-                          <GroupIcon size={22} className="text-white/50 light:text-zinc-500" />
-                          <h3 className="font-display font-bold text-lg leading-snug tracking-tight text-white light:text-zinc-900">
-                            {group.title}
-                          </h3>
-                          <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed">
-                            {group.description}
-                          </p>
-                        </motion.div>
-                      );
-                    })}
-                  </div>
-
-                  <p className="font-sans text-xl text-white/60 light:text-zinc-600 leading-relaxed mb-12 max-w-3xl">
-                    {content.audienceMapping.closing}
-                  </p>
-
-                  <h3 className="font-display font-bold text-2xl sm:text-3xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">
-                    {content.audienceMapping.conceptsHeading}
-                  </h3>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {content.audienceMapping.concepts.map((concept, i) => {
-                      const ConceptIcon = conceptIcons[i] || Sparkles;
-                      const won = concept.outcome === 'won';
-                      return (
-                        <motion.div
-                          key={concept.name}
-                          whileHover={{ y: -4 }}
-                          transition={{ type: 'spring', bounce: 0.18, duration: 0.45 }}
-                          className={`rounded-3xl border p-6 flex flex-col gap-4 ${
-                            won
-                              ? 'bg-white text-black light:bg-zinc-900 light:text-white border-white/70 light:border-zinc-900'
-                              : 'bg-white/[0.04] light:bg-black/[0.03] text-white light:text-zinc-900 border-white/10 light:border-black/10'
-                          }`}
-                        >
-                          {/* Sketch frame */}
-                          <div
-                            className={`aspect-[4/3] w-full rounded-2xl border border-dashed overflow-hidden flex items-center justify-center ${
-                              won ? 'border-black/15 light:border-white/15 bg-black/[0.03] light:bg-white/[0.06]' : 'border-white/15 light:border-black/15 bg-black/20 light:bg-black/[0.03]'
-                            }`}
-                          >
-                            {concept.sketch ? (
-                              <img src={concept.sketch} alt={`${concept.name} sketch`} className="w-full h-full object-cover" />
-                            ) : (
-                              <span className={`font-mono text-[10px] uppercase tracking-widest text-center px-4 ${won ? 'text-black/30 light:text-white/30' : 'text-white/25 light:text-zinc-400'}`}>
-                                Sketch · {concept.name}
-                              </span>
-                            )}
-                          </div>
-
-                          <div className="flex items-center justify-between">
-                            <ConceptIcon size={22} className={won ? 'text-black/50 light:text-white/50' : 'text-white/50 light:text-zinc-500'} />
-                            <span
-                              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest ${
-                                won
-                                  ? 'bg-emerald-400/15 text-emerald-600 light:text-emerald-400'
-                                  : 'bg-rose-400/10 text-rose-500 light:text-rose-400'
-                              }`}
-                            >
-                              {won ? <Check size={12} /> : <X size={12} />}
-                              {concept.verdict}
-                            </span>
-                          </div>
-                          <div>
-                            <h4 className="font-display font-bold text-xl tracking-tight mb-1.5">{concept.name}</h4>
-                            <p className={`font-sans text-base leading-relaxed ${won ? 'text-black/60 light:text-white/60' : 'text-white/60 light:text-zinc-500'}`}>
-                              {concept.description}
-                            </p>
-                          </div>
-                          <p className={`font-sans text-sm leading-relaxed pt-3 border-t ${won ? 'border-black/10 light:border-white/10 text-black/50 light:text-white/50' : 'border-white/10 light:border-black/10 text-white/45 light:text-zinc-500'}`}>
-                            {concept.detail}
-                          </p>
-                        </motion.div>
-                      );
-                    })}
-                  </div>
-                </section>
-              )}
 
               {/* REDO | Stage 2 : Testing Product Strategy */}
               <section id="stage-2" className="scroll-mt-16"> 
