@@ -297,7 +297,62 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         <p key={i} className="font-sans text-xl text-white/65 light:text-zinc-600 leading-relaxed ">{p}</p>
                       ))}
                     </div>
+                       {/* As-is workflow flowchart */}
+                    <div>
+                      {/* <p className="font-sans text-xs font-semibold tracking-widest uppercase text-white/30 light:text-zinc-400 mb-6">As-is workflow</p> */}
 
+                      {/* Desktop: horizontal flow */}
+                      <div className="hidden sm:flex items-start gap-2">
+                        <div className="flex-1 bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-5 flex flex-col gap-3">
+                          <Users size={20} className="text-white/40 light:text-zinc-400" />
+                          <p className="font-sans text-xl font-medium text-white/75 light:text-zinc-700 leading-snug">Employee wants to access an HCD resource</p>
+                        </div>
+                        <ChevronRight size={18} className="text-white/20 light:text-zinc-300 mt-8 shrink-0" />
+                        <div className="flex-1 bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-5 flex flex-col gap-3">
+                          <Search size={20} className="text-white/40 light:text-zinc-400" />
+                          <p className="font-sans text-xl font-medium text-white/75 light:text-zinc-700 leading-snug">Tries finding the resource on their own</p>
+                        </div>
+                        <ChevronRight size={18} className="text-white/20 light:text-zinc-300 mt-8 shrink-0" />
+                        <div className="flex-1 bg-rose-500/[0.08] border border-rose-500/40 rounded-2xl p-5 flex flex-col gap-3 relative">
+                          {/* <div className="absolute -top-3 left-4">
+                            <span className="bg-rose-500 text-white text-sm font-bold tracking-wider uppercase px-2.5 py-1 ">Pain Point</span>
+                          </div> */}
+                          <AlertTriangle size={20} className="text-rose-400 light:text-rose-600" />
+                          <p className="font-sans text-xl font-medium text-rose-300/90 light:text-rose-700 leading-snug">Fails. Reaches out to HCD@Cox</p>
+                        </div>
+                        <ChevronRight size={18} className="text-white/20 light:text-zinc-300 mt-8 shrink-0" />
+                        <div className="flex-1 bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-5 flex flex-col gap-3">
+                          <Layers size={20} className="text-white/40 light:text-zinc-400" />
+                          <p className="font-sans text-xl font-medium text-white/75 light:text-zinc-700 leading-snug">HCD team manually curates and shares links</p>
+                        </div>
+                      </div>
+
+                      {/* Mobile: vertical flow */}
+                      <div className="flex sm:hidden flex-col items-center gap-0">
+                        <div className="w-full bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-4 flex items-center gap-3">
+                          <Users size={18} className="text-white/40 light:text-zinc-400 shrink-0" />
+                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">Employee wants to access an HCD resource</p>
+                        </div>
+                        <ChevronRight size={16} className="text-white/20 light:text-zinc-300 rotate-90 my-1" />
+                        <div className="w-full bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-4 flex items-center gap-3">
+                          <Search size={18} className="text-white/40 light:text-zinc-400 shrink-0" />
+                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">Tries finding the resource on their own</p>
+                        </div>
+                        <ChevronRight size={16} className="text-white/20 light:text-zinc-300 rotate-90 my-1" />
+                        <div className="w-full bg-rose-500/[0.08] border border-rose-500/40 rounded-2xl p-4 flex items-center gap-3 relative mt-3">
+                          <div className="absolute -top-3 left-4">
+                            <span className="bg-rose-500 text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full">Pain Point</span>
+                          </div>
+                          <AlertTriangle size={18} className="text-rose-400 light:text-rose-600 shrink-0" />
+                          <p className="font-sans text-sm font-medium text-rose-300/90 light:text-rose-700 leading-snug">Fails. Messages the HCD Team</p>
+                        </div>
+                        <ChevronRight size={16} className="text-white/20 light:text-zinc-300 rotate-90 my-1" />
+                        <div className="w-full bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-4 flex items-center gap-3">
+                          <Layers size={18} className="text-white/40 light:text-zinc-400 shrink-0" />
+                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">HCD team manually curates and shares links</p>
+                        </div>
+                      </div>
+                    </div>
                     {/* Design challenge callout */}
                     {content.challenge.designChallenge && (
                       <div className="rounded-3xl bg-white light:bg-zinc-900 p-7">
@@ -449,7 +504,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                       return (
                         <div className="hidden md:flex gap-8 lg:gap-12 items-start">
                           {/* Left: insight rows */}
-                          <div className="w-[44%] shrink-0 flex flex-col divide-y divide-white/[0.07] light:divide-black/[0.07]">
+                          <div className="w-[70%] shrink-0 flex flex-col divide-y divide-white/[0.07] light:divide-black/[0.07]">
                             {content.stages[0].insights.map((item, i) => {
                               const isActive = activeIdx === i;
                               return (
@@ -463,10 +518,10 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                     {String(i + 1).padStart(2, '0')}
                                   </span>
                                   <div className="flex flex-col gap-1.5 flex-1">
-                                    <h3 className="font-display font-bold text-base leading-snug tracking-tight text-white light:text-zinc-900">
+                                    <h3 className="font-display font-bold text-xl leading-snug tracking-tight text-white light:text-zinc-900">
                                       {item.phrase}
                                     </h3>
-                                    <p className="font-sans text-sm text-white/55 light:text-zinc-600 leading-relaxed">
+                                    <p className="font-sans text-base text-white/55 light:text-zinc-600 leading-relaxed">
                                       {item.insight}
                                     </p>
                                   </div>
@@ -495,12 +550,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 className={`rounded-3xl border ${borders[activeIdx]} bg-white/[0.03] light:bg-black/[0.02] p-8`}
                               >
                                 <Quote size={22} className={`${iconColors[activeIdx]} mb-5`} />
-                                <p className="font-sans text-lg leading-relaxed text-white/80 light:text-zinc-800 mb-5">
+                                <p className="font-sans text-xl leading-relaxed text-white/80 light:text-zinc-800 mb-5">
                                   "{quoteBody}"
                                 </p>
                                 {attribution && (
-                                  <p className="font-sans text-sm text-white/35 light:text-zinc-400 italic">
-                                    — {attribution}
+                                  <p className="font-display text-base text-white/35 light:text-zinc-400">
+                                   {attribution}
                                   </p>
                                 )}
                               </motion.div>
@@ -509,64 +564,6 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         </div>
                       );
                     })()}
-
-
-                    {/* As-is workflow flowchart */}
-                    <div className="mt-14">
-                      <p className="font-sans text-xs font-semibold tracking-widest uppercase text-white/30 light:text-zinc-400 mb-6">As-is workflow</p>
-
-                      {/* Desktop: horizontal flow */}
-                      <div className="hidden sm:flex items-start gap-2">
-                        <div className="flex-1 bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-5 flex flex-col gap-3">
-                          <Users size={20} className="text-white/40 light:text-zinc-400" />
-                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">Employee wants to access an HCD resource</p>
-                        </div>
-                        <ChevronRight size={18} className="text-white/20 light:text-zinc-300 mt-8 shrink-0" />
-                        <div className="flex-1 bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-5 flex flex-col gap-3">
-                          <Search size={20} className="text-white/40 light:text-zinc-400" />
-                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">Tries finding the resource on their own</p>
-                        </div>
-                        <ChevronRight size={18} className="text-white/20 light:text-zinc-300 mt-8 shrink-0" />
-                        <div className="flex-1 bg-rose-500/[0.08] border border-rose-500/40 rounded-2xl p-5 flex flex-col gap-3 relative">
-                          <div className="absolute -top-3 left-4">
-                            <span className="bg-rose-500 text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full">Pain Point</span>
-                          </div>
-                          <AlertTriangle size={20} className="text-rose-400 light:text-rose-600" />
-                          <p className="font-sans text-sm font-medium text-rose-300/90 light:text-rose-700 leading-snug">Fails. Messages the HCD Team</p>
-                        </div>
-                        <ChevronRight size={18} className="text-white/20 light:text-zinc-300 mt-8 shrink-0" />
-                        <div className="flex-1 bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-5 flex flex-col gap-3">
-                          <Layers size={20} className="text-white/40 light:text-zinc-400" />
-                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">HCD team manually curates and shares links</p>
-                        </div>
-                      </div>
-
-                      {/* Mobile: vertical flow */}
-                      <div className="flex sm:hidden flex-col items-center gap-0">
-                        <div className="w-full bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-4 flex items-center gap-3">
-                          <Users size={18} className="text-white/40 light:text-zinc-400 shrink-0" />
-                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">Employee wants to access an HCD resource</p>
-                        </div>
-                        <ChevronRight size={16} className="text-white/20 light:text-zinc-300 rotate-90 my-1" />
-                        <div className="w-full bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-4 flex items-center gap-3">
-                          <Search size={18} className="text-white/40 light:text-zinc-400 shrink-0" />
-                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">Tries finding the resource on their own</p>
-                        </div>
-                        <ChevronRight size={16} className="text-white/20 light:text-zinc-300 rotate-90 my-1" />
-                        <div className="w-full bg-rose-500/[0.08] border border-rose-500/40 rounded-2xl p-4 flex items-center gap-3 relative mt-3">
-                          <div className="absolute -top-3 left-4">
-                            <span className="bg-rose-500 text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full">Pain Point</span>
-                          </div>
-                          <AlertTriangle size={18} className="text-rose-400 light:text-rose-600 shrink-0" />
-                          <p className="font-sans text-sm font-medium text-rose-300/90 light:text-rose-700 leading-snug">Fails. Messages the HCD Team</p>
-                        </div>
-                        <ChevronRight size={16} className="text-white/20 light:text-zinc-300 rotate-90 my-1" />
-                        <div className="w-full bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-4 flex items-center gap-3">
-                          <Layers size={18} className="text-white/40 light:text-zinc-400 shrink-0" />
-                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">HCD team manually curates and shares links</p>
-                        </div>
-                      </div>
-                    </div>
 
                   </>
                 ) : (

@@ -66,8 +66,8 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
       'Helping 55,000+ employees discover, learn, and apply Human-Centered Design through a self-service enterprise knowledge platform.',
     tools: ['Figma', 'Miro', 'Teams', 'Excel', 'Claude'],
     meta: [
-      { label: 'Role', value: 'AI Product Designer · UX Research' },
-      { label: 'Timeline', value: '15 Weeks' },
+      { label: 'Role', value: "Product Design Lead\nUX Research\nProject Management"},
+      { label: 'Timeline', value: '8 Weeks' },
       { label: 'Team', value: '4 Designers' },
       { label: 'Client', value: 'Cox Enterprises' },
     ],
@@ -147,43 +147,80 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
       ],
       intents: ['Learn HCD', 'Plan User Research', 'Find Templates', 'Explore Projects', 'Connect with Experts'],
       visionClosing: 'The goal shifted from storing knowledge to helping employees confidently act on it.',
+      // features: [
+      //   {
+      //     title: 'Intent-Based Navigation',
+      //     description:
+      //       "The homepage became the product's primary decision surface. Navigation was organized around outcomes rather than organizational terminology, reducing the amount of institutional knowledge employees needed before they could succeed.",
+      //     imageLabel: 'Homepage decision surface',
+      //     imageTone: 'from-sky-500/30 via-cyan-400/15 to-emerald-400/20',
+      //   },
+      //   {
+      //     title: 'Progressive Learning Pathways',
+      //     description:
+      //       'Employees entered with different levels of experience. We created guided learning journeys that helped beginners build confidence while allowing experienced practitioners to quickly access advanced resources.',
+      //     imageLabel: 'Beginner to practitioner journey',
+      //     imageTone: 'from-fuchsia-500/25 via-rose-400/15 to-amber-300/20',
+      //   },
+      //   {
+      //     title: 'Unified Knowledge Search',
+      //     description:
+      //       'Rather than forcing employees to search across multiple internal systems, we designed a single discovery experience spanning templates, workshops, methods, projects, and learning materials.',
+      //     imageLabel: 'Cross-platform resource discovery',
+      //     imageTone: 'from-violet-500/25 via-blue-400/15 to-slate-100/20',
+      //   },
+      //   {
+      //     title: 'Expert Directory',
+      //     description:
+      //       'Human expertise remained important, but should be intentional rather than required. Employees could discover experts based on specialties and connect when guidance—not navigation—was needed.',
+      //     imageLabel: 'Specialty-based expert routing',
+      //     imageTone: 'from-lime-400/25 via-emerald-500/15 to-teal-300/20',
+      //   },
+      //   {
+      //     title: 'Project Library',
+      //     description:
+      //       'Real examples inspired adoption. A curated project library demonstrated how Human-Centered Design had been successfully applied across the organization.',
+      //     imageLabel: 'Reusable proof through projects',
+      //     imageTone: 'from-orange-400/25 via-red-400/15 to-pink-300/20',
+      //   },
+      // ],
       features: [
-        {
-          title: 'Intent-Based Navigation',
-          description:
-            "The homepage became the product's primary decision surface. Navigation was organized around outcomes rather than organizational terminology, reducing the amount of institutional knowledge employees needed before they could succeed.",
-          imageLabel: 'Homepage decision surface',
-          imageTone: 'from-sky-500/30 via-cyan-400/15 to-emerald-400/20',
-        },
-        {
-          title: 'Progressive Learning Pathways',
-          description:
-            'Employees entered with different levels of experience. We created guided learning journeys that helped beginners build confidence while allowing experienced practitioners to quickly access advanced resources.',
-          imageLabel: 'Beginner to practitioner journey',
-          imageTone: 'from-fuchsia-500/25 via-rose-400/15 to-amber-300/20',
-        },
-        {
-          title: 'Unified Knowledge Search',
-          description:
-            'Rather than forcing employees to search across multiple internal systems, we designed a single discovery experience spanning templates, workshops, methods, projects, and learning materials.',
-          imageLabel: 'Cross-platform resource discovery',
-          imageTone: 'from-violet-500/25 via-blue-400/15 to-slate-100/20',
-        },
-        {
-          title: 'Expert Directory',
-          description:
-            'Human expertise remained important, but should be intentional rather than required. Employees could discover experts based on specialties and connect when guidance—not navigation—was needed.',
-          imageLabel: 'Specialty-based expert routing',
-          imageTone: 'from-lime-400/25 via-emerald-500/15 to-teal-300/20',
-        },
-        {
-          title: 'Project Library',
-          description:
-            'Real examples inspired adoption. A curated project library demonstrated how Human-Centered Design had been successfully applied across the organization.',
-          imageLabel: 'Reusable proof through projects',
-          imageTone: 'from-orange-400/25 via-red-400/15 to-pink-300/20',
-        },
-      ],
+  {
+    title: 'Intent-Based Navigation',
+    description:
+      'Employees reached the right resources through goals instead of internal terminology.',
+    imageLabel: 'Homepage decision surface',
+    imageTone: 'from-sky-500/30 via-cyan-400/15 to-emerald-400/20',
+  },
+  {
+    title: 'Progressive Learning Pathways',
+    description:
+      'Guided journeys helped beginners build confidence while experts moved faster.',
+    imageLabel: 'Beginner to practitioner journey',
+    imageTone: 'from-fuchsia-500/25 via-rose-400/15 to-amber-300/20',
+  },
+  {
+    title: 'Unified Knowledge Search',
+    description:
+      'A single search experience connected templates, workshops, projects, and resources.',
+    imageLabel: 'Cross-platform resource discovery',
+    imageTone: 'from-violet-500/25 via-blue-400/15 to-slate-100/20',
+  },
+  {
+    title: 'Expert Directory',
+    description:
+      'Specialty-based profiles connected employees with the right HCD experts.',
+    imageLabel: 'Specialty-based expert routing',
+    imageTone: 'from-lime-400/25 via-emerald-500/15 to-teal-300/20',
+  },
+  {
+    title: 'Project Library',
+    description:
+      'Real case studies demonstrated HCD in practice across the organization.',
+    imageLabel: 'Reusable proof through projects',
+    imageTone: 'from-orange-400/25 via-red-400/15 to-pink-300/20',
+  },
+],
     },
     stages: [
       {
