@@ -60,7 +60,7 @@ export interface CaseStudyContent {
 // Keyed by project title (src/App.tsx PROJECTS). Projects without an entry
 // here fall back to the generic placeholder content in CaseStudyModal.
 export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
-  'Cox HCD Resource Hub': {
+  '2-click discovery for HCD Resources @ Cox': {
     subtitle: 'Designing the Front Door to Human-Centered Design',
     summary:
       'Helping 55,000+ employees discover, learn, and apply Human-Centered Design through a self-service enterprise knowledge platform.',
