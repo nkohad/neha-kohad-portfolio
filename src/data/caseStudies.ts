@@ -347,6 +347,11 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
           verdict: 'Won',
           outcome: 'won',
           sketch: '/sketch-centralized-hub.png',
+          bullets: [
+            { type: '+', text: 'Solved the actual root cause directly' },
+            { type: '+', text: "Asked nothing extra of the 4-person team's bandwidth" },
+            { type: '+', text: 'Let visibility grow without anyone losing control' },
+          ],
         },
       ],
     },
