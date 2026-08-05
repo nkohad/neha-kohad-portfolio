@@ -83,18 +83,18 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
       metrics: [
         {
           value: '55K+',
-          label: 'Enterprise employees',
-          description: 'Employees across Cox Enterprises needed clearer access to HCD guidance.',
+          label: 'Enterprise Scale',
+          description: 'Employees across Cox Enterprises with access to self-service HCD guidance.',
         },
         {
-          value: '1K+',
-          label: 'HCD participants',
-          description: 'Employees had already joined workshops, certifications, and HCD initiatives.',
+          value: '94.4%',
+          label: 'Task Success',
+          description: 'Task completion rate',
         },
         {
-          value: '6+',
-          label: 'Resource types',
-          description: 'Templates, methods, projects, workshops, experts, and learning materials were spread across systems.',
+          value: '<2',
+          label: 'Clicks',
+          description: 'To complete any task',
         },
       ],
       painPoints: [
@@ -384,6 +384,11 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
           verdict: 'Won',
           outcome: 'won',
           sketch: '/sketch-centralized-hub.png',
+          bullets: [
+            { type: '+', text: 'Solved the actual root cause directly' },
+            { type: '+', text: "Asked nothing extra of the 4-person team's bandwidth" },
+            { type: '+', text: 'Let visibility grow without anyone losing control' },
+          ],
         },
       ],
     },
