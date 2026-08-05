@@ -43,7 +43,7 @@ export interface CaseStudyContent {
     groups: { title: string; description: string }[];
     closing: string;
     conceptsHeading: string;
-    concepts: { name: string; description: string; detail: string; verdict: string; outcome: 'won' | 'killed'; sketch?: string }[];
+    concepts: { name: string; description: string; detail: string; verdict: string; outcome: 'won' | 'killed'; sketch?: string; bullets?: { type: '+' | '-'; text: string }[] }[];
   };
   impact: {
     heading: string;
@@ -321,6 +321,11 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
           verdict: 'Killed — governance overhead',
           outcome: 'killed',
           sketch: '/sketch-mascot-agent.png',
+          bullets: [
+            { type: '-', text: 'No build capacity on the team' },
+            { type: '-', text: 'Stakeholders had no reason to trust it yet' },
+            { type: '-', text: 'Needed a hub to live inside — phase 2, not a standalone fix' },
+          ],
         },
         {
           name: 'Smart Email Response System',
@@ -329,6 +334,11 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
           verdict: 'Killed — wrong audience',
           outcome: 'killed',
           sketch: '/sketch-email-response.png',
+          bullets: [
+            { type: '-', text: "Only reached people who already knew to email HCD" },
+            { type: '-', text: "Missed the bigger group who didn't know the team existed" },
+            { type: '-', text: "Wrong problem — it was about monotony, not saving time" },
+          ],
         },
         {
           name: 'Centralized Design Hub',
