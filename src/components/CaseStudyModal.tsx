@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft, ChevronLeft, ChevronRight, Sparkles, AlertTriangle, ArrowUpRight, Building2, Check, Quote, Search, Route, Library, Users, PanelsTopLeft, MessageSquare, Table2, Compass, EyeOff, Layers, Headphones, GitBranch, BarChart2, Zap, Award, UserPlus, Briefcase, Bot, Mail, X } from 'lucide-react';
 import { CASE_STUDY_CONTENT } from '../data/caseStudies';
 import { CASE_STUDY_SECTIONS } from './LeftSidebar';
@@ -411,53 +411,161 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                       {content.stages[0].validating}
                     </p>
 
-                    <div className="grid grid-cols-2 gap-4">
-                      {content.stages[0].insights.map((item, i) => {
-                        const S1Icon = stage1Icons[i];
-                        const isLight = i === 1;
-                        const gradients = [
-                          'from-violet-500/50 via-blue-500/25 to-transparent',
-                          'from-orange-400/50 via-rose-400/30 to-transparent',
-                          'from-cyan-400/40 via-teal-500/20 to-transparent',
-                          'from-emerald-400/40 via-green-500/20 to-transparent',
-                        ];
-                        return (
-                          <motion.div
-                            key={i}
-                            whileHover={{ y: -6 }}
-                            transition={{ type: 'spring', bounce: 0.18, duration: 0.45 }}
-                            className={`group rounded-3xl border overflow-hidden flex flex-col ${
-                              isLight
-                                ? 'bg-white light:bg-zinc-900 border-white/70 light:border-zinc-900'
-                                : 'bg-white/[0.04] light:bg-black/[0.03] border-white/10 light:border-black/10'
-                            }`}
-                          >
-                            {/* Gradient header strip with icon */}
-                            <div className={`bg-gradient-to-br ${gradients[i]} px-8 py-8`}>
-                              <div className="flex items-center gap-4">
-                                <S1Icon
-                                  size={24}
-                                  className={`shrink-0 ${isLight ? 'text-black/50' : 'text-white/55'}`}
-                                />
-
+                    {/* Mobile: editorial list with inline quotes */}
+                    <div className="md:hidden flex flex-col divide-y divide-white/[0.07] light:divide-black/[0.07]">
+                      {content.stages[0].insights.map((item, i) => (
+                        <div key={i} className="py-6 first:pt-0 flex gap-5">
+                          <span className="font-display font-bold text-2xl leading-none tabular-nums shrink-0 text-white/15 light:text-black/10 select-none">
+                            {String(i + 1).padStart(2, '0')}
+                          </span>
+                          <div className="flex flex-col gap-2.5">
+                            <h3 className="font-display font-bold text-base leading-snug tracking-tight text-white light:text-zinc-900">
+                              {item.phrase}
+                            </h3>
+                            <p className="font-sans text-sm text-white/50 light:text-zinc-600 leading-relaxed">{item.insight}</p>
+                            {item.quote && (
+                              <div className="border-l-2 border-white/15 light:border-black/[0.12] pl-4 mt-1">
+                                <p className="font-sans text-sm italic text-white/38 light:text-zinc-500 leading-relaxed">{item.quote}</p>
                               </div>
-                            </div>
-                            {/* Content */}
-                            <div className="p-6 flex flex-col gap-2.5 flex-1">
-                               <h3
-                                  className={`font-display font-bold text-xl leading-snug tracking-tight ${
-                                    isLight ? 'text-black' : 'text-white'
-                                  }`}
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Desktop: interactive split — hover insight to swap quote */}
+                    {(() => {
+                      const numColors  = ['text-violet-400', 'text-amber-400', 'text-cyan-400', 'text-emerald-400'];
+                      const borders    = ['border-violet-500/30', 'border-amber-500/30', 'border-cyan-500/30', 'border-emerald-500/30'];
+                      const iconColors = ['text-violet-400/70', 'text-amber-400/70', 'text-cyan-400/70', 'text-emerald-400/70'];
+                      const activeIdx  = hoveredInsight ?? 0;
+                      const activeItem = content.stages[0].insights[activeIdx];
+                      const lastDash   = activeItem.quote?.lastIndexOf(' — ') ?? -1;
+                      const quoteBody  = lastDash > -1
+                        ? activeItem.quote.slice(0, lastDash).replace(/^"/, '').replace(/"$/, '')
+                        : activeItem.quote ?? '';
+                      const attribution = lastDash > -1 ? activeItem.quote.slice(lastDash + 3) : '';
+
+                      return (
+                        <div className="hidden md:flex gap-8 lg:gap-12 items-start">
+                          {/* Left: insight rows */}
+                          <div className="w-[44%] shrink-0 flex flex-col divide-y divide-white/[0.07] light:divide-black/[0.07]">
+                            {content.stages[0].insights.map((item, i) => {
+                              const isActive = activeIdx === i;
+                              return (
+                                <div
+                                  key={i}
+                                  className="group py-5 first:pt-0 flex gap-4 items-start cursor-default select-none"
+                                  onMouseEnter={() => setHoveredInsight(i)}
+                                  onMouseLeave={() => setHoveredInsight(null)}
                                 >
-                                  {item.phrase}
-                                </h3>
-                              <p className={`font-sans text-base leading-relaxed flex-1 ${isLight ? 'text-black/60 light:text-white/60' : 'text-white/60 light:text-zinc-500'}`}>
-                                {item.insight}
-                              </p>
-                            </div>
-                          </motion.div>
-                        );
-                      })}
+                                  <span className={`font-display font-bold text-xl leading-none tabular-nums shrink-0 mt-0.5 transition-colors duration-200 ${isActive ? numColors[i] : 'text-white/25 light:text-black/20'}`}>
+                                    {String(i + 1).padStart(2, '0')}
+                                  </span>
+                                  <div className="flex flex-col gap-1.5 flex-1">
+                                    <h3 className="font-display font-bold text-base leading-snug tracking-tight text-white light:text-zinc-900">
+                                      {item.phrase}
+                                    </h3>
+                                    <p className="font-sans text-sm text-white/55 light:text-zinc-600 leading-relaxed">
+                                      {item.insight}
+                                    </p>
+                                  </div>
+                                  <Quote
+                                    size={13}
+                                    className={`shrink-0 mt-1.5 transition-colors duration-200 ${
+                                      isActive
+                                        ? numColors[i]
+                                        : 'text-white/20 group-hover:text-white/50 light:text-black/12 light:group-hover:text-black/30'
+                                    }`}
+                                  />
+                                </div>
+                              );
+                            })}
+                          </div>
+
+                          {/* Right: animated quote panel */}
+                          <div className="flex-1 min-h-0">
+                            <AnimatePresence mode="wait">
+                              <motion.div
+                                key={activeIdx}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.2, ease: 'easeInOut' }}
+                                className={`rounded-3xl border ${borders[activeIdx]} bg-white/[0.03] light:bg-black/[0.02] p-8`}
+                              >
+                                <Quote size={22} className={`${iconColors[activeIdx]} mb-5`} />
+                                <p className="font-sans text-lg leading-relaxed text-white/80 light:text-zinc-800 mb-5">
+                                  "{quoteBody}"
+                                </p>
+                                {attribution && (
+                                  <p className="font-sans text-sm text-white/35 light:text-zinc-400 italic">
+                                    — {attribution}
+                                  </p>
+                                )}
+                              </motion.div>
+                            </AnimatePresence>
+                          </div>
+                        </div>
+                      );
+                    })()}
+
+
+                    {/* As-is workflow flowchart */}
+                    <div className="mt-14">
+                      <p className="font-sans text-xs font-semibold tracking-widest uppercase text-white/30 light:text-zinc-400 mb-6">As-is workflow</p>
+
+                      {/* Desktop: horizontal flow */}
+                      <div className="hidden sm:flex items-start gap-2">
+                        <div className="flex-1 bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-5 flex flex-col gap-3">
+                          <Users size={20} className="text-white/40 light:text-zinc-400" />
+                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">Employee wants to access an HCD resource</p>
+                        </div>
+                        <ChevronRight size={18} className="text-white/20 light:text-zinc-300 mt-8 shrink-0" />
+                        <div className="flex-1 bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-5 flex flex-col gap-3">
+                          <Search size={20} className="text-white/40 light:text-zinc-400" />
+                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">Tries finding the resource on their own</p>
+                        </div>
+                        <ChevronRight size={18} className="text-white/20 light:text-zinc-300 mt-8 shrink-0" />
+                        <div className="flex-1 bg-rose-500/[0.08] border border-rose-500/40 rounded-2xl p-5 flex flex-col gap-3 relative">
+                          <div className="absolute -top-3 left-4">
+                            <span className="bg-rose-500 text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full">Pain Point</span>
+                          </div>
+                          <AlertTriangle size={20} className="text-rose-400 light:text-rose-600" />
+                          <p className="font-sans text-sm font-medium text-rose-300/90 light:text-rose-700 leading-snug">Fails. Messages the HCD Team</p>
+                        </div>
+                        <ChevronRight size={18} className="text-white/20 light:text-zinc-300 mt-8 shrink-0" />
+                        <div className="flex-1 bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-5 flex flex-col gap-3">
+                          <Layers size={20} className="text-white/40 light:text-zinc-400" />
+                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">HCD team manually curates and shares links</p>
+                        </div>
+                      </div>
+
+                      {/* Mobile: vertical flow */}
+                      <div className="flex sm:hidden flex-col items-center gap-0">
+                        <div className="w-full bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-4 flex items-center gap-3">
+                          <Users size={18} className="text-white/40 light:text-zinc-400 shrink-0" />
+                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">Employee wants to access an HCD resource</p>
+                        </div>
+                        <ChevronRight size={16} className="text-white/20 light:text-zinc-300 rotate-90 my-1" />
+                        <div className="w-full bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-4 flex items-center gap-3">
+                          <Search size={18} className="text-white/40 light:text-zinc-400 shrink-0" />
+                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">Tries finding the resource on their own</p>
+                        </div>
+                        <ChevronRight size={16} className="text-white/20 light:text-zinc-300 rotate-90 my-1" />
+                        <div className="w-full bg-rose-500/[0.08] border border-rose-500/40 rounded-2xl p-4 flex items-center gap-3 relative mt-3">
+                          <div className="absolute -top-3 left-4">
+                            <span className="bg-rose-500 text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full">Pain Point</span>
+                          </div>
+                          <AlertTriangle size={18} className="text-rose-400 light:text-rose-600 shrink-0" />
+                          <p className="font-sans text-sm font-medium text-rose-300/90 light:text-rose-700 leading-snug">Fails. Messages the HCD Team</p>
+                        </div>
+                        <ChevronRight size={16} className="text-white/20 light:text-zinc-300 rotate-90 my-1" />
+                        <div className="w-full bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-4 flex items-center gap-3">
+                          <Layers size={18} className="text-white/40 light:text-zinc-400 shrink-0" />
+                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">HCD team manually curates and shares links</p>
+                        </div>
+                      </div>
                     </div>
 
                   </>
