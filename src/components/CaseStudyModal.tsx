@@ -508,14 +508,14 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     {content.audienceMapping.heading}
                   </h2>
                   {content.audienceMapping.paragraphs.map((p, i) => (
-                    <p key={i} className="font-sans text-xl text-white/60 light:text-zinc-600 leading-relaxed mb-4 max-w-3xl">
+                    <p key={i} className="font-sans text-xl text-white/60 light:text-zinc-600 leading-relaxed mb-4">
                       {p}
                     </p>
                   ))}
-
-                  <p className="font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mt-6 mb-4">
+{/* 
+                  <p className=" text-xl tracking-widest text-white/55 light:text-zinc-500 mt-6 mb-4">
                     {content.audienceMapping.groupsIntro}
-                  </p>
+                  </p> */}
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                     {content.audienceMapping.groups.map((group, i) => {
@@ -528,7 +528,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                           className="rounded-3xl border border-white/10 light:border-black/10 bg-white/[0.04] light:bg-black/[0.03] p-6 flex flex-col gap-3"
                         >
                           <GroupIcon size={22} className="text-white/50 light:text-zinc-500" />
-                          <h3 className="font-display font-bold text-lg leading-snug tracking-tight text-white light:text-zinc-900">
+                          <h3 className="font-display font-bold text-xl leading-snug tracking-tight text-white light:text-zinc-900">
                             {group.title}
                           </h3>
                           <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed">
@@ -538,10 +538,10 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                       );
                     })}
                   </div>
-
+{/* 
                   <p className="font-sans text-xl text-white/60 light:text-zinc-600 leading-relaxed mb-12 max-w-3xl">
                     {content.audienceMapping.closing}
-                  </p>
+                  </p> */}
 
                   <h3 className="font-display font-bold text-2xl sm:text-3xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">
                     {content.audienceMapping.conceptsHeading}
@@ -648,11 +648,11 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   <div className="min-h-screen bg-[#080808] light:bg-zinc-950 flex flex-col px-8 md:px-16 pt-16 pb-10">
 
                     {/* Compact header */}
-                    <div className="flex flex-col gap-3 mb-10 max-w-3xl">
-                      <h2 className="font-display font-bold text-2xl sm:text-3xl tracking-tight text-white drop-shadow-md leading-snug">
+                    <div className="flex flex-col gap-3 mb-10 ">
+                      <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white drop-shadow-md leading-snug">
                         {stage2?.title}
                       </h2>
-                      <p className="font-sans text-base text-white/50 leading-relaxed">
+                      <p className="font-sans text-xl text-white/50 leading-relaxed">
                         {stage2?.validating}
                       </p>
                     </div>
@@ -718,10 +718,10 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             </div>
 
                             {/* Labels — pinned to viewport corners */}
-                            <div className="absolute top-3 left-3 z-10 px-2 py-1 rounded-md bg-zinc-900/80 backdrop-blur-sm text-white text-[9px] font-bold uppercase tracking-widest pointer-events-none">
+                            <div className="absolute top-3 left-3 z-10 px-2 py-1 rounded-md bg-zinc-900/80 backdrop-blur-sm text-white text-base font-bold uppercase tracking-widest pointer-events-none">
                               Before
                             </div>
-                            <div className="absolute top-3 right-3 z-10 px-2 py-1 rounded-md bg-zinc-900/80 backdrop-blur-sm text-white text-[9px] font-bold uppercase tracking-widest pointer-events-none">
+                            <div className="absolute top-3 right-3 z-10 px-2 py-1 rounded-md bg-zinc-900/80 backdrop-blur-sm text-white text-base font-bold uppercase tracking-widest pointer-events-none">
                               After
                             </div>
                           </div>
@@ -737,7 +737,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         <button
                           onClick={() => { setSliderPage(p => Math.max(0, p - 1)); setSliderPos(50); }}
                           disabled={sliderPage === 0}
-                          className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:border-white/40 transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
+                          className="w-8 h-8  border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:border-white/40 transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
                           aria-label="Previous page"
                         >
                           <ChevronLeft size={15} />
@@ -748,7 +748,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             <button
                               key={i}
                               onClick={() => { setSliderPage(i); setSliderPos(50); }}
-                              className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all duration-200 ${
+                              className={`px-3 py-1.5  text-base font-medium transition-all duration-200 ${
                                 i === sliderPage
                                   ? 'bg-white text-black'
                                   : 'text-white/40 hover:text-white/70 hover:bg-white/8'
@@ -762,7 +762,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         <button
                           onClick={() => { setSliderPage(p => Math.min(COMPARE_PAGES.length - 1, p + 1)); setSliderPos(50); }}
                           disabled={sliderPage === COMPARE_PAGES.length - 1}
-                          className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:border-white/40 transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
+                          className="w-8 h-8 border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:border-white/40 transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
                           aria-label="Next page"
                         >
                           <ChevronRight size={15} />
@@ -774,108 +774,6 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                 </div>
               </section>
 
-              {/* Stage 3: Testing the Workflow */}
-              <section> 
-                <div id="stage-3" className="-mx-8 md:-mx-16 scroll-mt-24">
-                  <div className="bg-[#0d0d0d] light:bg-zinc-50 px-8 md:px-16 flex flex-col gap-10 py-10">
-                    {/* Header */}
-                    <div>
-                      <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">{stage3.title}</h2>
-                      <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed max-w-2xl">
-                        {stage3.validating}
-                      </p>
-                    </div>
-
-                    {/* Insight / Design Change table + MacBook side panel */}
-                    <div className="flex gap-10 xl:gap-16 items-start">
-                      {/* Left: 2-col insight / change table — rows size to content only */}
-                      <div className="flex-1 min-w-0">
-                        <div className="grid grid-cols-2 gap-x-8">
-                          <div className="text-xs font-bold uppercase text-white/55 light:text-zinc-500 pb-3">Insight</div>
-                          <div className="text-xs font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 pb-3">Design Change</div>
-                        </div>
-                        {stage3.insights.map((item, i) => {
-                          const active = i === stage3Active;
-                          const S3Icon = stage3Icons[i];
-                          return (
-                            <div key={i} className={`grid grid-cols-2 gap-x-8 border-t ${active ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}>
-                              <motion.div
-                                initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                                transition={{ duration: 0.45, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                                onMouseEnter={() => setStage3Active(i)}
-                                onClick={() => setStage3Active(i)}
-                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setStage3Active(i); }}
-                                role="button" tabIndex={0}
-                                className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
-                              >
-                                <div className={`flex items-center gap-4 font-display text-xl font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
-                                  {S3Icon && <S3Icon size={20} className="shrink-0 opacity-70" />}
-                                  {item.phrase ?? `Insight ${i + 1}`}
-                                </div>
-                                <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                  <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.insight}</p>
-                                </div>
-                              </motion.div>
-                              <motion.div
-                                initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                                transition={{ duration: 0.45, delay: i * 0.1 + 0.06, ease: [0.16, 1, 0.3, 1] }}
-                                onMouseEnter={() => setStage3Active(i)}
-                                onClick={() => setStage3Active(i)}
-                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setStage3Active(i); }}
-                                role="button" tabIndex={0}
-                                className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
-                              >
-                                <div className={`flex items-center gap-2 font-display text-xl font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
-                                  {/* {S3Icon && <S3Icon size={13} className="shrink-0 opacity-70" />} */}
-                                  {item.changePhrase ?? `Design Response ${i + 1}`}
-                                </div>
-                                <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                  <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.change}</p>
-                                </div>
-                              </motion.div>
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                      {/* Right: MacBook + Key Question — independent of table row heights */}
-                      <div className="hidden xl:flex w-[42%] shrink-0 flex-col gap-4 self-start">
-                        <div className="rounded-xl bg-white light:bg-zinc-900 text-black light:text-white p-5">
-                          <div className="font-display text-base font-bold uppercase text-black/55 light:text-white/55 mb-1.5">Key Question</div>
-                          <p className=" font-medium text-xl tracking-tight leading-snug">{stage3.question}</p>
-                        </div>
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                          className="flex flex-col items-center"
-                        >
-                          <div className="w-full rounded-[18px] bg-[#1d1d1f] p-[9px] shadow-[0_30px_60px_rgba(0,0,0,0.6)] ring-1 ring-white/[0.10]">
-                            <div className="flex justify-center pb-[6px]"><div className="w-[7px] h-[7px] rounded-full bg-[#3a3a3c]" /></div>
-                            <div className="aspect-[16/10] rounded-[11px] bg-black overflow-hidden relative">
-                              <motion.div key={stage3Active} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.45 }}
-                                className={`absolute inset-0 bg-gradient-to-br ${
-                                  stage3Active === 1 ? 'from-orange-500/50 via-amber-600/30 to-transparent' :
-                                  stage3Active === 2 ? 'from-cyan-500/50 via-blue-600/30 to-transparent' :
-                                  'from-emerald-500/50 via-teal-600/30 to-transparent'
-                                }`}
-                              />
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <span className="text-[10px] font-mono uppercase tracking-widest text-white/20">
-                                  {`Insight ${stage3Active + 1} · Placeholder`}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="w-[90%]">
-                            <div className="h-[5px] bg-[#1d1d1f] rounded-b" />
-                            <div className="h-[10px] bg-[#141414] mx-1 rounded-b-xl shadow-xl" />
-                          </div>
-                        </motion.div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
 
               {/* 5. Outcomes */}
               <section id="impact" className="scroll-mt-16">

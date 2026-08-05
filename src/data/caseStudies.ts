@@ -304,7 +304,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
       paragraphs: [
         "For that, I didn't just rely on what people told me in interviews — I asked the HCD team to pull their last three months of inbox requests, and read the actual pattern of what people were asking for, not just what they said they wanted in a session.",
       ],
-      groupsIntro: 'Between the two, three distinct groups came into focus:',
+      groupsIntro: 'Between the two, three distinct groups came into focus',
       groups: [
         { title: 'New to HCD entirely', description: "Didn't know the program existed, let alone what it offered." },
         { title: 'HCD-aware, self-motivated', description: 'Knew about it, wanted in for their own work or career growth.' },
