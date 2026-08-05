@@ -615,7 +615,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             <div className="flex items-center justify-between">
                               <ConceptIcon size={22} className={won ? 'text-black/50 light:text-white/50' : 'text-white/50 light:text-zinc-500'} />
                               <span
-                                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest ${
+                                className={`inline-flex items-center gap-1.5 px-2.5 py-1  text-[11px] font-bold uppercase tracking-widest ${
                                   won
                                     ? 'bg-emerald-400/15 text-emerald-600 light:text-emerald-400'
                                     : 'bg-rose-400/10 text-rose-500 light:text-rose-400'
@@ -631,7 +631,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 {concept.description}
                               </p>
                             </div>
-                            <p className={`font-sans text-sm leading-relaxed pt-3 border-t ${won ? 'border-black/10 light:border-white/10 text-black/50 light:text-white/50' : 'border-white/10 light:border-black/10 text-white/45 light:text-zinc-500'}`}>
+                            <p className={`font-sans text-base leading-relaxed pt-3 border-t ${won ? 'border-black/10 light:border-white/10 text-black/50 light:text-white/50' : 'border-white/10 light:border-black/10 text-white/45 light:text-zinc-500'}`}>
                               {concept.detail}
                             </p>
                           </div>
