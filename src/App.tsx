@@ -169,7 +169,9 @@ export default function App() {
   const { theme } = useTheme();
   const workSectionRef = React.useRef<HTMLDivElement>(null);
   const wordmarkRef = React.useRef<HTMLHeadingElement>(null);
+  const nehaRef = React.useRef<HTMLSpanElement>(null);
   const [wordmarkNaturalWidth, setWordmarkNaturalWidth] = useState(0);
+  const [nehaWordWidth, setNehaWordWidth] = useState(0);
   const introScrollControlsRef = React.useRef<{ stop: () => void } | null>(null);
   const cardPanelRefs = React.useRef<(HTMLDivElement | null)[]>([]);
   const [mode, setMode] = useState<'spiral' | 'grid'>('spiral');
@@ -260,6 +262,9 @@ export default function App() {
   useEffect(() => {
     if (wordmarkRef.current) {
       setWordmarkNaturalWidth(wordmarkRef.current.offsetWidth);
+    }
+    if (nehaRef.current) {
+      setNehaWordWidth(nehaRef.current.offsetWidth);
     }
   }, [windowWidth]);
 
@@ -375,9 +380,11 @@ export default function App() {
   const targetWordmarkScale = useMotionValue(1);
   const targetWordmarkY = useMotionValue(0);
   const targetWordmarkOpacity = useMotionValue(1);
+  const targetKohadOpacity = useMotionValue(1);
   const springWordmarkScale = useSpring(targetWordmarkScale, springConfig);
   const springWordmarkY = useSpring(targetWordmarkY, springConfig);
   const springWordmarkOpacity = useSpring(targetWordmarkOpacity, springConfig);
+  const springKohadOpacity = useSpring(targetKohadOpacity, springConfig);
 
   const workProgressRef = React.useRef(0);
   useEffect(() => {
@@ -491,13 +498,14 @@ export default function App() {
       targetRotateY.set(latest * -(CARDS.length - 1) * spiralAngleStep);
       targetZ.set(-radius);
 
-      // Grow the wordmark in place and push it down toward center by the
-      // halfway point of the scroll; it stays legible but recedes into the backdrop.
+      // Grow just "Neha" to full width as the user scrolls in spiral mode.
       const growProgress = Math.min(latest / 0.5, 1);
-      const wordmarkMaxScale = wordmarkNaturalWidth > 0 ? contentWidth / wordmarkNaturalWidth : 5.5;
-      targetWordmarkScale.set(1 + growProgress * (wordmarkMaxScale - 1));
+      const nehaMaxScale = nehaWordWidth > 0 ? contentWidth / nehaWordWidth : 5.5;
+      targetWordmarkScale.set(1 + growProgress * (nehaMaxScale - 1));
       targetWordmarkY.set(windowHeight * 0.22 * growProgress);
       targetWordmarkOpacity.set(Math.max(0.16, 1 - growProgress * 0.85));
+      // "Kohad" fades out quickly at the start so only "Neha" remains as it grows.
+      targetKohadOpacity.set(Math.max(0, 1 - latest / 0.15));
     } else {
       targetY.set(latest * -maxGridScroll);
       targetRotateY.set(0);
@@ -506,6 +514,7 @@ export default function App() {
       targetWordmarkScale.set(1);
       targetWordmarkY.set(0);
       targetWordmarkOpacity.set(1);
+      targetKohadOpacity.set(1);
     }
   }, [
     mode,
@@ -521,7 +530,9 @@ export default function App() {
     targetWordmarkScale,
     targetWordmarkY,
     targetWordmarkOpacity,
+    targetKohadOpacity,
     wordmarkNaturalWidth,
+    nehaWordWidth,
     windowWidth,
   ]);
 
@@ -705,14 +716,15 @@ export default function App() {
         <div className="w-full px-4 flex flex-col items-center">
           <motion.h1
             ref={wordmarkRef}
-            className="font-display font-black text-6xl sm:text-7xl tracking-tighter text-white light:text-zinc-900 mb-4 drop-shadow-lg whitespace-nowrap"
+            className="font-display font-black text-6xl sm:text-7xl tracking-tighter text-white light:text-zinc-900 mb-4 drop-shadow-lg whitespace-nowrap overflow-visible"
             style={
               mode === 'spiral'
                 ? { scale: springWordmarkScale, y: springWordmarkY, opacity: springWordmarkOpacity }
                 : { scale: heroScale, y: heroY, opacity: heroOpacity }
             }
           >
-            Neha Kohad
+            <span ref={nehaRef}>Neha</span>
+            <motion.span style={mode === 'spiral' ? { opacity: springKohadOpacity } : {}}>{' '}Kohad</motion.span>
           </motion.h1>
           <motion.div
             className="flex flex-col items-center space-y-1 text-center"
