@@ -247,11 +247,36 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
               {/* 2. Problem Statement */}
               <section id="problem" className="scroll-mt-16">
                 {content?.challenge ? (
-                  <div className="grid grid-cols-[1fr_1fr] gap-8 items-stretch">
+                  <div className="flex flex-col gap-10">
 
-                    {/* Left col: stacked metric cards */}
+                    {/* Problem framing */}
+                    <div className="flex flex-col gap-5">
+                      <h2 className="font-display font-bold text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md">
+                        {content.challenge.heading}
+                      </h2>
+                      {content.overview?.hook && (
+                        <p className="font-sans text-xl text-white/55 light:text-zinc-500 leading-relaxed max-w-3xl">
+                          {content.overview.hook}
+                        </p>
+                      )}
+                      {content.challenge.paragraphs.map((p, i) => (
+                        <p key={i} className="font-sans text-xl text-white/65 light:text-zinc-600 leading-relaxed max-w-3xl">{p}</p>
+                      ))}
+                    </div>
+
+                    {/* Design challenge callout */}
+                    {content.challenge.designChallenge && (
+                      <div className="rounded-3xl bg-white light:bg-zinc-900 p-7">
+                        <h3 className="font-display text-base font-bold uppercase text-black/55 light:text-white/55 mb-4">Design Challenge</h3>
+                        <p className="font-medium text-xl text-black light:text-white tracking-tight leading-snug">
+                          {content.challenge.designChallenge}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* 3 scale metrics */}
                     {content.overview?.metrics && (
-                      <div className="flex flex-col gap-3 h-full">
+                      <div className="grid grid-cols-3 gap-3">
                         {content.overview.metrics.map((metric, i) => {
                           const gradients = [
                             'from-violet-500/45 via-blue-500/20 to-transparent',
@@ -264,19 +289,19 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                               key={metric.value}
                               whileHover={{ y: -4 }}
                               transition={{ type: 'spring', bounce: 0.18, duration: 0.45 }}
-                              className={`group relative flex-1 overflow-hidden rounded-3xl border flex ${
+                              className={`group relative overflow-hidden rounded-3xl border flex flex-col ${
                                 isLight
                                   ? 'bg-white text-black light:bg-zinc-900 light:text-white border-white/70 light:border-zinc-900'
                                   : 'bg-white/[0.04] light:bg-black/[0.03] text-white light:text-zinc-900 border-white/10 light:border-black/10'
                               }`}
                             >
-                              {/* Left: gradient + big number */}
-                              <div className={`w-[40%] shrink-0 bg-gradient-to-br ${gradients[i]} flex items-end p-5`}>
+                              {/* Top: gradient + big number */}
+                              <div className={`bg-gradient-to-br ${gradients[i]} flex items-end p-6 min-h-[110px]`}>
                                 <span className={`font-display font-black text-6xl tracking-tighter leading-none ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>{metric.value}</span>
                               </div>
-                              {/* Right: label + description */}
-                              <div className={`flex-1 flex flex-col justify-end p-5 ${isLight ? 'bg-white light:bg-zinc-900' : 'bg-[#0d0d0d] light:bg-white'}`}>
-                                <h3 className={`font-display font-bold text-base tracking-tight mb-1 ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>{metric.label}</h3>
+                              {/* Bottom: label + description */}
+                              <div className={`flex flex-col gap-1 p-6 flex-1 ${isLight ? 'bg-white light:bg-zinc-900' : 'bg-[#0d0d0d] light:bg-white'}`}>
+                                <h3 className={`font-display font-bold text-base tracking-tight ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>{metric.label}</h3>
                                 <p className={`font-sans text-xl leading-snug ${isLight ? 'text-black/55 light:text-white/55' : 'text-white/50 light:text-zinc-500'}`}>{metric.description}</p>
                               </div>
                             </motion.div>
@@ -285,36 +310,11 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                       </div>
                     )}
 
-                    {/* Right col: all text + design challenge */}
-                    <div className="flex flex-col gap-5">
-                      <div>
-                        <h2 className="font-display font-bold text-xl sm:text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md mb-4">
-                          {content.challenge.heading}
-                        </h2>
-                        {content.overview?.hook && (
-                          <p className="font-sans text-xl text-white/55 light:text-zinc-500 leading-relaxed">
-                            {content.overview.hook}
-                          </p>
-                        )}
-                      </div>
-                      {content.challenge.paragraphs.map((p, i) => (
-                        <p key={i} className="font-sans text-xl text-white/65 light:text-zinc-600 leading-relaxed">{p}</p>
-                      ))}
-                      {content.challenge.designChallenge && (
-                        <div className="rounded-3xl bg-white light:bg-zinc-900 p-7 mt-5">
-                          <h3 className="font-display text-base font-bold uppercase text-black/55 light:text-white/55 mb-4">Design Challenge</h3>
-                          <p className="font-medium text-xl sm:text-xl text-black light:text-white tracking-tight leading-snug">
-                            {content.challenge.designChallenge}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
                   </div>
                 ) : (
                   <>
-                    <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">Untangling the Mess</h2>
-                    <div className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl space-y-6">
+                    <h2 className="font-display font-bold text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">Untangling the Mess</h2>
+                    <div className="font-sans text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl space-y-6">
                       <p>
                         When I joined the team, the design infrastructure was highly fragmented. Designers were spending 40% of their time recreating components instead of focusing on user experience. The primary challenge was to establish a single source of truth without disrupting ongoing sprints.
                       </p>
