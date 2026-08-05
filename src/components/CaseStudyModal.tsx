@@ -257,26 +257,21 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             'from-orange-400/45 via-red-500/25 to-transparent',
                             'from-cyan-300/35 via-slate-400/20 to-transparent',
                           ];
-                          const isLight = i === 1;
                           return (
                             <motion.div
                               key={metric.value}
                               whileHover={{ y: -4 }}
                               transition={{ type: 'spring', bounce: 0.18, duration: 0.45 }}
-                              className={`group relative overflow-hidden rounded-3xl border flex flex-col ${
-                                isLight
-                                  ? 'bg-white text-black light:bg-zinc-900 light:text-white border-white/70 light:border-zinc-900'
-                                  : 'bg-white/[0.04] light:bg-black/[0.03] text-white light:text-zinc-900 border-white/10 light:border-black/10'
-                              }`}
+                              className="group relative overflow-hidden rounded-3xl border flex flex-col bg-white/[0.04] light:bg-black/[0.03] text-white light:text-zinc-900 border-white/10 light:border-black/10"
                             >
                               {/* Top: gradient + big number */}
                               <div className={`bg-gradient-to-br ${gradients[i]} flex items-end p-6 min-h-[110px]`}>
-                                <span className={`font-display font-black text-6xl tracking-tighter leading-none ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>{metric.value}</span>
+                                <span className="font-display font-black text-6xl tracking-tighter leading-none text-white light:text-zinc-900">{metric.value}</span>
                               </div>
                               {/* Bottom: label + description */}
-                              <div className={`flex flex-col gap-1 p-6 flex-1 ${isLight ? 'bg-white light:bg-zinc-900' : 'bg-[#0d0d0d] light:bg-white'}`}>
-                                <h3 className={`font-display font-bold text-base tracking-tight ${isLight ? 'text-black light:text-white' : 'text-white light:text-zinc-900'}`}>{metric.label}</h3>
-                                <p className={`font-sans text-xl leading-snug ${isLight ? 'text-black/55 light:text-white/55' : 'text-white/50 light:text-zinc-500'}`}>{metric.description}</p>
+                              <div className="flex flex-col gap-1 p-6 flex-1 bg-[#0d0d0d] light:bg-white">
+                                <h3 className="font-display font-bold text-base tracking-tight text-white light:text-zinc-900">{metric.label}</h3>
+                                <p className="font-sans text-xl leading-snug text-white/50 light:text-zinc-500">{metric.description}</p>
                               </div>
                             </motion.div>
                           );
