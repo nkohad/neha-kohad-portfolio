@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { motion, useSpring, useMotionValue, useTransform, animate, AnimatePresence } from 'motion/react';
 import { Figma, PenTool, Users, Sparkles, Bot, Code, ArrowRight, ArrowUpRight, Building2, MessageSquare, Table2 } from 'lucide-react';
 import SplashCursor from './components/SplashCursor';
+import yodleeLogo from './assets/logos/yodlee.jpeg';
+import coxLogo from './assets/logos/cox-enterprises.jpeg';
+import verizonLogo from './assets/logos/verizon-connect.png';
 import { CaseStudyModal } from './components/CaseStudyModal';
 import { useActiveTab } from './components/NavLinks';
 import { About } from './components/About';
@@ -37,7 +40,7 @@ const PROJECTS = [
   },
   {
     image: IMAGES[2],
-    title: "VM Prototyping Agent",
+    title: "Agentic Workflow for UI",
     impact: "Figma-free prototyping with absolute design system accuracy",
     type: "Internship",
     company: "Yodlee",
@@ -152,6 +155,12 @@ const CARDS = PROJECTS;
 
 const slugify = (title: string) =>
   title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+const COMPANY_LOGOS: Record<string, string> = {
+  'Yodlee': yodleeLogo,
+  'Cox Enterprises': coxLogo,
+  'Verizon Connect': verizonLogo,
+};
 
 const TOOL_ICONS: Record<string, React.ReactNode> = {
   "Figma": <img src="https://cdn.simpleicons.org/figma" alt="Figma" className="w-3.5 h-3.5" />,
@@ -856,7 +865,13 @@ export default function App() {
                     {/* Always-visible card overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-4 sm:p-6">
                       <div className="flex items-center gap-1.5 mb-2 text-[10px] sm:text-xs uppercase tracking-wider text-zinc-300 font-medium drop-shadow-md">
-                        {project.company === 'Personal' ? <Sparkles size={12} className="text-white/80" /> : <Building2 size={12} className="text-white/80" />}
+                        {COMPANY_LOGOS[project.company] ? (
+                          <img src={COMPANY_LOGOS[project.company]} alt={project.company} className="w-4 h-4 rounded object-cover flex-shrink-0" />
+                        ) : project.company === 'Personal' ? (
+                          <Sparkles size={12} className="text-white/80" />
+                        ) : (
+                          <Building2 size={12} className="text-white/80" />
+                        )}
                         <span className="text-white/90">{project.company}</span>
                       </div>
                       <h3 className="text-white font-display font-bold text-lg sm:text-2xl leading-tight mb-2 drop-shadow-md">{project.title}</h3>
@@ -982,7 +997,13 @@ export default function App() {
               </div>
               <div className="p-8 sm:p-12 relative -mt-20">
                 <div className="flex items-center gap-2 mb-4 text-xs uppercase tracking-wider text-zinc-400 font-medium">
-                  {CARDS[selectedCardIndex].company === 'Personal' ? <Sparkles size={14} className="text-zinc-300" /> : <Building2 size={14} className="text-zinc-300" />}
+                  {COMPANY_LOGOS[CARDS[selectedCardIndex].company] ? (
+                    <img src={COMPANY_LOGOS[CARDS[selectedCardIndex].company]} alt={CARDS[selectedCardIndex].company} className="w-5 h-5 rounded object-cover flex-shrink-0" />
+                  ) : CARDS[selectedCardIndex].company === 'Personal' ? (
+                    <Sparkles size={14} className="text-zinc-300" />
+                  ) : (
+                    <Building2 size={14} className="text-zinc-300" />
+                  )}
                   <span>{CARDS[selectedCardIndex].company}</span>
                   <span>•</span>
                   <span>{CARDS[selectedCardIndex].type}</span>
@@ -1044,7 +1065,13 @@ export default function App() {
               </div>
               <div className="flex-1 overflow-y-auto p-8 pt-0 scrollbar-hide">
                 <div className="flex items-center gap-2 mb-4 text-xs uppercase tracking-wider text-zinc-400 font-medium">
-                  {CARDS[selectedCardIndex].company === 'Personal' ? <Sparkles size={14} className="text-zinc-300" /> : <Building2 size={14} className="text-zinc-300" />}
+                  {COMPANY_LOGOS[CARDS[selectedCardIndex].company] ? (
+                    <img src={COMPANY_LOGOS[CARDS[selectedCardIndex].company]} alt={CARDS[selectedCardIndex].company} className="w-5 h-5 rounded object-cover flex-shrink-0" />
+                  ) : CARDS[selectedCardIndex].company === 'Personal' ? (
+                    <Sparkles size={14} className="text-zinc-300" />
+                  ) : (
+                    <Building2 size={14} className="text-zinc-300" />
+                  )}
                   <span>{CARDS[selectedCardIndex].company}</span>
                 </div>
                 <h2 className="text-3xl font-display font-bold text-white mb-2 leading-tight">{CARDS[selectedCardIndex].title}</h2>
