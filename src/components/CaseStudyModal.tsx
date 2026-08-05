@@ -36,11 +36,24 @@ const featureToneClasses = [
   'from-orange-400/25 via-red-400/15 to-pink-300/20',
 ];
 
+const COMPARE_PAGES = [
+  { label: 'Home Page',          before: '/wireframes/home-page.svg',          after: '/wireframes/new-home-page.svg' },
+  { label: 'New to HCD',         before: '/wireframes/new-to-hcd.svg',          after: '/wireframes/new-new-to-hcd.svg' },
+  { label: 'Get Inspired',       before: '/wireframes/get-inspired.svg',        after: '/wireframes/new-get-inspired.svg' },
+  { label: 'Consulting',         before: '/wireframes/request-consulting.svg',  after: '/wireframes/new-request-consulting.svg' },
+  { label: 'Get Certified',      before: '/wireframes/get-certified.svg',       after: '/wireframes/new-training.svg' },
+  { label: 'About',              before: '/wireframes/about.svg',               after: '/wireframes/new-about.svg' },
+];
+
 export function CaseStudyModal({ project, allProjects, currentIndex, onClose, onSelectProject, activeSection, onSectionChange }: CaseStudyModalProps) {
   const [activeFeature, setActiveFeature] = useState(0);
   const [hoveredInsight, setHoveredInsight] = useState<number | null>(null);
   const [stage2Active, setStage2Active] = useState(0);
   const [stage3Active, setStage3Active] = useState(0);
+  const [sliderPos, setSliderPos] = useState(50);
+  const [sliderPage, setSliderPage] = useState(0);
+  const isDraggingRef = useRef(false);
+  const compareRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const content = CASE_STUDY_CONTENT[project.title];
   const selectedFeature = content?.solutions?.features[activeFeature] || content?.solutions?.features[0];
@@ -119,6 +132,29 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
 
     window.addEventListener('scroll', handleSnap, { passive: true });
     return () => window.removeEventListener('scroll', handleSnap);
+  }, []);
+
+  // Before/after slider drag handlers — wired up once, guard via ref
+  useEffect(() => {
+    const move = (clientX: number) => {
+      if (!isDraggingRef.current || !compareRef.current) return;
+      const rect = compareRef.current.getBoundingClientRect();
+      const pct = Math.max(5, Math.min(95, ((clientX - rect.left) / rect.width) * 100));
+      setSliderPos(pct);
+    };
+    const stop = () => { isDraggingRef.current = false; };
+    const onMouseMove = (e: MouseEvent) => move(e.clientX);
+    const onTouchMove = (e: TouchEvent) => { e.preventDefault(); move(e.touches[0].clientX); };
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', stop);
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('touchend', stop);
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', stop);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('touchend', stop);
+    };
   }, []);
 
   if (!project) return null;
@@ -526,20 +562,53 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                               : 'bg-white/[0.04] light:bg-black/[0.03] text-white light:text-zinc-900 border-white/10 light:border-black/10'
                           }`}
                         >
-                          {/* Sketch frame — top half of card */}
-                          <div
-                            className={`aspect-[4/3] w-full border-b border-dashed flex items-center justify-center ${
-                              won ? 'border-black/15 light:border-white/15 bg-black/[0.03] light:bg-white/[0.06]' : 'border-white/15 light:border-black/15 bg-black/20 light:bg-black/[0.03]'
-                            }`}
-                          >
-                            {concept.sketch ? (
-                              <img src={concept.sketch} alt={`${concept.name} sketch`} className="w-full h-full object-cover" />
-                            ) : (
-                              <span className={`font-mono text-[10px] uppercase tracking-widest text-center px-4 ${won ? 'text-black/30 light:text-white/30' : 'text-white/25 light:text-zinc-400'}`}>
-                                Sketch · {concept.name}
-                              </span>
-                            )}
-                          </div>
+                          {/* Sketch frame — browser chrome window */}
+                          {(() => {
+                            const conceptWireframes = [
+                              '/wireframes/new-to-hcd.svg',
+                              '/wireframes/request-consulting.svg',
+                              '/wireframes/new-home-page.svg',
+                            ];
+                            const conceptUrls = [
+                              'mascot-agent · concept',
+                              'email-response · concept',
+                              'hcd.coxenterprises.com',
+                            ];
+                            const wireframeSrc = conceptWireframes[i];
+                            const urlLabel = conceptUrls[i] ?? 'concept · sketch';
+                            return (
+                              <div className={`w-full flex flex-col border-b ${won ? 'border-black/10 light:border-white/10' : 'border-white/10 light:border-black/10'}`}>
+                                {/* Chrome toolbar */}
+                                <div className={`px-3 py-2 flex items-center gap-3 shrink-0 ${won ? 'bg-zinc-100 light:bg-[#232325]' : 'bg-[#232325] light:bg-zinc-200'}`}>
+                                  <div className="flex gap-1.5 shrink-0">
+                                    <div className="w-2 h-2 rounded-full bg-[#ff5f57]" />
+                                    <div className="w-2 h-2 rounded-full bg-[#febc2e]" />
+                                    <div className="w-2 h-2 rounded-full bg-[#28c840]" />
+                                  </div>
+                                  <div className={`flex-1 h-4 rounded text-[9px] font-mono flex items-center px-2 ${won ? 'bg-black/10 text-black/30 light:bg-white/10 light:text-white/30' : 'bg-black/20 text-white/25 light:bg-black/8 light:text-black/25'}`}>
+                                    {urlLabel}
+                                  </div>
+                                </div>
+                                {/* Wireframe content */}
+                                <div className={`aspect-[4/3] w-full overflow-hidden ${won ? 'bg-white' : 'bg-[#f5f5f7]'}`}>
+                                  {wireframeSrc ? (
+                                    <img
+                                      src={wireframeSrc}
+                                      alt={`${concept.name} wireframe`}
+                                      className="w-full h-full object-cover object-top"
+                                      draggable={false}
+                                    />
+                                  ) : (
+                                    <div className="w-full h-full flex items-center justify-center">
+                                      <span className={`font-mono text-[10px] uppercase tracking-widest text-center px-4 ${won ? 'text-black/25' : 'text-white/20'}`}>
+                                        {concept.name}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })()}
 
                           {/* Card content */}
                           <div className="p-6 flex flex-col gap-4">
@@ -573,109 +642,136 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                 </section>
               )}
 
-              {/* REDO | Stage 2 : Testing Product Strategy */}
-              <section id="stage-2" className="scroll-mt-16"> 
-                <div id="stage-2" className="-mx-8 md:-mx-16 scroll-mt-24">
-                  <div className="bg-[#0a0a0a] light:bg-white px-8 md:px-16 flex flex-col gap-10 py-10">
-                    {/* Header */}
-                    <div>
-                      <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">{stage2.title}</h2>
-                      <p className="font-sans text-xl text-white/60 light:text-zinc-600 leading-relaxed">
-                        {stage2.validating}
+              {/* Stage 2: Before/After Wireframe Comparison */}
+              <section id="stage-2" className="scroll-mt-0">
+                <div className="-mx-8 md:-mx-16">
+                  <div className="min-h-screen bg-[#080808] light:bg-zinc-950 flex flex-col px-8 md:px-16 pt-16 pb-10">
+
+                    {/* Compact header */}
+                    <div className="flex flex-col gap-3 mb-10 max-w-3xl">
+                      <h2 className="font-display font-bold text-2xl sm:text-3xl tracking-tight text-white drop-shadow-md leading-snug">
+                        {stage2?.title}
+                      </h2>
+                      <p className="font-sans text-base text-white/50 leading-relaxed">
+                        {stage2?.validating}
                       </p>
                     </div>
 
-                    {/* Insight / Design Change table + MacBook side panel */}
-                    <div className="flex gap-10 xl:gap-16 items-start">
-                      {/* Left: 2-col insight / change table — rows size to content only */}
-                      <div className="flex-1 min-w-0">
-                        <div className="grid grid-cols-2 gap-x-8">
-                          <div className="font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 pb-3">Insight</div>
-                          <div className="font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 pb-3">Design Change</div>
-                        </div>
-                        {stage2.insights.map((item, i) => {
-                          const active = i === stage2Active;
-                          const S2Icon = stage2Icons[i];
-                          return (
-                            <div key={i} className={`grid grid-cols-2 gap-x-8 border-t ${active ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}>
-                              <motion.div
-                                initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                                transition={{ duration: 0.45, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                                onMouseEnter={() => setStage2Active(i)}
-                                onClick={() => setStage2Active(i)}
-                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setStage2Active(i); }}
-                                role="button" tabIndex={0}
-                                className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
-                              >
-                                <div className={`flex items-center gap-4 font-display text-xl font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-white light:text-zinc-900' : 'text-white/55 light:text-zinc-500'}`}>
-                                  {S2Icon && <S2Icon size={20} className="shrink-0 opacity-70" />}
-                                  {item.phrase ?? `Insight ${i + 1}`}
-                                </div>
-                                <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                  <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.insight}</p>
-                                </div>
-                              </motion.div>
-                              <motion.div
-                                initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                                transition={{ duration: 0.45, delay: i * 0.1 + 0.06, ease: [0.16, 1, 0.3, 1] }}
-                                onMouseEnter={() => setStage2Active(i)}
-                                onClick={() => setStage2Active(i)}
-                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setStage2Active(i); }}
-                                role="button" tabIndex={0}
-                                className="py-4 cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded"
-                              >
-                                <div className={`flex items-center gap-2 font-display text-xl font-medium mb-1.5 transition-colors duration-300 ${active ? 'text-emerald-400 light:text-emerald-600' : 'text-white/55 light:text-zinc-500'}`}>
-                                  {/* {S2Icon && <S2Icon size={20} className="shrink-0 opacity-70" />} */}
-                                  {item.changePhrase ?? `Design Response ${i + 1}`}
-                                </div>
-                                <div className={`overflow-hidden transition-all duration-500 ${active ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                  <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed pt-1">{item.change}</p>
-                                </div>
-                              </motion.div>
-                            </div>
-                          );
-                        })}
-                      </div>
+                    {/* Laptop + page navigation — fills remaining space */}
+                    <div className="flex-1 flex flex-col items-center justify-center gap-6">
 
-                      {/* Right: MacBook + Key Question — independent of table row heights */}
-                      <div className="hidden xl:flex w-[42%] shrink-0 flex-col gap-4 self-start">
-                        <div className="rounded-xl bg-white light:bg-zinc-900 text-black light:text-white p-5">
-                          <div className="font-display text-base font-bold uppercase tracking-widest text-black/55 light:text-white/55 mb-1.5">Key Question</div>
-                          <p className=" font-medium text-xl tracking-tight leading-snug">{stage2.question}</p>
-                        </div>
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                          className="flex flex-col items-center"
-                        >
-                          <div className="w-full rounded-[18px] bg-[#1d1d1f] p-[9px] shadow-[0_30px_60px_rgba(0,0,0,0.6)] ring-1 ring-white/[0.10]">
-                            <div className="flex justify-center pb-[6px]"><div className="w-[7px] h-[7px] rounded-full bg-[#3a3a3c]" /></div>
-                            <div className="aspect-[16/10] rounded-[11px] bg-black overflow-hidden relative">
-                              <motion.div key={stage2Active} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.45 }}
-                                className={`absolute inset-0 bg-gradient-to-br ${
-                                  stage2Active === 1 ? 'from-violet-500/50 via-purple-600/30 to-transparent' :
-                                  stage2Active === 2 ? 'from-rose-500/50 via-pink-600/30 to-transparent' :
-                                  'from-sky-500/50 via-blue-600/30 to-transparent'
-                                }`}
-                              />
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <span className="text-[10px] font-mono uppercase tracking-widest text-white/20">
-                                  {`Insight ${stage2Active + 1} · Placeholder`}
-                                </span>
+                      {/* MacBook mockup */}
+                      <div className="w-full max-w-[900px]">
+                        {/* Screen body */}
+                        <div className="rounded-2xl bg-[#1d1d1f] p-[10px] shadow-[0_40px_100px_rgba(0,0,0,0.85)] ring-1 ring-white/[0.08]">
+                          {/* Camera notch */}
+                          <div className="flex justify-center pb-[5px]">
+                            <div className="w-[6px] h-[6px] rounded-full bg-[#3a3a3c]" />
+                          </div>
+
+                          {/* Screen — fixed viewport, scrollable content inside */}
+                          <div
+                            ref={compareRef}
+                            className="aspect-[16/10] rounded-[10px] overflow-hidden relative select-none bg-white"
+                          >
+                            {/* Scrollable content wrapper */}
+                            <div className="absolute inset-0 overflow-y-auto overflow-x-hidden">
+                              <div className="relative w-full">
+                                {/* BEFORE — renders at full natural height */}
+                                <img
+                                  src={COMPARE_PAGES[sliderPage].before}
+                                  alt={`${COMPARE_PAGES[sliderPage].label} — before`}
+                                  className="w-full h-auto block pointer-events-none"
+                                  draggable={false}
+                                />
+
+                                {/* AFTER — same natural height, clipped from left */}
+                                <div
+                                  className="absolute inset-0"
+                                  style={{ clipPath: `inset(0 0 0 ${sliderPos}%)` }}
+                                >
+                                  <img
+                                    src={COMPARE_PAGES[sliderPage].after}
+                                    alt={`${COMPARE_PAGES[sliderPage].label} — after`}
+                                    className="w-full h-auto block pointer-events-none"
+                                    draggable={false}
+                                  />
+                                </div>
                               </div>
                             </div>
+
+                            {/* Divider line — non-scrolling overlay */}
+                            <div
+                              className="absolute top-0 bottom-0 w-px bg-white shadow-[0_0_10px_rgba(255,255,255,0.9)] pointer-events-none z-10"
+                              style={{ left: `${sliderPos}%` }}
+                            />
+
+                            {/* Drag handle — stays centered in the viewport, not the content */}
+                            <div
+                              className="absolute top-1/2 z-20 flex items-center gap-0.5 bg-white rounded-full px-3 py-2 shadow-xl cursor-ew-resize"
+                              style={{ left: `${sliderPos}%`, transform: 'translate(-50%, -50%)' }}
+                              onMouseDown={(e) => { e.preventDefault(); isDraggingRef.current = true; }}
+                              onTouchStart={(e) => { isDraggingRef.current = true; }}
+                            >
+                              <ChevronLeft size={12} className="text-zinc-600" />
+                              <ChevronRight size={12} className="text-zinc-600" />
+                            </div>
+
+                            {/* Labels — pinned to viewport corners */}
+                            <div className="absolute top-3 left-3 z-10 px-2 py-1 rounded-md bg-zinc-900/80 backdrop-blur-sm text-white text-[9px] font-bold uppercase tracking-widest pointer-events-none">
+                              Before
+                            </div>
+                            <div className="absolute top-3 right-3 z-10 px-2 py-1 rounded-md bg-zinc-900/80 backdrop-blur-sm text-white text-[9px] font-bold uppercase tracking-widest pointer-events-none">
+                              After
+                            </div>
                           </div>
-                          <div className="w-[90%]">
-                            <div className="h-[5px] bg-[#1d1d1f] rounded-b" />
-                            <div className="h-[10px] bg-[#141414] mx-1 rounded-b-xl shadow-xl" />
-                          </div>
-                        </motion.div>
-                        
+                        </div>
+
+                        {/* Keyboard base */}
+                        <div className="w-[94%] mx-auto h-[5px] bg-[#1c1c1e] rounded-b-sm" />
+                        <div className="w-full h-[12px] bg-[#141414] rounded-b-2xl shadow-2xl" />
                       </div>
+
+                      {/* Page navigation */}
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => { setSliderPage(p => Math.max(0, p - 1)); setSliderPos(50); }}
+                          disabled={sliderPage === 0}
+                          className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:border-white/40 transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
+                          aria-label="Previous page"
+                        >
+                          <ChevronLeft size={15} />
+                        </button>
+
+                        <div className="flex items-center gap-1.5">
+                          {COMPARE_PAGES.map((page, i) => (
+                            <button
+                              key={i}
+                              onClick={() => { setSliderPage(i); setSliderPos(50); }}
+                              className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all duration-200 ${
+                                i === sliderPage
+                                  ? 'bg-white text-black'
+                                  : 'text-white/40 hover:text-white/70 hover:bg-white/8'
+                              }`}
+                            >
+                              {page.label}
+                            </button>
+                          ))}
+                        </div>
+
+                        <button
+                          onClick={() => { setSliderPage(p => Math.min(COMPARE_PAGES.length - 1, p + 1)); setSliderPos(50); }}
+                          disabled={sliderPage === COMPARE_PAGES.length - 1}
+                          className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:border-white/40 transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
+                          aria-label="Next page"
+                        >
+                          <ChevronRight size={15} />
+                        </button>
+                      </div>
+
                     </div>
                   </div>
                 </div>
-              
               </section>
 
               {/* Stage 3: Testing the Workflow */}
