@@ -314,7 +314,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
     },
   },
 
-  'VM Prototyping Agent': {
+  'Agentic Workflow for UI': {
     subtitle: 'Figma-free prototyping with absolute design system accuracy',
     summary:
       'An AI agent that reads Yodlee\'s live React component library and generates pixel-accurate interactive prototypes from natural language specs — eliminating the prototype-to-production fidelity gap.',
@@ -508,7 +508,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
     impact: {
       heading: 'Outcomes',
       intro:
-        'The VM Prototyping Agent eliminated the prototype-to-production fidelity gap by making the live React component library the only prototyping surface. Designers ship faster, engineers review less, and the design system gets stronger with every prototype generated.',
+        'This agentic workflow eliminated the prototype-to-production fidelity gap by making the live React component library the only prototyping surface. Designers ship faster, engineers review less, and the design system gets stronger with every prototype generated.',
       outcomes: [
         'Eliminated Figma-to-code prop correction cycles from the engineering review process.',
         'Reduced prototype delivery time from days to under an hour for standard screens.',
