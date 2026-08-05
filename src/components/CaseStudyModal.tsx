@@ -543,9 +543,14 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     {content.audienceMapping.closing}
                   </p> */}
 
-                  <h3 className="font-display font-bold text-2xl sm:text-3xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">
+                </section>
+              )}
+
+              {content?.audienceMapping?.concepts && (
+                <section id="concepts" className="scroll-mt-16">
+                  <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">
                     {content.audienceMapping.conceptsHeading}
-                  </h3>
+                  </h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {content.audienceMapping.concepts.map((concept, i) => {
@@ -631,9 +636,20 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 {concept.description}
                               </p>
                             </div>
-                            <p className={`font-sans text-base leading-relaxed pt-3 border-t ${won ? 'border-black/10 light:border-white/10 text-black/50 light:text-white/50' : 'border-white/10 light:border-black/10 text-white/45 light:text-zinc-500'}`}>
-                              {concept.detail}
-                            </p>
+                            {concept.bullets && concept.bullets.length > 0 ? (
+                              <ul className={`pt-3 border-t space-y-1.5 ${won ? 'border-black/10 light:border-white/10' : 'border-white/10 light:border-black/10'}`}>
+                                {concept.bullets.map((b, bi) => (
+                                  <li key={bi} className={`font-sans text-base leading-relaxed flex gap-2 ${b.type === '+' ? 'text-emerald-500 light:text-emerald-400' : won ? 'text-black/50 light:text-white/50' : 'text-rose-400 light:text-rose-400'}`}>
+                                    <span className="shrink-0 font-mono font-bold">{b.type}</span>
+                                    <span className={won ? 'text-black/50 light:text-white/50' : 'text-white/45 light:text-zinc-500'}>{b.text}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <p className={`font-sans text-base leading-relaxed pt-3 border-t ${won ? 'border-black/10 light:border-white/10 text-black/50 light:text-white/50' : 'border-white/10 light:border-black/10 text-white/45 light:text-zinc-500'}`}>
+                                {concept.detail}
+                              </p>
+                            )}
                           </div>
                         </motion.div>
                       );

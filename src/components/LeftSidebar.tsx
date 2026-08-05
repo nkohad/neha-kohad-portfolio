@@ -10,8 +10,8 @@ export const CASE_STUDY_SECTIONS = [
   { id: 'solution', navTitle: 'Key Features' },
   { id: 'stage-1', navTitle: 'Understanding the Problem' },
   { id: 'audience', navTitle: 'Mapping the Audience' },
+  { id: 'concepts', navTitle: 'Exploring Concepts' },
   { id: 'stage-2', navTitle: 'Validating the Strategy' },
-  { id: 'stage-3', navTitle: 'Refining the Experience' },
   { id: 'impact', navTitle: 'Outcomes' },
   { id: 'reflection', navTitle: 'Reflection' },
 ];
