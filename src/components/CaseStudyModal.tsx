@@ -283,11 +283,11 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                       <h2 className="font-display font-bold text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md">
                         {content.challenge.heading}
                       </h2>
-                      {content.overview?.hook && (
+                      {/* {content.overview?.hook && (
                         <p className="font-sans text-xl text-white/55 light:text-zinc-500 leading-relaxed max-w-3xl">
                           {content.overview.hook}
                         </p>
-                      )}
+                      )} */}
                       {content.challenge.paragraphs.map((p, i) => (
                         <p key={i} className="font-sans text-xl text-white/65 light:text-zinc-600 leading-relaxed ">{p}</p>
                       ))}
@@ -405,7 +405,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 {feature.title}
                               </div>
                               <div className={`overflow-hidden transition-all duration-500 ${isActive ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <p className="font-sans text-xl text-white/60 light:text-zinc-600 leading-relaxed pt-1">{feature.description}</p>
+                                <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed pt-1">{feature.description}</p>
                               </div>
                             </motion.div>
                           );

@@ -395,7 +395,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
     impact: {
       heading: 'Outcomes',
       intro:
-        'The final solution validated our core hypothesis: organizing HCD resources around employee intent rather than organizational structure made the experience easier to navigate, understand, and adopt. The platform transformed fragmented knowledge into a scalable, self-service experience capable of supporting 55,000+ employees while reducing dependency on manual support from the HCD team.',
+        'We conducted a heuristic evaluation and task-based usability testing with 8 employees across Cox Enterprises and Cox Automotive. The results confirmed that the intent-driven navigation model translated into an efficient and learnable experience.',
       outcomes: [
         'Reduced reliance on the HCD team\'s manual resource curation workflow.',
         'Unified fragmented HCD resources into a single intent-driven experience.',
