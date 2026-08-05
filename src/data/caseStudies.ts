@@ -320,6 +320,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
           detail: "The team didn't have the build capacity, and stakeholders didn't trust a bot they had no reason to trust yet. It also needed a hub to live inside — phase 2, not a standalone fix.",
           verdict: 'Killed — governance overhead',
           outcome: 'killed',
+          sketch: '/sketch-mascot-agent.png',
         },
         {
           name: 'Smart Email Response System',
@@ -327,6 +328,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
           detail: "It only helped people who already knew to email HCD — not the much bigger group who didn't know the team existed. Stakeholders reframed the real complaint: it wasn't about saving time, it was the monotony of answering the same five questions on repeat. Different problem, different fix.",
           verdict: 'Killed — wrong audience',
           outcome: 'killed',
+          sketch: '/sketch-email-response.png',
         },
         {
           name: 'Centralized Design Hub',
@@ -334,6 +336,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
           detail: "It solved the actual root cause, asked nothing extra of a 4-person team's bandwidth, and let visibility grow without anyone losing control of it.",
           verdict: 'Won',
           outcome: 'won',
+          sketch: '/sketch-centralized-hub.png',
         },
       ],
     },
