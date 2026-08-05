@@ -248,33 +248,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
               <section id="problem" className="scroll-mt-16">
                 {content?.challenge ? (
                   <div className="flex flex-col gap-10">
-
-                    {/* Problem framing */}
-                    <div className="flex flex-col gap-5">
-                      <h2 className="font-display font-bold text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md">
-                        {content.challenge.heading}
-                      </h2>
-                      {content.overview?.hook && (
-                        <p className="font-sans text-xl text-white/55 light:text-zinc-500 leading-relaxed max-w-3xl">
-                          {content.overview.hook}
-                        </p>
-                      )}
-                      {content.challenge.paragraphs.map((p, i) => (
-                        <p key={i} className="font-sans text-xl text-white/65 light:text-zinc-600 leading-relaxed max-w-3xl">{p}</p>
-                      ))}
-                    </div>
-
-                    {/* Design challenge callout */}
-                    {content.challenge.designChallenge && (
-                      <div className="rounded-3xl bg-white light:bg-zinc-900 p-7">
-                        <h3 className="font-display text-base font-bold uppercase text-black/55 light:text-white/55 mb-4">Design Challenge</h3>
-                        <p className="font-medium text-xl text-black light:text-white tracking-tight leading-snug">
-                          {content.challenge.designChallenge}
-                        </p>
-                      </div>
-                    )}
-
-                    {/* 3 scale metrics */}
+                                        {/* 3 scale metrics */}
                     {content.overview?.metrics && (
                       <div className="grid grid-cols-3 gap-3">
                         {content.overview.metrics.map((metric, i) => {
@@ -309,6 +283,32 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         })}
                       </div>
                     )}
+                    {/* Problem framing */}
+                    <div className="flex flex-col gap-5">
+                      <h2 className="font-display font-bold text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md">
+                        {content.challenge.heading}
+                      </h2>
+                      {content.overview?.hook && (
+                        <p className="font-sans text-xl text-white/55 light:text-zinc-500 leading-relaxed max-w-3xl">
+                          {content.overview.hook}
+                        </p>
+                      )}
+                      {content.challenge.paragraphs.map((p, i) => (
+                        <p key={i} className="font-sans text-xl text-white/65 light:text-zinc-600 leading-relaxed ">{p}</p>
+                      ))}
+                    </div>
+
+                    {/* Design challenge callout */}
+                    {content.challenge.designChallenge && (
+                      <div className="rounded-3xl bg-white light:bg-zinc-900 p-7">
+                        <h3 className="font-display text-base font-bold uppercase text-black/55 light:text-white/55 mb-4">Design Challenge</h3>
+                        <p className="font-medium text-xl text-black light:text-white tracking-tight leading-snug">
+                          {content.challenge.designChallenge}
+                        </p>
+                      </div>
+                    )}
+
+
 
                   </div>
                 ) : (
