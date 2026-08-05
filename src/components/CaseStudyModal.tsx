@@ -520,15 +520,15 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                           key={concept.name}
                           whileHover={{ y: -4 }}
                           transition={{ type: 'spring', bounce: 0.18, duration: 0.45 }}
-                          className={`rounded-3xl border p-6 flex flex-col gap-4 ${
+                          className={`rounded-3xl border overflow-hidden flex flex-col ${
                             won
                               ? 'bg-white text-black light:bg-zinc-900 light:text-white border-white/70 light:border-zinc-900'
                               : 'bg-white/[0.04] light:bg-black/[0.03] text-white light:text-zinc-900 border-white/10 light:border-black/10'
                           }`}
                         >
-                          {/* Sketch frame */}
+                          {/* Sketch frame — top half of card */}
                           <div
-                            className={`aspect-[4/3] w-full rounded-2xl border border-dashed overflow-hidden flex items-center justify-center ${
+                            className={`aspect-[4/3] w-full border-b border-dashed flex items-center justify-center ${
                               won ? 'border-black/15 light:border-white/15 bg-black/[0.03] light:bg-white/[0.06]' : 'border-white/15 light:border-black/15 bg-black/20 light:bg-black/[0.03]'
                             }`}
                           >
@@ -541,28 +541,31 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             )}
                           </div>
 
-                          <div className="flex items-center justify-between">
-                            <ConceptIcon size={22} className={won ? 'text-black/50 light:text-white/50' : 'text-white/50 light:text-zinc-500'} />
-                            <span
-                              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest ${
-                                won
-                                  ? 'bg-emerald-400/15 text-emerald-600 light:text-emerald-400'
-                                  : 'bg-rose-400/10 text-rose-500 light:text-rose-400'
-                              }`}
-                            >
-                              {won ? <Check size={12} /> : <X size={12} />}
-                              {concept.verdict}
-                            </span>
-                          </div>
-                          <div>
-                            <h4 className="font-display font-bold text-xl tracking-tight mb-1.5">{concept.name}</h4>
-                            <p className={`font-sans text-base leading-relaxed ${won ? 'text-black/60 light:text-white/60' : 'text-white/60 light:text-zinc-500'}`}>
-                              {concept.description}
+                          {/* Card content */}
+                          <div className="p-6 flex flex-col gap-4">
+                            <div className="flex items-center justify-between">
+                              <ConceptIcon size={22} className={won ? 'text-black/50 light:text-white/50' : 'text-white/50 light:text-zinc-500'} />
+                              <span
+                                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest ${
+                                  won
+                                    ? 'bg-emerald-400/15 text-emerald-600 light:text-emerald-400'
+                                    : 'bg-rose-400/10 text-rose-500 light:text-rose-400'
+                                }`}
+                              >
+                                {won ? <Check size={12} /> : <X size={12} />}
+                                {concept.verdict}
+                              </span>
+                            </div>
+                            <div>
+                              <h4 className="font-display font-bold text-xl tracking-tight mb-1.5">{concept.name}</h4>
+                              <p className={`font-sans text-base leading-relaxed ${won ? 'text-black/60 light:text-white/60' : 'text-white/60 light:text-zinc-500'}`}>
+                                {concept.description}
+                              </p>
+                            </div>
+                            <p className={`font-sans text-sm leading-relaxed pt-3 border-t ${won ? 'border-black/10 light:border-white/10 text-black/50 light:text-white/50' : 'border-white/10 light:border-black/10 text-white/45 light:text-zinc-500'}`}>
+                              {concept.detail}
                             </p>
                           </div>
-                          <p className={`font-sans text-sm leading-relaxed pt-3 border-t ${won ? 'border-black/10 light:border-white/10 text-black/50 light:text-white/50' : 'border-white/10 light:border-black/10 text-white/45 light:text-zinc-500'}`}>
-                            {concept.detail}
-                          </p>
                         </motion.div>
                       );
                     })}
