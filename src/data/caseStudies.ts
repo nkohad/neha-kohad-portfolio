@@ -312,7 +312,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
       ],
       closing:
         'Three groups with three different reasons for showing up meant a single, one-size-fits-all navigation structure was never going to work — which is exactly why an intent-based structure, not a resource-based one, became the design principle the rest of the hub was built around. It\'s the same idea as "people think in goals, not resources" above, just made concrete: the IA and the copy both had to start from why someone came, not what category HCD happened to file something under.',
-      conceptsHeading: 'Three ideas, one real constraint',
+      conceptsHeading: 'Three ideas, one real direction',
       concepts: [
         {
           name: 'Mascot AI Agent',
