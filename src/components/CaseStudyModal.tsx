@@ -543,9 +543,14 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     {content.audienceMapping.closing}
                   </p> */}
 
-                  <h3 className="font-display font-bold text-2xl sm:text-3xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">
+                </section>
+              )}
+
+              {content?.audienceMapping?.concepts && (
+                <section id="concepts" className="scroll-mt-16">
+                  <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">
                     {content.audienceMapping.conceptsHeading}
-                  </h3>
+                  </h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {content.audienceMapping.concepts.map((concept, i) => {
