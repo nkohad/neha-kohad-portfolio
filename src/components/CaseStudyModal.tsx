@@ -65,8 +65,10 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
   const [stage3Active, setStage3Active] = useState(0);
   const [sliderPos, setSliderPos] = useState(50);
   const [sliderPage, setSliderPage] = useState(0);
+  const [compareContentHeight, setCompareContentHeight] = useState<number | null>(null);
   const isDraggingRef = useRef(false);
   const compareRef = useRef<HTMLDivElement>(null);
+  const compareScrollerRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const content = CASE_STUDY_CONTENT[project.title];
   const selectedFeature = content?.solutions?.features[activeFeature] || content?.solutions?.features[0];
@@ -169,6 +171,33 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
       window.removeEventListener('touchend', stop);
     };
   }, []);
+
+  // Measure both images for the current page and use the taller one as the content height
+  useEffect(() => {
+    if (compareScrollerRef.current) compareScrollerRef.current.scrollTop = 0;
+    const page = COMPARE_PAGES[sliderPage];
+    const containerWidth = compareRef.current?.clientWidth ?? 800;
+    let loaded = 0;
+    let maxAspect = 0;
+
+    const checkDone = () => {
+      loaded++;
+      if (loaded === 2) setCompareContentHeight(maxAspect * containerWidth);
+    };
+
+    for (const src of [page.before, page.after]) {
+      const img = new window.Image();
+      img.onload = () => {
+        if (img.naturalWidth > 0) {
+          const aspect = img.naturalHeight / img.naturalWidth;
+          if (aspect > maxAspect) maxAspect = aspect;
+        }
+        checkDone();
+      };
+      img.onerror = checkDone;
+      img.src = src;
+    }
+  }, [sliderPage]);
 
   if (!project) return null;
 
@@ -799,8 +828,11 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             className="aspect-[16/10] rounded-[10px] overflow-hidden relative select-none bg-white"
                           >
                             {/* Scrollable content wrapper */}
-                            <div className="absolute inset-0 overflow-y-auto overflow-x-hidden">
-                              <div className="relative w-full">
+                            <div ref={compareScrollerRef} className="absolute inset-0 overflow-y-auto overflow-x-hidden">
+                              <div
+                                className="relative w-full"
+                                style={compareContentHeight != null ? { height: compareContentHeight } : undefined}
+                              >
                                 {/* BEFORE — renders at full natural height */}
                                 <img
                                   src={COMPARE_PAGES[sliderPage].before}
@@ -811,7 +843,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
 
                                 {/* AFTER — same natural height, clipped from left */}
                                 <div
-                                  className="absolute inset-0"
+                                  className="absolute inset-0 bg-white"
                                   style={{ clipPath: `inset(0 0 0 ${sliderPos}%)` }}
                                 >
                                   <img
