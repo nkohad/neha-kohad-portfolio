@@ -1058,43 +1058,55 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
         ref={carouselRef}
         className="flex gap-6 overflow-x-auto overflow-y-hidden snap-x snap-mandatory scrollbar-hide pt-2 pb-2"
       >
-        {carouselProjects.map((p, i) => (
-          <motion.button
-            key={p.index}
-            onClick={() => onSelectProject(p.index)}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.4, delay: i * 0.05 }}
-            whileHover={{ y: -4 }}
-            className="group relative w-[260px] sm:w-[300px] shrink-0 snap-start rounded-2xl overflow-hidden border border-white/10 light:border-black/10 hover:border-white/30 light:hover:border-black/25 bg-white/[0.02] light:bg-black/[0.02] transition-colors text-left"
-          >
-            {i === 0 && (
-              <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full bg-white text-black light:bg-zinc-900 light:text-white text-[9px] font-bold uppercase tracking-widest">
-                Up Next
-              </span>
-            )}
-            <div className="h-36 sm:h-40 w-full overflow-hidden">
-              <img
-                src={p.image}
-                alt=""
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-            </div>
-            <div className="p-4">
-              <div className="flex items-center gap-1.5 mb-1.5 text-xs uppercase tracking-widest text-white/55 light:text-zinc-500 font-medium">
-                {p.company === 'Personal' ? <Sparkles size={11} /> : <Building2 size={11} />}
-                <span>{p.company}</span>
+        {carouselProjects.map((p, i) => {
+          const isLocked = !!(p as any).status;
+          return (
+            <motion.button
+              key={p.index}
+              onClick={isLocked ? undefined : () => onSelectProject(p.index)}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              whileHover={isLocked ? {} : { y: -4 }}
+              className={`group relative w-[260px] sm:w-[300px] shrink-0 snap-start rounded-2xl overflow-hidden border border-white/10 light:border-black/10 bg-white/[0.02] light:bg-black/[0.02] transition-colors text-left ${isLocked ? 'cursor-default' : 'hover:border-white/30 light:hover:border-black/25 cursor-pointer'}`}
+            >
+              {i === 0 && !isLocked && (
+                <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full bg-white text-black light:bg-zinc-900 light:text-white text-[9px] font-bold uppercase tracking-widest">
+                  Up Next
+                </span>
+              )}
+              <div className="h-36 sm:h-40 w-full overflow-hidden">
+                <img
+                  src={p.image}
+                  alt=""
+                  className={`w-full h-full object-cover transition-transform duration-500 ease-out ${isLocked ? '' : 'group-hover:scale-110'}`}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
               </div>
-              <h4 className="font-display font-bold text-lg text-white light:text-zinc-900 tracking-tight leading-snug">{p.title}</h4>
-            </div>
-            <ArrowUpRight
-              size={16}
-              className="absolute top-3 right-3 text-white/60 light:text-zinc-500 opacity-0 group-hover:opacity-100 transition-opacity"
-            />
-          </motion.button>
-        ))}
+              <div className="p-4">
+                <div className="flex items-center gap-1.5 mb-1.5 text-xs uppercase tracking-widest text-white/55 light:text-zinc-500 font-medium">
+                  {p.company === 'Personal' ? <Sparkles size={11} /> : <Building2 size={11} />}
+                  <span>{p.company}</span>
+                </div>
+                <h4 className="font-display font-bold text-lg text-white light:text-zinc-900 tracking-tight leading-snug">{p.title}</h4>
+              </div>
+              {!isLocked && (
+                <ArrowUpRight
+                  size={16}
+                  className="absolute top-3 right-3 text-white/60 light:text-zinc-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                />
+              )}
+              {isLocked && (
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm bg-black/50 light:bg-white/60 rounded-2xl">
+                  <span className="px-3 py-1.5 rounded-full bg-white/10 light:bg-black/10 border border-white/25 light:border-black/20 text-white light:text-zinc-900 text-[10px] font-bold uppercase tracking-widest">
+                    Coming Soon
+                  </span>
+                </div>
+              )}
+            </motion.button>
+          );
+        })}
       </div>
     </div>
     </div>
