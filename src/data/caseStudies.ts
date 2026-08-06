@@ -113,7 +113,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
       ],
     },
     challenge: {
-      heading: 'Where Do I Start?',
+      heading: 'Resources were scattered across multiple internal systems with inconsistent navigation and terminology',
       paragraphs: [
         "The Human-Centered Design (HCD) team had already built a rich ecosystem of workshops, templates, certifications, and coaching. Yet employees still struggled to find the right resources.Every failed search became another Teams message or email to the HCD team.",
         // 'When we partnered with Cox Enterprises, the Human-Centered Design (HCD) team had already built an ecosystem of workshops, certifications, templates, research methods, project examples, and coaching opportunities. More than 1,000 employees had participated in HCD initiatives across an organization of 55,000+ people.',
@@ -337,9 +337,9 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
       },
     ],
     audienceMapping: {
-      heading: "Findings told me what people needed. They didn't tell me who was asking.",
+      heading: "Analysing the mailbox unearthed intent behind the requests",
       paragraphs: [
-        "For that, I didn't just rely on what people told me in interviews — I asked the HCD team to pull their last three months of inbox requests, and read the actual pattern of what people were asking for, not just what they said they wanted in a session.",
+        "I didn't just rely on what people told me in interviews. I asked the HCD team to pull their last three months of inbox requests, and read the actual pattern of what people were asking for, not just what they said they wanted in a session.",
       ],
       groupsIntro: 'Between the two, three distinct groups came into focus',
       groups: [
@@ -366,7 +366,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
         },
         {
           name: 'Smart Email Response System',
-          description: 'Automating replies to routine requests.',
+          description: 'Automating replies to routine requests using templates and standard content..',
           detail: "It only helped people who already knew to email HCD — not the much bigger group who didn't know the team existed. Stakeholders reframed the real complaint: it wasn't about saving time, it was the monotony of answering the same five questions on repeat. Different problem, different fix.",
           verdict: 'Killed — wrong audience',
           outcome: 'killed',
@@ -379,7 +379,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
         },
         {
           name: 'Centralized Design Hub',
-          description: 'One low-maintenance source of truth.',
+          description: 'One low-maintenance source of truth for all Cox Subsidiaries ',
           detail: "It solved the actual root cause, asked nothing extra of a 4-person team's bandwidth, and let visibility grow without anyone losing control of it.",
           verdict: 'Won',
           outcome: 'won',
@@ -395,7 +395,7 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
     impact: {
       heading: 'Outcomes',
       intro:
-        'We conducted a heuristic evaluation and task-based usability testing with 8 employees across Cox Enterprises and Cox Automotive. The results confirmed that the intent-driven navigation model translated into an efficient and learnable experience.',
+        'We conducted a heuristic evaluation and usability testing of the final prototype, measuring task completion, clicks to complete tasks, and overall usability. The results confirmed that the intent-driven navigation model translated into an efficient and learnable experience.',
       outcomes: [
         'Reduced reliance on the HCD team\'s manual resource curation workflow.',
         'Unified fragmented HCD resources into a single intent-driven experience.',

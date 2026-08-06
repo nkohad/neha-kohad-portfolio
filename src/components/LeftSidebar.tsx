@@ -137,7 +137,7 @@ export function LeftSidebar({
                   className="flex items-center gap-2 text-white/35 light:text-zinc-400 hover:text-white light:hover:text-zinc-900 transition-colors mb-4 group w-fit"
                 >
                   <ArrowLeft size={20} className="group-hover:-translate-x-0.5 transition-transform" />
-                  <span className="text-base font-bold uppercase tracking-widest">BAck</span>
+                  {/* <span className="text-base font-bold uppercase tracking-widest">BAck</span> */}
                 </button>
 
                 {/* <p className="font-display text-sm font-bold uppercase tracking-widest text-white/30 light:text-zinc-400 mb-1">
@@ -155,7 +155,7 @@ export function LeftSidebar({
                     <button
                       key={section.id}
                       onClick={() => onSectionClick(section.id)}
-                      className={`relative pl-4 text-left font-sans text-base tracking-wide transition-colors focus-visible:outline-none ${
+                      className={`relative pl-4 text-left font-sans text-sm tracking-wide transition-colors focus-visible:outline-none ${
                         activeSection === section.id
                           ? 'text-white light:text-zinc-900 font-medium'
                           : 'text-white/38 light:text-zinc-400 hover:text-white/70 light:hover:text-zinc-600'

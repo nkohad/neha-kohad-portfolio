@@ -205,7 +205,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   </p>
                 )} */}
                 <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,680px)_minmax(280px,1fr)] gap-8 lg:gap-16 items-end">
-                  <p className="font-sans text-xl sm:text-2xl font-normal text-white/70 light:text-zinc-600 leading-relaxed">
+                  <p className="font-sans text-xl sm:text-xl font-normal text-white/70 light:text-zinc-600 leading-relaxed">
                     {content?.summary || project.impact}
                   </p>
 
@@ -233,7 +233,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     {content.meta.map((m) => (
                       <div key={m.label}>
                         <div className="font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-1.5">{m.label}</div>
-                        <div className="text-lg sm:text-xl text-white/80 light:text-zinc-700 font-medium leading-snug">{m.value}</div>
+                        <div className="text-lg sm:text-base text-white/80 light:text-zinc-700 font-medium leading-snug">{m.value}</div>
                       </div>
                     ))}
                   </div>
@@ -270,8 +270,8 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                               </div>
                               {/* Bottom: label + description */}
                               <div className="flex flex-col gap-1 p-6 flex-1 bg-[#0d0d0d] light:bg-white">
-                                <h3 className="font-display font-bold text-base tracking-tight text-white light:text-zinc-900">{metric.label}</h3>
-                                <p className="font-sans text-xl leading-snug text-white/50 light:text-zinc-500">{metric.description}</p>
+                                <h3 className="font-display text-xl tracking-tight text-white light:text-zinc-900">{metric.label}</h3>
+                                <p className="font-sans text-lg leading-snug text-white/50 light:text-zinc-500">{metric.description}</p>
                               </div>
                             </motion.div>
                           );
@@ -289,7 +289,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         </p>
                       )} */}
                       {content.challenge.paragraphs.map((p, i) => (
-                        <p key={i} className="font-sans text-xl text-white/65 light:text-zinc-600 leading-relaxed ">{p}</p>
+                        <p key={i} className="font-sans text-lg text-white/65 light:text-zinc-600 leading-relaxed ">{p}</p>
                       ))}
                     </div>
                        {/* As-is workflow flowchart */}
@@ -300,12 +300,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                       <div className="hidden sm:flex items-start gap-2">
                         <div className="flex-1 bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-5 flex flex-col gap-3">
                           <Users size={20} className="text-white/40 light:text-zinc-400" />
-                          <p className="font-sans text-xl font-medium text-white/75 light:text-zinc-700 leading-snug">Employee wants to access an HCD resource</p>
+                          <p className="font-sans text-lg font-medium text-white/75 light:text-zinc-700 leading-snug">Employee wants to access an HCD resource</p>
                         </div>
                         <ChevronRight size={18} className="text-white/20 light:text-zinc-300 mt-8 shrink-0" />
                         <div className="flex-1 bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-5 flex flex-col gap-3">
                           <Search size={20} className="text-white/40 light:text-zinc-400" />
-                          <p className="font-sans text-xl font-medium text-white/75 light:text-zinc-700 leading-snug">Tries finding the resource on their own</p>
+                          <p className="font-sans text-lg font-medium text-white/75 light:text-zinc-700 leading-snug">Tries finding the resource on their own</p>
                         </div>
                         <ChevronRight size={18} className="text-white/20 light:text-zinc-300 mt-8 shrink-0" />
                         <div className="flex-1 bg-rose-500/[0.08] border border-rose-500/40 rounded-2xl p-5 flex flex-col gap-3 relative">
@@ -313,12 +313,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             <span className="bg-rose-500 text-white text-sm font-bold tracking-wider uppercase px-2.5 py-1 ">Pain Point</span>
                           </div> */}
                           <AlertTriangle size={20} className="text-rose-400 light:text-rose-600" />
-                          <p className="font-sans text-xl font-medium text-rose-300/90 light:text-rose-700 leading-snug">Fails. Reaches out to HCD@Cox</p>
+                          <p className="font-sans text-lg font-medium text-rose-300/90 light:text-rose-700 leading-snug">Fails. Reaches out to HCD@Cox</p>
                         </div>
                         <ChevronRight size={18} className="text-white/20 light:text-zinc-300 mt-8 shrink-0" />
                         <div className="flex-1 bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-5 flex flex-col gap-3">
                           <Layers size={20} className="text-white/40 light:text-zinc-400" />
-                          <p className="font-sans text-xl font-medium text-white/75 light:text-zinc-700 leading-snug">HCD team manually curates and shares links</p>
+                          <p className="font-sans text-lg font-medium text-white/75 light:text-zinc-700 leading-snug">HCD team manually curates and shares links</p>
                         </div>
                       </div>
 
@@ -351,8 +351,8 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     {/* Design challenge callout */}
                     {content.challenge.designChallenge && (
                       <div className="rounded-3xl bg-white light:bg-zinc-900 p-7">
-                        <h3 className="font-display text-base font-bold uppercase text-black/55 light:text-white/55 mb-4">Design Challenge</h3>
-                        <p className="font-medium text-xl text-black light:text-white tracking-tight leading-snug">
+                        <h3 className="font-display text-xl font-bold uppercase text-black/55 light:text-white/55 mb-4">Design Challenge</h3>
+                        <p className="font-medium text-lg text-black light:text-white tracking-tight leading-snug">
                           {content.challenge.designChallenge}
                         </p>
                       </div>
@@ -400,12 +400,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                               tabIndex={0}
                               className={`py-4 border-t cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded ${isActive ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
                             >
-                              <div className={`flex items-center gap-2 font-display text-xl font-medium mb-1.5 transition-colors duration-300 ${isActive ?'text-emerald-400' : 'text-white/55 light:text-zinc-500'}`}>
+                              <div className={`flex items-center gap-2 font-display text-2xl font-medium mb-1.5 transition-colors duration-300 ${isActive ?'text-emerald-400' : 'text-white/55 light:text-zinc-500'}`}>
                                 <Icon size={20} className="shrink-0 opacity-70" />
                                 {feature.title}
                               </div>
                               <div className={`overflow-hidden transition-all duration-500 ${isActive ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed pt-1">{feature.description}</p>
+                                <p className="font-sans text-lg text-white/60 light:text-zinc-600 leading-relaxed pt-1">{feature.description}</p>
                               </div>
                             </motion.div>
                           );
@@ -457,7 +457,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     </h2>
 
                     {/* Intro context */}
-                    <p className="font-sans text-xl text-white/55 light:text-zinc-600 leading-relaxed mb-10">
+                    <p className="font-sans text-lg text-white/55 light:text-zinc-600 leading-relaxed mb-10">
                       {content.stages[0].validating}
                     </p>
 
@@ -513,10 +513,10 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                     {String(i + 1).padStart(2, '0')}
                                   </span>
                                   <div className="flex flex-col gap-1.5 flex-1">
-                                    <h3 className="font-display font-bold text-xl leading-snug tracking-tight text-white light:text-zinc-900">
+                                    <h3 className="font-display font-bold text-2xl leading-snug tracking-tight text-white light:text-zinc-900">
                                       {item.phrase}
                                     </h3>
-                                    <p className="font-sans text-base text-white/55 light:text-zinc-600 leading-relaxed">
+                                    <p className="font-sans text-lg text-white/55 light:text-zinc-600 leading-relaxed">
                                       {item.insight}
                                     </p>
                                   </div>
@@ -545,7 +545,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 className={`rounded-3xl border ${borders[activeIdx]} bg-white/[0.03] light:bg-black/[0.02] p-8`}
                               >
                                 <Quote size={22} className={`${iconColors[activeIdx]} mb-5`} />
-                                <p className="font-sans text-xl leading-relaxed text-white/80 light:text-zinc-800 mb-5">
+                                <p className="font-sans text-lg leading-relaxed text-white/80 light:text-zinc-800 mb-5">
                                   "{quoteBody}"
                                 </p>
                                 {attribution && (
@@ -628,10 +628,10 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                           className="rounded-3xl border border-white/10 light:border-black/10 bg-white/[0.04] light:bg-black/[0.03] p-6 flex flex-col gap-3"
                         >
                           <GroupIcon size={22} className="text-white/50 light:text-zinc-500" />
-                          <h3 className="font-display font-bold text-xl leading-snug tracking-tight text-white light:text-zinc-900">
+                          <h3 className="font-display font-bold text-2xl leading-snug tracking-tight text-white light:text-zinc-900">
                             {group.title}
                           </h3>
-                          <p className="font-sans text-base text-white/60 light:text-zinc-600 leading-relaxed">
+                          <p className="font-sans text-lg text-white/60 light:text-zinc-600 leading-relaxed">
                             {group.description}
                           </p>
                         </motion.div>
@@ -731,8 +731,8 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                               </span>
                             </div>
                             <div>
-                              <h4 className="font-display font-bold text-xl tracking-tight mb-1.5">{concept.name}</h4>
-                              <p className={`font-sans text-base leading-relaxed ${won ? 'text-black/60 light:text-white/60' : 'text-white/60 light:text-zinc-500'}`}>
+                              <h4 className="font-display font-bold text-2xl tracking-tight mb-1.5">{concept.name}</h4>
+                              <p className={`font-sans text-lg leading-relaxed ${won ? 'text-black/60 light:text-white/60' : 'text-white/60 light:text-zinc-500'}`}>
                                 {concept.description}
                               </p>
                             </div>
@@ -768,7 +768,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                       <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white drop-shadow-md leading-snug">
                         {stage2?.title}
                       </h2>
-                      <p className="font-sans text-xl text-white/50 leading-relaxed">
+                      <p className="font-sans text-lg text-white/50 leading-relaxed">
                         {stage2?.validating}
                       </p>
                     </div>
@@ -912,8 +912,8 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             <span className="font-display font-black text-6xl tracking-tighter leading-none text-white light:text-zinc-900">55K+</span>
                           </div>
                           <div className="flex-1 flex flex-col justify-end p-5 bg-[#0d0d0d] light:bg-white">
-                            <h3 className="font-display font-bold text-base tracking-tight text-white light:text-zinc-900 mb-1">Enterprise Scale</h3>
-                            <p className="font-sans text-xl leading-snug text-white/50 light:text-zinc-500">Employees across Cox Enterprises with access to self-service HCD guidance.</p>
+                            <h3 className="font-display font-bold text-2xl tracking-tight text-white light:text-zinc-900 mb-1">Enterprise Scale</h3>
+                            <p className="font-sans text-lg leading-snug text-white/50 light:text-zinc-500">Employees across Cox Enterprises with access to self-service HCD guidance.</p>
                           </div>
                         </div>
 
@@ -922,7 +922,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                           {content.impact.outcomes.map((outcome, i) => (
                             <div key={i} className="flex items-center gap-3 p-5 rounded-2xl bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 flex-1">
                               <Check size={15} className="text-emerald-400 light:text-emerald-600 shrink-0" />
-                              <p className="font-sans text-xl text-white/70 light:text-zinc-600 leading-snug">{outcome}</p>
+                              <p className="font-sans text-lg text-white/70 light:text-zinc-600 leading-snug">{outcome}</p>
                             </div>
                           ))}
                         </div>
@@ -941,8 +941,8 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                   </span>
                                 </div>
                                 <div className="flex-1 flex flex-col justify-end p-5 bg-[#0d0d0d] light:bg-white">
-                                  <h3 className="font-display font-bold text-base tracking-tight text-white light:text-zinc-900 mb-1">{m.label}</h3>
-                                  <p className="font-sans text-xl leading-snug text-white/50 light:text-zinc-500">{m.description}</p>
+                                  <h3 className="font-display font-bold text-2xl tracking-tight text-white light:text-zinc-900 mb-1">{m.label}</h3>
+                                  <p className="font-sans text-lg leading-snug text-white/50 light:text-zinc-500">{m.description}</p>
                                 </div>
                               </div>
                             ))}
@@ -961,12 +961,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         <div className="grid grid-cols-1 xl:grid-cols-[1fr_1fr] gap-12 xl:gap-16 items-start">
                           <div>
                             <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">Reflection</h2>
-                            <div className="font-sans text-lg sm:text-xl font-normal text-white/70 light:text-zinc-600 leading-relaxed space-y-6">
+                            <div className="font-sans text-lg sm:text-lg font-normal text-white/70 light:text-zinc-600 leading-relaxed space-y-6">
                               {content.reflection.paragraphs.map((p, i) => (
                                 <p key={i}>{p}</p>
                               ))}
                             </div>
-                            <p className="font-display font-medium text-xl sm:text-2xl text-white light:text-zinc-900 tracking-tight leading-snug mt-8">
+                            <p className="font-display font-medium text-xl sm:text-lg text-white light:text-zinc-900 tracking-tight leading-snug mt-8">
                               {content.reflection.closing}
                             </p>
                           </div>
