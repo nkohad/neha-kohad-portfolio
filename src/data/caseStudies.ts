@@ -190,6 +190,13 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
       // ],
       features: [
   {
+    title: 'Unified Knowledge Search',
+    description:
+      'A single search experience connected templates, workshops, projects, and resources.',
+    imageLabel: 'Cross-platform resource discovery',
+    imageTone: 'from-violet-500/25 via-blue-400/15 to-slate-100/20',
+  },
+  {
     title: 'Intent-Based Navigation',
     description:
       'Employees reached the right resources through goals instead of internal terminology.',
@@ -202,20 +209,6 @@ export const CASE_STUDY_CONTENT: Record<string, CaseStudyContent> = {
       'Guided journeys helped beginners build confidence while experts moved faster.',
     imageLabel: 'Beginner to practitioner journey',
     imageTone: 'from-fuchsia-500/25 via-rose-400/15 to-amber-300/20',
-  },
-  {
-    title: 'Unified Knowledge Search',
-    description:
-      'A single search experience connected templates, workshops, projects, and resources.',
-    imageLabel: 'Cross-platform resource discovery',
-    imageTone: 'from-violet-500/25 via-blue-400/15 to-slate-100/20',
-  },
-  {
-    title: 'Expert Directory',
-    description:
-      'Specialty-based profiles connected employees with the right HCD experts.',
-    imageLabel: 'Specialty-based expert routing',
-    imageTone: 'from-lime-400/25 via-emerald-500/15 to-teal-300/20',
   },
   {
     title: 'Project Library',
