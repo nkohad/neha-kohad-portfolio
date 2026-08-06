@@ -4,6 +4,11 @@ import { ArrowLeft, ChevronLeft, ChevronRight, Sparkles, AlertTriangle, ArrowUpR
 import { CASE_STUDY_CONTENT } from '../data/caseStudies';
 import { CASE_STUDY_SECTIONS } from './LeftSidebar';
 
+import videoIntentPaths from '../assets/feature-videos/Intent-based-pathways.mp4';
+import videoNewToHcd from '../assets/feature-videos/New-to-HCD.mp4';
+import videoAiSearch from '../assets/feature-videos/AI-Search.mp4';
+import videoGetInspired from '../assets/feature-videos/Get-Inspired.mp4';
+
 import wfBeforeHome from '../assets/wireframes/Home Page.svg';
 import wfBeforeNewToHcd from '../assets/wireframes/New to HCD.svg';
 import wfBeforeGetInspired from '../assets/wireframes/Get Inspired.svg';
@@ -41,6 +46,14 @@ const stage2Icons = [Route, Compass, GitBranch, BarChart2];
 const stage3Icons = [Layers, Search, Zap, Award];
 const audienceGroupIcons = [EyeOff, UserPlus, Briefcase];
 const conceptIcons = [Bot, Mail, Building2];
+const COMING_SOON = 'coming-soon';
+const featureVideos: (string | null)[] = [
+  videoAiSearch,
+  videoIntentPaths,
+  COMING_SOON,
+  videoGetInspired,
+];
+
 const featureToneClasses = [
   'from-sky-500/30 via-cyan-400/15 to-emerald-400/20',
   'from-fuchsia-500/25 via-rose-400/15 to-amber-300/20',
@@ -60,6 +73,8 @@ const COMPARE_PAGES = [
 
 export function CaseStudyModal({ project, allProjects, currentIndex, onClose, onSelectProject, activeSection, onSectionChange }: CaseStudyModalProps) {
   const [activeFeature, setActiveFeature] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
+  const hasInteractedRef = useRef(false);
   const [hoveredInsight, setHoveredInsight] = useState<number | null>(null);
   const [stage2Active, setStage2Active] = useState(0);
   const [stage3Active, setStage3Active] = useState(0);
@@ -198,6 +213,45 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
       img.src = src;
     }
   }, [sliderPage]);
+
+  // Start auto-play when the solution section enters the viewport (first time only)
+  useEffect(() => {
+    const el = document.getElementById('solution');
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasInteractedRef.current) {
+          setActiveFeature(0);
+          setIsAutoPlaying(true);
+        }
+      },
+      { threshold: 0.4 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto-advance past "Coming Soon" slots (no video to signal end)
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    if (featureVideos[activeFeature] !== COMING_SOON) return;
+    const total = content?.solutions?.features?.length ?? 0;
+    if (activeFeature >= total - 1) return;
+    const t = setTimeout(() => setActiveFeature(f => f + 1), 3000);
+    return () => clearTimeout(t);
+  }, [activeFeature, isAutoPlaying, content]);
+
+  const handleFeatureEnded = () => {
+    if (!isAutoPlaying) return;
+    const total = content?.solutions?.features?.length ?? 0;
+    if (activeFeature < total - 1) setActiveFeature(f => f + 1);
+  };
+
+  const handleFeatureInteract = (i: number) => {
+    hasInteractedRef.current = true;
+    setIsAutoPlaying(false);
+    setActiveFeature(i);
+  };
 
   if (!project) return null;
 
@@ -435,9 +489,9 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                           return (
                             <motion.div
                               key={feature.title}
-                              onMouseEnter={() => setActiveFeature(i)}
-                              onClick={() => setActiveFeature(i)}
-                              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setActiveFeature(i); }}
+                              onMouseEnter={() => handleFeatureInteract(i)}
+                              onClick={() => handleFeatureInteract(i)}
+                              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleFeatureInteract(i); }}
                               role="button"
                               tabIndex={0}
                               className={`py-4 border-t cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded ${isActive ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
@@ -460,18 +514,44 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                       <div className="w-full rounded-[18px] bg-[#1d1d1f] p-[9px] shadow-[0_30px_60px_rgba(0,0,0,0.6)] ring-1 ring-white/[0.10]">
                         <div className="flex justify-center pb-[6px]"><div className="w-[7px] h-[7px] rounded-full bg-[#3a3a3c]" /></div>
                         <div className="aspect-[16/10] rounded-[11px] bg-black overflow-hidden relative">
-                          <motion.div
-                            key={activeFeature}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.45 }}
-                            className={`absolute inset-0 bg-gradient-to-br ${featureToneClasses[activeFeature % featureToneClasses.length]}`}
-                          />
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="text-[10px] font-mono uppercase tracking-widest text-white/20">
-                              {`Feature ${activeFeature + 1} · Placeholder`}
-                            </span>
-                          </div>
+                          <AnimatePresence mode="wait">
+                            {featureVideos[activeFeature] === COMING_SOON ? (
+                              <motion.div
+                                key={`coming-soon-${activeFeature}`}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.35 }}
+                                className={`absolute inset-0 bg-gradient-to-br ${featureToneClasses[activeFeature % featureToneClasses.length]} flex items-center justify-center`}
+                              >
+                                <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-white/35">Coming Soon</span>
+                              </motion.div>
+                            ) : featureVideos[activeFeature] ? (
+                              <motion.video
+                                key={activeFeature}
+                                src={featureVideos[activeFeature]!}
+                                autoPlay
+                                muted
+                                loop={!isAutoPlaying}
+                                playsInline
+                                onEnded={handleFeatureEnded}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.35 }}
+                                className="absolute inset-0 w-full h-full object-cover"
+                              />
+                            ) : (
+                              <motion.div
+                                key={`placeholder-${activeFeature}`}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.45 }}
+                                className={`absolute inset-0 bg-gradient-to-br ${featureToneClasses[activeFeature % featureToneClasses.length]}`}
+                              />
+                            )}
+                          </AnimatePresence>
                         </div>
                       </div>
                       <div className="w-[90%]">
