@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 import { NAV_LINKS, useActiveTab } from './NavLinks';
-import { ThemeToggle } from './ThemeToggle';
 
 export function NavLiquidGlass() {
   const activeTab = useActiveTab();
@@ -33,9 +32,6 @@ export function NavLiquidGlass() {
             );
           })}
 
-          <span className="text-white/20 light:text-black/15 select-none px-1">|</span>
-
-          <ThemeToggle />
         </motion.nav>
       </div>
 
@@ -51,7 +47,6 @@ export function NavLiquidGlass() {
             {activeLink?.label ?? 'Menu'}
           </span>
           <div className="flex items-center gap-1 shrink-0">
-            <ThemeToggle />
             <button
               onClick={() => setMobileOpen((open) => !open)}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}

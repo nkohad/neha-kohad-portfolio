@@ -2,7 +2,6 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
 import { NAV_LINKS } from './NavLinks';
-import { ThemeToggle } from './ThemeToggle';
 
 export const CASE_STUDY_SECTIONS = [
   { id: 'first-glance', navTitle: 'Overview' },
@@ -98,7 +97,6 @@ export function LeftSidebar({
         >
           NEHA
         </a>
-        <ThemeToggle />
       </div>
       <div className="h-px bg-white/10 light:bg-black/10 mx-6 shrink-0" />
 
