@@ -4,6 +4,19 @@ import { ArrowLeft, ChevronLeft, ChevronRight, Sparkles, AlertTriangle, ArrowUpR
 import { CASE_STUDY_CONTENT } from '../data/caseStudies';
 import { CASE_STUDY_SECTIONS } from './LeftSidebar';
 
+import wfBeforeHome from '../assets/wireframes/Home Page.svg';
+import wfBeforeNewToHcd from '../assets/wireframes/New to HCD.svg';
+import wfBeforeGetInspired from '../assets/wireframes/Get Inspired.svg';
+import wfBeforeConsulting from '../assets/wireframes/Request Consulting.svg';
+import wfBeforeCertified from '../assets/wireframes/Get Certified.svg';
+import wfBeforeAbout from '../assets/wireframes/About.svg';
+import wfAfterHome from '../assets/wireframes/New - Home page.svg';
+import wfAfterNewToHcd from '../assets/wireframes/NEW - New to HCD.svg';
+import wfAfterGetInspired from '../assets/wireframes/New - Get Inspired.svg';
+import wfAfterConsulting from '../assets/wireframes/NEW - Request Consulting.svg';
+import wfAfterCertified from '../assets/wireframes/New - Training.svg';
+import wfAfterAbout from '../assets/wireframes/New - About.svg';
+
 interface CaseStudyModalProps {
   project: any;
   allProjects: any[];
@@ -37,12 +50,12 @@ const featureToneClasses = [
 ];
 
 const COMPARE_PAGES = [
-  { label: 'Home Page',          before: '/wireframes/home-page.svg',          after: '/wireframes/new-home-page.svg' },
-  { label: 'New to HCD',         before: '/wireframes/new-to-hcd.svg',          after: '/wireframes/new-new-to-hcd.svg' },
-  { label: 'Get Inspired',       before: '/wireframes/get-inspired.svg',        after: '/wireframes/new-get-inspired.svg' },
-  { label: 'Consulting',         before: '/wireframes/request-consulting.svg',  after: '/wireframes/new-request-consulting.svg' },
-  { label: 'Get Certified',      before: '/wireframes/get-certified.svg',       after: '/wireframes/new-training.svg' },
-  { label: 'About',              before: '/wireframes/about.svg',               after: '/wireframes/new-about.svg' },
+  { label: 'Home Page',     before: wfBeforeHome,       after: wfAfterHome },
+  { label: 'New to HCD',   before: wfBeforeNewToHcd,   after: wfAfterNewToHcd },
+  { label: 'Get Inspired',  before: wfBeforeGetInspired, after: wfAfterGetInspired },
+  { label: 'Consulting',    before: wfBeforeConsulting,  after: wfAfterConsulting },
+  { label: 'Get Certified', before: wfBeforeCertified,  after: wfAfterCertified },
+  { label: 'About',         before: wfBeforeAbout,      after: wfAfterAbout },
 ];
 
 export function CaseStudyModal({ project, allProjects, currentIndex, onClose, onSelectProject, activeSection, onSectionChange }: CaseStudyModalProps) {
@@ -669,17 +682,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         >
                           {/* Sketch frame — browser chrome window */}
                           {(() => {
-                            const conceptWireframes = [
-                              '/wireframes/new-to-hcd.svg',
-                              '/wireframes/request-consulting.svg',
-                              '/wireframes/new-home-page.svg',
-                            ];
                             const conceptUrls = [
                               'mascot-agent · concept',
                               'email-response · concept',
                               'hcd.coxenterprises.com',
                             ];
-                            const wireframeSrc = conceptWireframes[i];
+                            const wireframeSrc = concept.sketch;
                             const urlLabel = conceptUrls[i] ?? 'concept · sketch';
                             return (
                               <div className={`w-full flex flex-col border-b ${won ? 'border-black/10 light:border-white/10' : 'border-white/10 light:border-black/10'}`}>
