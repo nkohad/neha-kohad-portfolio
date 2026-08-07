@@ -24,7 +24,7 @@ export function NavLiquidGlass() {
               <a
                 key={link.label}
                 href={link.href}
-                className={`relative px-6 py-1 rounded-full transition-colors duration-300 text-sm font-medium tracking-wide group ${isActive ? 'text-white light:text-zinc-900' : 'text-zinc-300 light:text-zinc-500 hover:text-white light:hover:text-zinc-900'}`}
+                className={`relative px-6 py-1 rounded-full transition-colors duration-300 label group ${isActive ? 'text-white light:text-zinc-900' : 'text-zinc-300 light:text-zinc-500 hover:text-white light:hover:text-zinc-900'}`}
               >
                 <span className="relative z-10">{link.label}</span>
                 <div className={`absolute inset-0 rounded-full transition-colors duration-300 pointer-events-none ${isActive ? 'bg-white/20 light:bg-black/10' : 'bg-white/0 group-hover:bg-white/10 light:group-hover:bg-black/5'}`} />

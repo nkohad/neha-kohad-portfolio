@@ -690,7 +690,7 @@ export default function App() {
             {/* View Controls */}
             <div className="absolute bottom-8 left-0 right-0 z-50 flex justify-center pointer-events-auto px-4">
         <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 bg-white/10 light:bg-black/5 backdrop-blur-xl px-6 py-3 rounded-full border border-white/20 light:border-black/10 shadow-2xl">
-          <div className="flex items-center gap-4 text-sm font-medium tracking-wide">
+          <div className="flex items-center gap-4 label">
             <button
               onClick={() => setMode('spiral')}
               className={`transition-colors cursor-pointer ${mode === 'spiral' ? 'text-white light:text-zinc-900 drop-shadow-md' : 'text-zinc-400 light:text-zinc-500 hover:text-white light:hover:text-zinc-900'}`}
@@ -714,7 +714,7 @@ export default function App() {
         <div className="w-full px-4 flex flex-col items-center">
           <motion.h1
             ref={wordmarkRef}
-            className="font-display font-black text-6xl sm:text-7xl tracking-tighter text-white light:text-zinc-900 mb-4 drop-shadow-lg whitespace-nowrap"
+            className="display-xl text-white light:text-zinc-900 mb-4 drop-shadow-lg whitespace-nowrap"
             style={
               mode === 'spiral'
                 ? { scale: springWordmarkScale, y: springWordmarkY, opacity: springWordmarkOpacity }

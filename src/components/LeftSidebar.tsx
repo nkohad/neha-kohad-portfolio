@@ -141,7 +141,7 @@ export function LeftSidebar({
                 {/* <p className="font-display text-sm font-bold uppercase tracking-widest text-white/30 light:text-zinc-400 mb-1">
                   Case Study
                 </p> */}
-                <p className="font-display text-2xl font-bold text-white light:text-zinc-900 tracking-tight leading-snug mb-4">
+                <p className="heading-4 text-white light:text-zinc-900 mb-4">
                   {project.title}
                 </p>
 
@@ -153,7 +153,7 @@ export function LeftSidebar({
                     <button
                       key={section.id}
                       onClick={() => onSectionClick(section.id)}
-                      className={`relative pl-4 text-left font-sans text-sm tracking-wide transition-colors focus-visible:outline-none ${
+                      className={`relative pl-4 text-left label transition-colors focus-visible:outline-none ${
                         activeSection === section.id
                           ? 'text-white light:text-zinc-900 font-medium'
                           : 'text-white/38 light:text-zinc-400 hover:text-white/70 light:hover:text-zinc-600'
