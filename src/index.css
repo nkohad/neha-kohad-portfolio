@@ -36,3 +36,38 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ─── Semantic Typography System ─────────────────────────────────────────── */
+@layer utilities {
+
+  /* Display — largest type, page-level heroes */
+  .display-xl    { @apply font-display font-black text-6xl sm:text-7xl tracking-tighter; }
+  .display-hero  { @apply font-display font-black text-5xl sm:text-7xl tracking-tighter; }
+  .display-about { @apply font-display font-medium text-5xl sm:text-6xl lg:text-7xl tracking-tight; line-height: 1.05; }
+  .display-stat  { @apply font-display font-black text-6xl tracking-tighter leading-none; }
+
+  /* Headings */
+  .heading-1        { @apply font-display font-bold text-4xl tracking-tight; }
+  .heading-2        { @apply font-display font-bold text-3xl sm:text-4xl tracking-tight; }
+  .heading-3        { @apply font-display text-2xl; }
+  .heading-4        { @apply font-display font-bold text-2xl leading-snug tracking-tight; }
+  .heading-5        { @apply font-display font-bold text-xl tracking-tight; }
+  .heading-card     { @apply font-display font-medium text-xl sm:text-2xl; }
+  .heading-feature  { @apply font-display font-medium text-2xl; }
+  .heading-carousel { @apply font-display font-bold text-2xl sm:text-4xl tracking-tight; }
+  .heading-card-sm  { @apply font-display font-bold text-lg tracking-tight leading-snug; }
+
+  /* Body */
+  .body-xl   { @apply font-sans font-light text-lg sm:text-xl; line-height: 1.8; }
+  .body-lg   { @apply font-sans text-xl leading-relaxed; }
+  .body      { @apply font-sans text-lg leading-relaxed; }
+  .body-sm   { @apply font-sans text-base leading-relaxed; }
+  .body-item { @apply font-sans font-light text-base sm:text-lg; }
+  .meta-date { @apply font-sans font-light text-sm sm:text-base tracking-wide; }
+
+  /* Labels, eyebrows, captions */
+  .eyebrow       { @apply font-sans text-xs font-bold uppercase tracking-widest; }
+  .section-label { @apply font-display text-base font-bold uppercase tracking-widest; }
+  .label         { @apply font-sans text-sm font-medium tracking-wide; }
+  .caption       { @apply font-sans text-xs tracking-wide; }
+}

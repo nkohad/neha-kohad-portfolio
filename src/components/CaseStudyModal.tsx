@@ -292,7 +292,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   </span>
                   <span className="text-white/60 light:text-zinc-500">{project.company}</span>
                 </div>
-                <h1 className="font-display font-black text-5xl sm:text-7xl tracking-tighter text-white light:text-zinc-900 mb-6 leading-[1.1] drop-shadow-lg">
+                <h1 className="display-hero text-white light:text-zinc-900 mb-6 leading-[1.1] drop-shadow-lg">
                   {project.title}
                 </h1>
                 {/* {content?.subtitle && (
@@ -301,13 +301,13 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   </p>
                 )} */}
                 <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,680px)_minmax(280px,1fr)] gap-8 lg:gap-16 items-end">
-                  <p className="font-sans text-xl sm:text-xl font-normal text-white/70 light:text-zinc-600 leading-relaxed">
+                  <p className="body-lg text-white/70 light:text-zinc-600">
                     {content?.summary || project.impact}
                   </p>
 
                   {content?.tools && content.tools.length > 0 && (
                     <div className="lg:justify-self-end">
-                      <div className="font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-3">Tools Used</div>
+                      <div className="section-label text-white/55 light:text-zinc-500 mb-3">Tools Used</div>
                       <div className="flex flex-wrap gap-3 lg:justify-end">
                         {content.tools.map((tool) => (
                           <div
@@ -328,7 +328,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-x-8 gap-y-8 lg:gap-x-14 xl:gap-x-20 mt-10 pt-8 border-t border-white/10 light:border-black/10 w-full">
                     {content.meta.map((m) => (
                       <div key={m.label}>
-                        <div className="font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-1.5">{m.label}</div>
+                        <div className="section-label text-white/55 light:text-zinc-500 mb-1.5">{m.label}</div>
                         <div className="text-lg sm:text-base text-white/80 light:text-zinc-700 font-medium leading-snug">{m.value}</div>
                       </div>
                     ))}
@@ -362,12 +362,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             >
                               {/* Top: gradient + big number */}
                               <div className={`bg-gradient-to-br ${gradients[i]} flex items-end p-6 min-h-[110px]`}>
-                                <span className="font-display font-black text-6xl tracking-tighter leading-none text-white light:text-zinc-900">{metric.value}</span>
+                                <span className="display-stat text-white light:text-zinc-900">{metric.value}</span>
                               </div>
                               {/* Bottom: label + description */}
                               <div className="flex flex-col gap-1 p-6 flex-1 bg-[#0d0d0d] light:bg-white">
                                 <h3 className="font-display text-xl tracking-tight text-white light:text-zinc-900">{metric.label}</h3>
-                                <p className="font-sans text-lg leading-snug text-white/50 light:text-zinc-500">{metric.description}</p>
+                                <p className="body leading-snug text-white/50 light:text-zinc-500">{metric.description}</p>
                               </div>
                             </motion.div>
                           );
@@ -376,7 +376,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     )}
                     {/* Problem framing */}
                     <div className="flex flex-col gap-5">
-                      <h2 className="font-display font-bold text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md">
+                      <h2 className="heading-1 text-white light:text-zinc-900 drop-shadow-md">
                         {content.challenge.heading}
                       </h2>
                       {/* {content.overview?.hook && (
@@ -385,7 +385,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         </p>
                       )} */}
                       {content.challenge.paragraphs.map((p, i) => (
-                        <p key={i} className="font-sans text-lg text-white/65 light:text-zinc-600 leading-relaxed ">{p}</p>
+                        <p key={i} className="body text-white/65 light:text-zinc-600">{p}</p>
                       ))}
                     </div>
                        {/* As-is workflow flowchart */}
@@ -396,12 +396,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                       <div className="hidden sm:flex items-start gap-2">
                         <div className="flex-1 bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-5 flex flex-col gap-3">
                           <Users size={20} className="text-white/40 light:text-zinc-400" />
-                          <p className="font-sans text-lg font-medium text-white/75 light:text-zinc-700 leading-snug">Employee wants to access an HCD resource</p>
+                          <p className="body font-medium leading-snug text-white/75 light:text-zinc-700">Employee wants to access an HCD resource</p>
                         </div>
                         <ChevronRight size={18} className="text-white/20 light:text-zinc-300 mt-8 shrink-0" />
                         <div className="flex-1 bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-5 flex flex-col gap-3">
                           <Search size={20} className="text-white/40 light:text-zinc-400" />
-                          <p className="font-sans text-lg font-medium text-white/75 light:text-zinc-700 leading-snug">Tries finding the resource on their own</p>
+                          <p className="body font-medium leading-snug text-white/75 light:text-zinc-700">Tries finding the resource on their own</p>
                         </div>
                         <ChevronRight size={18} className="text-white/20 light:text-zinc-300 mt-8 shrink-0" />
                         <div className="flex-1 bg-rose-500/[0.08] border border-rose-500/40 rounded-2xl p-5 flex flex-col gap-3 relative">
@@ -409,12 +409,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             <span className="bg-rose-500 text-white text-sm font-bold tracking-wider uppercase px-2.5 py-1 ">Pain Point</span>
                           </div> */}
                           <AlertTriangle size={20} className="text-rose-400 light:text-rose-600" />
-                          <p className="font-sans text-lg font-medium text-rose-300/90 light:text-rose-700 leading-snug">Fails. Reaches out to HCD@Cox</p>
+                          <p className="body font-medium leading-snug text-rose-300/90 light:text-rose-700">Fails. Reaches out to HCD@Cox</p>
                         </div>
                         <ChevronRight size={18} className="text-white/20 light:text-zinc-300 mt-8 shrink-0" />
                         <div className="flex-1 bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-5 flex flex-col gap-3">
                           <Layers size={20} className="text-white/40 light:text-zinc-400" />
-                          <p className="font-sans text-lg font-medium text-white/75 light:text-zinc-700 leading-snug">HCD team manually curates and shares links</p>
+                          <p className="body font-medium leading-snug text-white/75 light:text-zinc-700">HCD team manually curates and shares links</p>
                         </div>
                       </div>
 
@@ -422,12 +422,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                       <div className="flex sm:hidden flex-col items-center gap-0">
                         <div className="w-full bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-4 flex items-center gap-3">
                           <Users size={18} className="text-white/40 light:text-zinc-400 shrink-0" />
-                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">Employee wants to access an HCD resource</p>
+                          <p className="label leading-snug text-white/75 light:text-zinc-700">Employee wants to access an HCD resource</p>
                         </div>
                         <ChevronRight size={16} className="text-white/20 light:text-zinc-300 rotate-90 my-1" />
                         <div className="w-full bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-4 flex items-center gap-3">
                           <Search size={18} className="text-white/40 light:text-zinc-400 shrink-0" />
-                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">Tries finding the resource on their own</p>
+                          <p className="label leading-snug text-white/75 light:text-zinc-700">Tries finding the resource on their own</p>
                         </div>
                         <ChevronRight size={16} className="text-white/20 light:text-zinc-300 rotate-90 my-1" />
                         <div className="w-full bg-rose-500/[0.08] border border-rose-500/40 rounded-2xl p-4 flex items-center gap-3 relative mt-3">
@@ -435,12 +435,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             <span className="bg-rose-500 text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full">Pain Point</span>
                           </div>
                           <AlertTriangle size={18} className="text-rose-400 light:text-rose-600 shrink-0" />
-                          <p className="font-sans text-sm font-medium text-rose-300/90 light:text-rose-700 leading-snug">Fails. Messages the HCD Team</p>
+                          <p className="label leading-snug text-rose-300/90 light:text-rose-700">Fails. Messages the HCD Team</p>
                         </div>
                         <ChevronRight size={16} className="text-white/20 light:text-zinc-300 rotate-90 my-1" />
                         <div className="w-full bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 rounded-2xl p-4 flex items-center gap-3">
                           <Layers size={18} className="text-white/40 light:text-zinc-400 shrink-0" />
-                          <p className="font-sans text-sm font-medium text-white/75 light:text-zinc-700 leading-snug">HCD team manually curates and shares links</p>
+                          <p className="label leading-snug text-white/75 light:text-zinc-700">HCD team manually curates and shares links</p>
                         </div>
                       </div>
                     </div>
@@ -459,7 +459,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   </div>
                 ) : (
                   <>
-                    <h2 className="font-display font-bold text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">Untangling the Mess</h2>
+                    <h2 className="heading-1 text-white light:text-zinc-900 mb-8 drop-shadow-md">Untangling the Mess</h2>
                     <div className="font-sans text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl space-y-6">
                       <p>
                         When I joined the team, the design infrastructure was highly fragmented. Designers were spending 40% of their time recreating components instead of focusing on user experience. The primary challenge was to establish a single source of truth without disrupting ongoing sprints.
@@ -476,13 +476,13 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                     {/* Left: heading + subtext + feature list */}
                     <div className="flex flex-col gap-6">
                       <div className="flex flex-col gap-3">
-                        <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 drop-shadow-md">
+                        <h2 className="heading-2 text-white light:text-zinc-900 drop-shadow-md">
                           {content.solutions.heading}
                         </h2>
                       
                       </div>
                       <div>
-                        <div className="font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-3">Features</div>
+                        <div className="section-label text-white/55 light:text-zinc-500 mb-3">Features</div>
                         {content.solutions.features.map((feature, i) => {
                           const Icon = featureIcons[i] || PanelsTopLeft;
                           const isActive = i === activeFeature;
@@ -496,12 +496,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                               tabIndex={0}
                               className={`py-4 border-t cursor-pointer transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:rounded ${isActive ? 'border-white/25 light:border-black/20' : 'border-white/10 light:border-black/10'}`}
                             >
-                              <div className={`flex items-center gap-2 font-display text-2xl font-medium mb-1.5 transition-colors duration-300 ${isActive ?'text-emerald-400' : 'text-white/55 light:text-zinc-500'}`}>
+                              <div className={`flex items-center gap-2 heading-feature mb-1.5 transition-colors duration-300 ${isActive ?'text-emerald-400' : 'text-white/55 light:text-zinc-500'}`}>
                                 <Icon size={20} className="shrink-0 opacity-70" />
                                 {feature.title}
                               </div>
                               <div className={`overflow-hidden transition-all duration-500 ${isActive ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <p className="font-sans text-lg text-white/60 light:text-zinc-600 leading-relaxed pt-1">{feature.description}</p>
+                                <p className="body text-white/60 light:text-zinc-600 pt-1">{feature.description}</p>
                               </div>
                             </motion.div>
                           );
@@ -562,7 +562,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   </div>
                 ) : (
                   <>
-                    <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">The Final Deliverable</h2>
+                    <h2 className="heading-2 text-white light:text-zinc-900 mb-8 drop-shadow-md">The Final Deliverable</h2>
                     <div className="aspect-video w-full rounded-3xl bg-white/5 light:bg-black/[0.03] border border-white/10 light:border-black/10 overflow-hidden mb-12">
                       <img src={project.image} alt="Solution" className="w-full h-full object-cover" />
                     </div>
@@ -574,12 +574,12 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
               <section id="stage-1" className="scroll-mt-16">
                 {content?.stages?.[0] ? (
                   <>
-                    <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">
+                    <h2 className="heading-2 text-white light:text-zinc-900 mb-6 drop-shadow-md">
                       {content.challenge.emphasis.join(' ')}
                     </h2>
 
                     {/* Intro context */}
-                    <p className="font-sans text-lg text-white/55 light:text-zinc-600 leading-relaxed mb-10">
+                    <p className="body text-white/55 light:text-zinc-600 mb-10">
                       {content.stages[0].validating}
                     </p>
 
@@ -594,10 +594,10 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                             <h3 className="font-display font-bold text-base leading-snug tracking-tight text-white light:text-zinc-900">
                               {item.phrase}
                             </h3>
-                            <p className="font-sans text-sm text-white/50 light:text-zinc-600 leading-relaxed">{item.insight}</p>
+                            <p className="label text-white/50 light:text-zinc-600 leading-relaxed">{item.insight}</p>
                             {item.quote && (
                               <div className="border-l-2 border-white/15 light:border-black/[0.12] pl-4 mt-1">
-                                <p className="font-sans text-sm italic text-white/38 light:text-zinc-500 leading-relaxed">{item.quote}</p>
+                                <p className="label italic text-white/38 light:text-zinc-500 leading-relaxed">{item.quote}</p>
                               </div>
                             )}
                           </div>
@@ -635,10 +635,10 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                     {String(i + 1).padStart(2, '0')}
                                   </span>
                                   <div className="flex flex-col gap-1.5 flex-1">
-                                    <h3 className="font-display font-bold text-2xl leading-snug tracking-tight text-white light:text-zinc-900">
+                                    <h3 className="heading-4 text-white light:text-zinc-900">
                                       {item.phrase}
                                     </h3>
-                                    <p className="font-sans text-lg text-white/55 light:text-zinc-600 leading-relaxed">
+                                    <p className="body text-white/55 light:text-zinc-600">
                                       {item.insight}
                                     </p>
                                   </div>
@@ -667,7 +667,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 className={`rounded-3xl border ${borders[activeIdx]} bg-white/[0.03] light:bg-black/[0.02] p-8`}
                               >
                                 <Quote size={22} className={`${iconColors[activeIdx]} mb-5`} />
-                                <p className="font-sans text-lg leading-relaxed text-white/80 light:text-zinc-800 mb-5">
+                                <p className="body text-white/80 light:text-zinc-800 mb-5">
                                   "{quoteBody}"
                                 </p>
                                 {attribution && (
@@ -685,7 +685,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   </>
                 ) : (
                   <>
-                    <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">Supercharging with AI</h2>
+                    <h2 className="heading-2 text-white light:text-zinc-900 mb-8 drop-shadow-md">Supercharging with AI</h2>
                     <p className="font-sans text-lg sm:text-xl font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed max-w-3xl mb-12">
                       I integrated generative models to accelerate our ideation and documentation phases. However, maintaining quality control meant navigating around AI hallucinations and generic outputs.
                     </p>
@@ -698,7 +698,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         </div>
                         <div className="flex items-center gap-3 mb-6 text-emerald-400 light:text-emerald-600">
                           <Sparkles size={24} />
-                          <h3 className="font-display font-bold text-xl tracking-tight">Workflow Acceleration</h3>
+                          <h3 className="heading-5">Workflow Acceleration</h3>
                         </div>
                         <p className="font-sans text-base sm:text-lg font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed relative z-10">
                           Used Claude to quickly draft component documentation and map out edge cases in the design system, cutting down our documentation time by three weeks.
@@ -712,7 +712,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                         </div>
                         <div className="flex items-center gap-3 mb-6 text-amber-400 light:text-amber-600">
                           <AlertTriangle size={24} />
-                          <h3 className="font-display font-bold text-xl tracking-tight">Hallucination Mitigation</h3>
+                          <h3 className="heading-5">Hallucination Mitigation</h3>
                         </div>
                         <p className="font-sans text-base sm:text-lg font-normal tracking-tight text-white/70 light:text-zinc-600 leading-relaxed relative z-10">
                           The AI generated inconsistent color token mappings. I had to manually intervene and establish strict JSON schemas to force the AI to adhere to our design tokens.
@@ -726,11 +726,11 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
               {/* Mapping the Audience */}
               {content?.audienceMapping && (
                 <section id="audience" className="scroll-mt-16">
-                  <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">
+                  <h2 className="heading-2 text-white light:text-zinc-900 mb-6 drop-shadow-md">
                     {content.audienceMapping.heading}
                   </h2>
                   {content.audienceMapping.paragraphs.map((p, i) => (
-                    <p key={i} className="font-sans text-xl text-white/60 light:text-zinc-600 leading-relaxed mb-4">
+                    <p key={i} className="body-lg text-white/60 light:text-zinc-600 mb-4">
                       {p}
                     </p>
                   ))}
@@ -750,10 +750,10 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                           className="rounded-3xl border border-white/10 light:border-black/10 bg-white/[0.04] light:bg-black/[0.03] p-6 flex flex-col gap-3"
                         >
                           <GroupIcon size={22} className="text-white/50 light:text-zinc-500" />
-                          <h3 className="font-display font-bold text-2xl leading-snug tracking-tight text-white light:text-zinc-900">
+                          <h3 className="heading-4 text-white light:text-zinc-900">
                             {group.title}
                           </h3>
-                          <p className="font-sans text-lg text-white/60 light:text-zinc-600 leading-relaxed">
+                          <p className="body text-white/60 light:text-zinc-600">
                             {group.description}
                           </p>
                         </motion.div>
@@ -770,7 +770,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
 
               {content?.audienceMapping?.concepts && (
                 <section id="concepts" className="scroll-mt-16">
-                  <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-6 drop-shadow-md">
+                  <h2 className="heading-2 text-white light:text-zinc-900 mb-6 drop-shadow-md">
                     {content.audienceMapping.conceptsHeading}
                   </h2>
 
@@ -848,22 +848,22 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                               </span>
                             </div>
                             <div>
-                              <h4 className="font-display font-bold text-2xl tracking-tight mb-1.5">{concept.name}</h4>
-                              <p className={`font-sans text-lg leading-relaxed ${won ? 'text-black/60 light:text-white/60' : 'text-white/60 light:text-zinc-500'}`}>
+                              <h4 className="heading-4 mb-1.5">{concept.name}</h4>
+                              <p className={`body ${won ? 'text-black/60 light:text-white/60' : 'text-white/60 light:text-zinc-500'}`}>
                                 {concept.description}
                               </p>
                             </div>
                             {concept.bullets && concept.bullets.length > 0 ? (
                               <ul className={`pt-3 border-t space-y-1.5 ${won ? 'border-black/10 light:border-white/10' : 'border-white/10 light:border-black/10'}`}>
                                 {concept.bullets.map((b, bi) => (
-                                  <li key={bi} className={`font-sans text-base leading-relaxed flex gap-2 ${b.type === '+' ? 'text-emerald-500 light:text-emerald-400' : won ? 'text-black/50 light:text-white/50' : 'text-rose-400 light:text-rose-400'}`}>
+                                  <li key={bi} className={`body-sm flex gap-2 ${b.type === '+' ? 'text-emerald-500 light:text-emerald-400' : won ? 'text-black/50 light:text-white/50' : 'text-rose-400 light:text-rose-400'}`}>
                                     <span className="shrink-0 font-mono font-bold">{b.type}</span>
                                     <span className={won ? 'text-black/50 light:text-white/50' : 'text-white/45 light:text-zinc-500'}>{b.text}</span>
                                   </li>
                                 ))}
                               </ul>
                             ) : (
-                              <p className={`font-sans text-base leading-relaxed pt-3 border-t ${won ? 'border-black/10 light:border-white/10 text-black/50 light:text-white/50' : 'border-white/10 light:border-black/10 text-white/45 light:text-zinc-500'}`}>
+                              <p className={`body-sm pt-3 border-t ${won ? 'border-black/10 light:border-white/10 text-black/50 light:text-white/50' : 'border-white/10 light:border-black/10 text-white/45 light:text-zinc-500'}`}>
                                 {concept.detail}
                               </p>
                             )}
@@ -882,10 +882,10 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
 
                     {/* Compact header */}
                     <div className="flex flex-col gap-3 mb-10 ">
-                      <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white drop-shadow-md leading-snug">
+                      <h2 className="heading-2 text-white drop-shadow-md leading-snug">
                         {stage2?.title}
                       </h2>
-                      <p className="font-sans text-lg text-white/50 leading-relaxed">
+                      <p className="body text-white/50">
                         {stage2?.validating}
                       </p>
                     </div>
@@ -1013,10 +1013,10 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
 
               {/* 5. Outcomes */}
               <section id="impact" className="scroll-mt-16">
-                    <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-5 drop-shadow-md">
+                    <h2 className="heading-2 text-white light:text-zinc-900 mb-5 drop-shadow-md">
                       {content.impact.heading}
                     </h2>
-                    <p className="font-sans text-xl text-white/60 light:text-zinc-600 leading-relaxed mb-8">
+                    <p className="body-lg text-white/60 light:text-zinc-600 mb-8">
                       {content.impact.intro}
                     </p>
 
@@ -1024,16 +1024,16 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
 
                       {/* Business column */}
                       <div className="flex flex-col gap-3 h-full">
-                        <div className="font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-1">Business</div>
+                        <div className="section-label text-white/55 light:text-zinc-500 mb-1">Business</div>
 
                         {/* 55K+ split metric card */}
                         <div className="relative overflow-hidden rounded-3xl border bg-white/[0.04] light:bg-black/[0.03] border-white/10 light:border-black/10 flex">
                           <div className="w-[40%] shrink-0 bg-gradient-to-br from-violet-500/45 via-blue-500/20 to-transparent flex items-end p-5">
-                            <span className="font-display font-black text-6xl tracking-tighter leading-none text-white light:text-zinc-900">55K+</span>
+                            <span className="display-stat text-white light:text-zinc-900">55K+</span>
                           </div>
                           <div className="flex-1 flex flex-col justify-end p-5 bg-[#0d0d0d] light:bg-white">
-                            <h3 className="font-display font-bold text-2xl tracking-tight text-white light:text-zinc-900 mb-1">Enterprise Scale</h3>
-                            <p className="font-sans text-lg leading-snug text-white/50 light:text-zinc-500">Employees across Cox Enterprises with access to self-service HCD guidance.</p>
+                            <h3 className="heading-4 text-white light:text-zinc-900 mb-1">Enterprise Scale</h3>
+                            <p className="body leading-snug text-white/50 light:text-zinc-500">Employees across Cox Enterprises with access to self-service HCD guidance.</p>
                           </div>
                         </div>
 
@@ -1042,7 +1042,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                           {content.impact.outcomes.map((outcome, i) => (
                             <div key={i} className="flex items-center gap-3 p-5 rounded-2xl bg-white/[0.04] light:bg-black/[0.03] border border-white/10 light:border-black/10 flex-1">
                               <Check size={15} className="text-emerald-400 light:text-emerald-600 shrink-0" />
-                              <p className="font-sans text-lg text-white/70 light:text-zinc-600 leading-snug">{outcome}</p>
+                              <p className="body leading-snug text-white/70 light:text-zinc-600">{outcome}</p>
                             </div>
                           ))}
                         </div>
@@ -1051,18 +1051,18 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                       {/* Validation column */}
                       {content.impact.metrics && (
                         <div className="flex flex-col gap-3 h-full">
-                          <div className=" font-display text-base font-bold uppercase tracking-widest text-white/55 light:text-zinc-500 mb-1">Validation</div>
+                          <div className="section-label text-white/55 light:text-zinc-500 mb-1">Validation</div>
                           <div className="flex flex-col gap-3 flex-1">
                             {content.impact.metrics.map((m, i) => (
                               <div key={i} className="relative flex-1 overflow-hidden rounded-3xl border bg-white/[0.04] light:bg-black/[0.03] border-white/10 light:border-black/10 flex">
                                 <div className={`w-[40%] shrink-0 bg-gradient-to-br ${m.gradient ?? 'from-white/10 to-transparent'} flex items-end p-5`}>
-                                  <span className="font-display font-black text-6xl tracking-tighter leading-none text-white light:text-zinc-900">
+                                  <span className="display-stat text-white light:text-zinc-900">
                                     {m.value}<span className="text-2xl text-white/50 light:text-zinc-500">{ m.unit ?? ' '} </span>
                                   </span>
                                 </div>
                                 <div className="flex-1 flex flex-col justify-end p-5 bg-[#0d0d0d] light:bg-white">
-                                  <h3 className="font-display font-bold text-2xl tracking-tight text-white light:text-zinc-900 mb-1">{m.label}</h3>
-                                  <p className="font-sans text-lg leading-snug text-white/50 light:text-zinc-500">{m.description}</p>
+                                  <h3 className="heading-4 text-white light:text-zinc-900 mb-1">{m.label}</h3>
+                                  <p className="body leading-snug text-white/50 light:text-zinc-500">{m.description}</p>
                                 </div>
                               </div>
                             ))}
@@ -1080,8 +1080,8 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                       <div id="reflection" className="mt-36 scroll-mt-16">
                         <div className="grid grid-cols-1 xl:grid-cols-[1fr_1fr] gap-12 xl:gap-16 items-start">
                           <div>
-                            <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-white light:text-zinc-900 mb-8 drop-shadow-md">Reflection</h2>
-                            <div className="font-sans text-lg sm:text-lg font-normal text-white/70 light:text-zinc-600 leading-relaxed space-y-6">
+                            <h2 className="heading-2 text-white light:text-zinc-900 mb-8 drop-shadow-md">Reflection</h2>
+                            <div className="body text-white/70 light:text-zinc-600 space-y-6">
                               {content.reflection.paragraphs.map((p, i) => (
                                 <p key={i}>{p}</p>
                               ))}
@@ -1098,7 +1098,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                                 className="w-full h-full object-cover"
                               />
                             </div>
-                            <p className="font-sans text-xs text-white/55 light:text-zinc-500 mt-3 text-center tracking-wide">The team at Cox Enterprises</p>
+                            <p className="caption text-white/55 light:text-zinc-500 mt-3 text-center">The team at Cox Enterprises</p>
                           </div>
                         </div>
                       </div>
@@ -1113,8 +1113,8 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
     <div className="w-full border-t border-white/10 light:border-black/10 bg-[#0a0a0a] light:bg-white py-16 px-6 sm:px-12 md:px-12" role="region" aria-label="More case studies">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h3 className="font-display font-bold text-2xl sm:text-4xl text-white light:text-zinc-900 tracking-tight">Explore More Work</h3>
-          <p className="text-white/55 light:text-zinc-500 text-xl mt-1">Keep browsing the rest of the portfolio</p>
+          <h3 className="heading-carousel text-white light:text-zinc-900">Explore More Work</h3>
+          <p className="body-lg text-white/55 light:text-zinc-500 mt-1">Keep browsing the rest of the portfolio</p>
         </div>
         <div className="hidden sm:flex items-center gap-2">
           <button
@@ -1169,7 +1169,7 @@ export function CaseStudyModal({ project, allProjects, currentIndex, onClose, on
                   {p.company === 'Personal' ? <Sparkles size={11} /> : <Building2 size={11} />}
                   <span>{p.company}</span>
                 </div>
-                <h4 className="font-display font-bold text-lg text-white light:text-zinc-900 tracking-tight leading-snug">{p.title}</h4>
+                <h4 className="heading-card-sm text-white light:text-zinc-900">{p.title}</h4>
               </div>
               {!isLocked && (
                 <ArrowUpRight
